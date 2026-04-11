@@ -4,3 +4,6 @@
 
 [[plugins]]
   package = "@netlify/angular-runtime"
+
+[functions]
+  included_files = ["dist/Misa7a/server/**"]
