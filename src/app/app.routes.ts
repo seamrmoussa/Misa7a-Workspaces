@@ -18,6 +18,7 @@ export const routes: Routes = [
     path: '',
     component: GeneralLayoutComponent,
     children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, title: 'Home Page | الصفحة الرئيسية' },
       { path: 'booking', component: BookingPageComponent, title: 'New Booking' },
       { path: 'plans', component: PlansAndPricingComponent, title: 'Plans & Price' },
