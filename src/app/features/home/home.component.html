@@ -1,0 +1,274 @@
+<section
+  class="relative bg-cover bg-center bg-no-repeat min-h-[85vh] flex items-center"
+  style="background-image: url('./img/mainBg.webp')"
+>
+  <div
+    class="absolute inset-0 bg-white/70 sm:bg-transparent sm:from-white/95 sm:to-white/25 sm:bg-linear-to-r"
+  ></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+    <div class="max-w-xl text-left">
+      <h1 class="text-5xl font-extrabold sm:text-6xl text-mainColorDark leading-tight">
+        Where <br />
+        <span class="text-mainColorLight">Productivity</span> <br />
+        Meets Comfort
+      </h1>
+      <p class="mt-4 max-w-lg sm:text-lg/relaxed text-fontGray1">
+        Curated workspaces designed for architectural precision and mental clarity. Your sanctuary
+        for deep work.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <app-main-button [link]="'/booking'" [text]="'Book Your Space'"></app-main-button>
+
+        <a
+          routerLink="/gallery"
+          class="block w-full rounded-lg bg-white/80 backdrop-blur-sm border border-gray-200 px-8 py-3.5 text-sm font-semibold text-mainColorLight shadow-sm hover:text-mainColorDark hover:bg-white focus:outline-none focus:ring transition-colors sm:w-auto text-center"
+        >
+          Take a Tour
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-mainBg py-16 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+      <div class="max-w-lg">
+        <h2 class="text-3xl font-extrabold sm:text-4xl text-mainColorDark">
+          Tailored for your<br />flow
+        </h2>
+      </div>
+      <p class="max-w-md text-fontGray2 text-sm leading-relaxed">
+        From solo brainstorming to board-level strategy, we provide the environment that scales with
+        your ambition.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        class="rounded-2xl border border-white/40 bg-white p-8 shadow-sm hover:shadow-md transition-all duration-300"
+      >
+        <span
+          class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-mainExtraLight text-mainColorLight mb-6"
+        >
+          <i class="fa-solid fa-laptop text-xl"></i>
+        </span>
+        <h3 class="text-xl font-bold text-mainColorDark mb-3">Hot Desks</h3>
+        <p class="text-fontGray2 text-sm leading-relaxed mb-6">
+          Perfect for digital nomads and flexible thinkers. Access any available spot in our
+          high-energy open zones.
+        </p>
+        <a
+          href="#"
+          class="group inline-flex items-center gap-2 text-sm font-bold text-mainColorLight hover:text-mainColorDark transition-colors"
+        >
+          Learn more
+          <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+        </a>
+      </div>
+
+      <div
+        class="rounded-2xl border border-white/40 bg-white p-8 shadow-sm hover:shadow-md transition-all duration-300"
+      >
+        <span
+          class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-badgeBgColor text-badgeTextColor mb-6"
+        >
+          <i class="fa-solid fa-door-closed text-xl"></i>
+        </span>
+        <h3 class="text-xl font-bold text-mainColorDark mb-3">Dedicated Offices</h3>
+        <p class="text-fontGray2 text-sm leading-relaxed mb-6">
+          Private, lockable spaces for teams of 2 to 20. Fully furnished with ergonomic perfection
+          and high-speed fiber.
+        </p>
+        <a
+          href="#"
+          class="group inline-flex items-center gap-2 text-sm font-bold text-mainColorLight hover:text-mainColorDark transition-colors"
+        >
+          Learn more
+          <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+        </a>
+      </div>
+
+      <div
+        class="rounded-2xl border border-white/40 bg-white p-8 shadow-sm hover:shadow-md transition-all duration-300"
+      >
+        <span
+          class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-beigeBgBadge text-beigeTextBadge mb-6"
+        >
+          <i class="fa-solid fa-users text-xl"></i>
+        </span>
+        <h3 class="text-xl font-bold text-mainColorDark mb-3">Meeting Rooms</h3>
+        <p class="text-fontGray2 text-sm leading-relaxed mb-6">
+          State-of-the-art visual tech and soundproofing. Impress your clients in a space built for
+          high-stakes decisions.
+        </p>
+        <a
+          href="#"
+          class="group inline-flex items-center gap-2 text-sm font-bold text-mainColorLight hover:text-mainColorDark transition-colors"
+        >
+          Learn more
+          <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 lg:py-24 bg-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <h2 class="text-4xl font-extrabold sm:text-5xl text-mainColorDark leading-tight mb-6">
+          Architectural <br />
+          <span class="text-gray-400 font-normal">Detail</span>
+        </h2>
+        <p class="text-fontGray1 text-sm sm:text-base leading-relaxed mb-10 max-w-md">
+          We believe that beauty inspires performance. Every corner of our sanctuary is designed
+          with intention, from the light temperature to the acoustic panels.
+        </p>
+
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <p class="text-3xl font-bold text-mainColorLight">12</p>
+            <p class="mt-1 text-xs font-bold uppercase tracking-widest text-fontGray2">Locations</p>
+          </div>
+          <div>
+            <p class="text-3xl font-bold text-mainColorLight">24/7</p>
+            <p class="mt-1 text-xs font-bold uppercase tracking-widest text-fontGray2">Access</p>
+          </div>
+          <div>
+            <p class="text-3xl font-bold text-mainColorLight">500+</p>
+            <p class="mt-1 text-xs font-bold uppercase tracking-widest text-fontGray2">Creators</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-125">
+        <div class="h-72 lg:h-full">
+          <img alt="Orange Sofa Workspace" src="./img/img1.png" class="h-full w-full rounded-2xl" />
+        </div>
+
+        <div class="grid grid-rows-2 gap-4 h-100 lg:h-full">
+          <img alt="Desk Lamp Detail" src="./img/img2.png" class="h-full w-full rounded-2xl" />
+          <img alt="Conference Room" src="./img/img3.png" class="h-full w-full rounded-2xl" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-8 bg-white border-b border-gray-50">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div
+      class="flex flex-col lg:flex-row items-center justify-between rounded-2xl bg-mainBg p-4 sm:p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] gap-6"
+    >
+      <div class="flex items-center gap-4 w-full lg:w-auto shrink-0">
+        <div class="rounded-xl bg-white p-3 shadow-sm text-mainColorLight">
+          <i class="fa-regular fa-calendar-check text-2xl"></i>
+        </div>
+        <div>
+          <p class="font-bold text-mainColorDark text-sm sm:text-base">Instant Availability</p>
+          <p class="text-xs text-fontGray2">Live slot bookings for today</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-2 flex-1 w-full">
+        <span
+          class="rounded-full bg-mainColorLight px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-pointer hover:bg-mainColorDark transition-colors"
+          >10:00</span
+        >
+        <span
+          class="rounded-full bg-mainColorLight px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-pointer hover:bg-mainColorDark transition-colors"
+          >11:00</span
+        >
+        <span
+          class="rounded-full bg-secColorDark px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-not-allowed"
+          >BOOKED</span
+        >
+        <span
+          class="rounded-full bg-mainColorLight px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-pointer hover:bg-mainColorDark transition-colors"
+          >13:00</span
+        >
+        <span
+          class="rounded-full bg-mainColorLight px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-pointer hover:bg-mainColorDark transition-colors"
+          >14:00</span
+        >
+        <span class="rounded-full bg-white border border-gray-200 px-8 py-2 h-8 w-16"></span>
+      </div>
+
+      <div class="w-full lg:w-auto shrink-0">
+        <a
+          href="#"
+          class="block w-full text-center rounded-xl bg-mainColorDark px-8 py-2.5 text-sm font-semibold text-white shadow hover:bg-mainColorLight transition-colors"
+        >
+          Check More
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-mainBg py-16 lg:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-extrabold text-mainColorDark sm:text-4xl">
+        Trusted by industry <br />
+        <span class="relative inline-block mt-2">
+          leaders
+          <span class="absolute -bottom-1 left-0 w-full h-1 bg-mainColorDark"></span>
+        </span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="flex flex-col items-center text-center">
+        <img
+          alt="David Chen"
+          src="./img/user1.png"
+          class="h-16 w-16 rounded-full object-cover shadow-md mb-6 ring-4 ring-white"
+        />
+        <p class="text-fontGray1 text-sm italic mb-6 leading-relaxed px-4">
+          "The focus I achieve at Architectural Sanctuary is unparalleled. The environment actually
+          encourages better thinking."
+        </p>
+        <h4 class="text-sm font-bold text-mainColorDark">David Chen</h4>
+        <p class="text-2xs font-bold uppercase tracking-widest text-fontGray2 mt-1">
+          Lead Architect, Studio V
+        </p>
+      </div>
+
+      <div class="flex flex-col items-center text-center">
+        <img
+          alt="Sarah Miller"
+          src="./img/user2.png"
+          class="h-16 w-16 rounded-full object-cover shadow-md mb-6 ring-4 ring-white"
+        />
+        <p class="text-fontGray1 text-sm italic mb-6 leading-relaxed px-4">
+          "Finding a space that balances luxury with functionality was hard until I found this
+          place. It's our team's second home."
+        </p>
+        <h4 class="text-sm font-bold text-mainColorDark">Sarah Miller</h4>
+        <p class="text-2xs font-bold uppercase tracking-widest text-fontGray2 mt-1">
+          CEO, Nexus Tech
+        </p>
+      </div>
+
+      <div class="flex flex-col items-center text-center">
+        <img
+          alt="Marcus Thorne"
+          src="./img/user3.png"
+          class="h-16 w-16 rounded-full object-cover shadow-md mb-6 ring-4 ring-white"
+        />
+        <p class="text-fontGray1 text-sm italic mb-6 leading-relaxed px-4">
+          "Everything from the coffee to the high-speed wifi is top-tier. I never have to worry
+          about the logistics, just my craft."
+        </p>
+        <h4 class="text-sm font-bold text-mainColorDark">Marcus Thorne</h4>
+        <p class="text-2xs font-bold uppercase tracking-widest text-fontGray2 mt-1">
+          Independent Designer
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

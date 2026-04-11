@@ -1,0 +1,86 @@
+@font-face {
+  font-family: 'alexandria';
+  src: url('/AlexandriaFont/Alexandria-Regular-400.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'alexandria';
+  src: url('/AlexandriaFont/Alexandria-Medium-500.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'alexandria';
+  src: url('/AlexandriaFont/Alexandria-SemiBold-600.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'alexandria';
+  src: url('/AlexandriaFont/Alexandria-Bold-700.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'alexandria';
+  src: url('/AlexandriaFont/Alexandria-Black-800.ttf') format('truetype');
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'alexandria';
+  src: url('/AlexandriaFont/Alexandria-ExtraBold-900.ttf') format('truetype');
+  font-weight: 900;
+  font-display: swap;
+}
+
+@import 'tailwindcss';
+@import 'flowbite/src/themes/default';
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@utility container {
+  margin-inline: auto;
+}
+
+@theme {
+  --color-mainColorDark: #0e3b69;
+  --color-mainColorLight: #2c5282;
+  --color-mainExtraLight: #d4e3ff;
+  --color-secColorDark: #4f3500;
+  --color-secColorLight: #6d4a00;
+  --color-secColorExtraLight: #ffdead;
+  --color-mainBg: #f7fafc;
+  --color-linksColor1: #475569;
+  --color-linksColor2: #64748b;
+  --color-fontGray1: #43474f;
+  --color-fontGray2: #737780;
+  --color-badgeBgColor: #e1e1c9;
+  --color-badgeTextColor: #636451;
+  --color-redColorDark: #ba1a1a;
+  --color-redColorLight: #ffdad6;
+  --color-greenTextBadge: #047857;
+  --color-greenBgBadge: #ecfdf5;
+  --color-greenPointBadge: #10b981;
+  --color-beigeTextBadge: #b45309;
+  --color-beigeBgBadge: #fffbeb;
+  --color-beigePointBadge: #f59e0b;
+}
+
+@layer utilities {
+  html,
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-family: 'alexandria', sans-serif;
+  }
+}
+
+body {
+  font-family: 'alexandria', sans-serif;
+  margin-top: 6rem;
+  background-color: var(--color-mainBg);
+}

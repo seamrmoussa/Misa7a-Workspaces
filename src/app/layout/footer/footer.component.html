@@ -1,0 +1,119 @@
+<footer class="bg-mainBg border-t border-gray-200 font-sans">
+  <div class="mx-auto w-full max-w-7xl p-4 py-8 lg:py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
+      <div>
+        <app-main-logo></app-main-logo>
+        @if (userMode() === 'guest') {
+          <p class="text-linksColor1 text-sm leading-relaxed">
+            Elevating the workspace through intentional design and quiet luxury. Your productivity
+            deserves a masterpiece.
+          </p>
+        } @else {
+          <p class="text-linksColor1 text-sm leading-relaxed">
+            Welcome back to your professional workspace management portal.
+          </p>
+        }
+      </div>
+
+      <div>
+        <h2 class="mb-6 text-xs font-bold text-mainColorDark uppercase tracking-widest">
+          {{ userMode() === 'guest' ? 'Company' : 'Platform' }}
+        </h2>
+        <ul class="text-linksColor2 font-medium text-sm">
+          @for (
+            link of userMode() === 'guest' ? guestLinks().company : userLinks().platform;
+            track link.name
+          ) {
+            <li class="mb-4">
+              <a [routerLink]="link.router" class="hover:text-mainColorLight transition-colors"
+                >{{ link.name }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="mb-6 text-xs font-bold text-mainColorDark uppercase tracking-widest">
+          {{ userMode() === 'guest' ? 'Support' : 'Help' }}
+        </h2>
+        <ul class="text-linksColor2 font-medium text-sm">
+          @for (
+            link of userMode() === 'guest' ? guestLinks().support : userLinks().help;
+            track link.name
+          ) {
+            <li class="mb-4">
+              <a [routerLink]="link.router" class="hover:text-mainColorLight transition-colors"
+                >{{ link.name }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      @if (userMode() === 'guest') {
+        <div>
+          <h2 class="mb-6 text-xs font-bold text-mainColorDark uppercase tracking-widest">
+            Stay Connected
+          </h2>
+          <form action="#" class="relative group">
+            <input
+              type="email"
+              id="footer-email"
+              class="block w-full p-3 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-1 focus:ring-mainColorLight focus:border-mainColorLight"
+              placeholder="Email address"
+              required
+            />
+            <button
+              type="submit"
+              class="text-white absolute inset-e-2 bottom-1.5 bg-mainColorLight hover:bg-mainColorDark focus:ring-4 focus:outline-none font-medium rounded-md text-sm px-3 py-1.5 transition-all cursor-pointer"
+            >
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+      }
+    </div>
+
+    <hr class="my-8 border-gray-100 lg:my-10" />
+
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <span class="text-xs text-linksColor1 uppercase tracking-widest">
+        © {{ currentYear() }} Misa7a. All Rights Reserved.
+      </span>
+
+      <div class="flex items-center space-x-5 text-linksColor1">
+        <a
+          href="https://web.facebook.com/?_rdc=1&_rdr#"
+          class="hover:text-mainColorLight transition-colors text-xl"
+          title="Facebook"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="sr-only">Facebook</span>
+          <i class="fa-brands fa-facebook-f"></i>
+        </a>
+        <a
+          href="https://www.instagram.com/"
+          class="hover:text-mainColorLight transition-colors text-xl"
+          title="Instagram"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="sr-only">Instagram</span>
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a
+          href="https://www.linkedin.com/"
+          class="hover:text-mainColorLight transition-colors text-xl"
+          title="LinkedIn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="sr-only">LinkedIn</span>
+          <i class="fa-brands fa-linkedin-in"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
