@@ -1,0 +1,10 @@
+{
+  "name": "misa7a",
+  "main": "./dist/Misa7a/server/server.mjs",
+  "compatibility_date": "2026-04-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist/Misa7a/browser"
+  }
+}
