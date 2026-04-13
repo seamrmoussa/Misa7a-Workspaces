@@ -40,7 +40,7 @@ export class BookingPageComponent {
       features: 'Gig-speed',
       description:
         'A focused space with noise-canceling acoustics and floor-to-ceiling city views.',
-      image: 'assets/images/room1.jpg', // عدل مسار الصورة
+      image: './img/booking1.png', // عدل مسار الصورة
     },
     {
       id: 2,
@@ -50,7 +50,7 @@ export class BookingPageComponent {
       features: 'Air Purified',
       description:
         'The ultimate quiet zone. Perfect for deep creative work or confidential strategy.',
-      image: 'assets/images/room2.jpg', // عدل مسار الصورة
+      image: './img/booking2.png', // عدل مسار الصورة
     },
   ]);
 

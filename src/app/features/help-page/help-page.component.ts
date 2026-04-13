@@ -6,4 +6,12 @@ import { Component } from '@angular/core';
   templateUrl: './help-page.component.html',
   styleUrl: './help-page.component.css',
 })
-export class HelpPageComponent {}
+export class HelpPageComponent {
+  bookingLinks = [
+    'How do I reserve a private meeting room?',
+    'Modifying or cancelling a reservation',
+    'Guest policy for meeting spaces',
+  ];
+
+  paymentLinks = ['Update billing information', 'Understanding your invoice', 'Refund policies'];
+}

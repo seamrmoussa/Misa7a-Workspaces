@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  paths = signal<string[]>(['home', 'booking', 'plans', 'gallery', 'review', 'help']);
+  paths = signal<string[]>(['home', 'booking', 'plans', 'gallery', 'review', 'contact-us', 'help']);
 
   notificationBasePath = input<string>();
   notificationLoggedIn = input<boolean>(false);

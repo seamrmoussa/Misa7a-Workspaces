@@ -139,6 +139,7 @@ export const routes: Routes = [
       { path: 'booking', component: BookingPageComponent, title: 'New Booking' },
       { path: 'plans', component: PlansAndPricingComponent, title: 'Plans & Price' },
       { path: 'review', component: ReviewComponent, title: 'Previous Reviews' },
+
       {
         path: 'gallery',
         loadComponent: () =>
@@ -150,6 +151,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/help-page/help-page.component').then((c) => c.HelpPageComponent),
         title: 'Help',
+      },
+      {
+        path: 'contact-us',
+        loadComponent: () =>
+          import('./features/contact-us/contact-us.component').then((c) => c.ContactUsComponent),
+        title: 'Contact Us',
       },
       {
         path: 'inquiry',
