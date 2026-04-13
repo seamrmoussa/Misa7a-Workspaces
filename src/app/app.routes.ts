@@ -3,7 +3,6 @@ import { HomeComponent } from './features/home/home.component';
 import { BookingPageComponent } from './features/booking-page/booking-page.component';
 import { PlansAndPricingComponent } from './features/plans-and-pricing/plans-and-pricing.component';
 import { ReviewComponent } from './features/review/review.component';
-import { NotFoundPageComponent } from './features/not-found-page/not-found-page.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
 import { GeneralLayoutComponent } from './layout/general-layout/general-layout.component';
@@ -11,40 +10,6 @@ import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component'
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-
-  //////////////////////////////////////////
-  // *for general
-  {
-    path: '',
-    component: GeneralLayoutComponent,
-    children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent, title: 'Home Page | الصفحة الرئيسية' },
-      { path: 'booking', component: BookingPageComponent, title: 'New Booking' },
-      { path: 'plans', component: PlansAndPricingComponent, title: 'Plans & Price' },
-      { path: 'review', component: ReviewComponent, title: 'Previous Reviews' },
-      {
-        path: 'gallery',
-        loadComponent: () =>
-          import('./features/gallery/gallery.component').then((c) => c.GalleryComponent),
-        title: 'Gallery',
-      },
-      {
-        path: 'help',
-        loadComponent: () =>
-          import('./features/help-page/help-page.component').then((c) => c.HelpPageComponent),
-        title: 'Help',
-      },
-      {
-        path: 'inquiry',
-        loadComponent: () =>
-          import('./features/inquiry-form/inquiry-form.component').then(
-            (c) => c.InquiryFormComponent,
-          ),
-        title: 'Inquiry',
-      },
-    ],
-  },
 
   //////////////////////////////////////////
   // *for authentication
@@ -163,5 +128,45 @@ export const routes: Routes = [
     ],
   },
 
-  { path: '**', component: NotFoundPageComponent, title: 'Page Not Found' },
+  //////////////////////////////////////////
+  // *for general
+  {
+    path: '',
+    component: GeneralLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, title: 'Home Page | الصفحة الرئيسية' },
+      { path: 'booking', component: BookingPageComponent, title: 'New Booking' },
+      { path: 'plans', component: PlansAndPricingComponent, title: 'Plans & Price' },
+      { path: 'review', component: ReviewComponent, title: 'Previous Reviews' },
+      {
+        path: 'gallery',
+        loadComponent: () =>
+          import('./features/gallery/gallery.component').then((c) => c.GalleryComponent),
+        title: 'Gallery',
+      },
+      {
+        path: 'help',
+        loadComponent: () =>
+          import('./features/help-page/help-page.component').then((c) => c.HelpPageComponent),
+        title: 'Help',
+      },
+      {
+        path: 'inquiry',
+        loadComponent: () =>
+          import('./features/inquiry-form/inquiry-form.component').then(
+            (c) => c.InquiryFormComponent,
+          ),
+        title: 'Inquiry',
+      },
+      {
+        path: '**',
+        loadComponent: () =>
+          import('./features/not-found-page/not-found-page.component').then(
+            (c) => c.NotFoundPageComponent,
+          ),
+        title: 'Page Not Found',
+      },
+    ],
+  },
 ];

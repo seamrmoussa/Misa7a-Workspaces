@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './plans-and-pricing.component.html',
   styleUrl: './plans-and-pricing.component.css',
 })
-export class PlansAndPricingComponent {}
+export class PlansAndPricingComponent {
+  isYearly: boolean = false;
+}

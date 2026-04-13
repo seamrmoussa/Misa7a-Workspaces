@@ -1,1 +1,214 @@
-<p>notifications works!</p>
+<div class="flex min-h-screen bg-mainBg font-sans">
+  <aside class="hidden md:flex flex-col w-64 px-6 py-10 bg-mainBg border-r border-gray-200">
+    <span class="text-xs font-bold text-fontGray2 tracking-widest uppercase mb-6 pl-4">Menu</span>
+
+    <nav class="flex flex-col gap-2">
+      <a
+        href="#"
+        class="flex items-center gap-4 px-4 py-3 rounded-lg text-linksColor1 hover:text-mainColorDark hover:bg-white transition-colors font-medium"
+      >
+        <i class="fa-solid fa-border-all text-lg w-5 text-center"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a
+        href="#"
+        class="flex items-center gap-4 px-4 py-3 rounded-lg text-mainColorDark bg-white shadow-sm font-bold"
+      >
+        <i class="fa-regular fa-bell text-lg w-5 text-center"></i>
+        <span>Notifications</span>
+      </a>
+
+      <a
+        href="#"
+        class="flex items-center gap-4 px-4 py-3 rounded-lg text-linksColor1 hover:text-mainColorDark hover:bg-white transition-colors font-medium"
+      >
+        <i class="fa-regular fa-calendar-check text-lg w-5 text-center"></i>
+        <span>My Bookings</span>
+      </a>
+
+      <a
+        href="#"
+        class="flex items-center gap-4 px-4 py-3 rounded-lg text-linksColor1 hover:text-mainColorDark hover:bg-white transition-colors font-medium"
+      >
+        <i class="fa-solid fa-gear text-lg w-5 text-center"></i>
+        <span>Settings</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="flex-1 p-6 lg:p-12 xl:p-16 relative">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-6 mb-10 relative">
+        <div>
+          <h1 class="text-4xl font-extrabold text-mainColorDark mb-3">Notifications</h1>
+          <p class="text-fontGray1 text-base max-w-lg leading-relaxed">
+            Stay updated with your latest booking activities, sanctuary alerts, and personalized
+            concierge reminders.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-4 shrink-0">
+          <button class="text-mainColorDark font-bold hover:underline text-sm px-2">
+            Mark as Read
+          </button>
+          <button
+            class="bg-gray-200 hover:bg-gray-300 text-fontGray1 font-bold py-2.5 px-6 rounded-lg transition-colors text-sm"
+          >
+            Clear All
+          </button>
+        </div>
+
+        @if (isAlertsDropdownOpen()) {
+          <div
+            class="absolute top-full right-0 mt-4 w-80 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 overflow-hidden"
+          >
+            <div
+              class="flex justify-between items-center px-5 py-4 border-b border-gray-100 bg-gray-50/50"
+            >
+              <h4 class="font-bold text-mainColorDark text-sm">Recent Alerts</h4>
+              <span
+                class="bg-mainExtraLight text-mainColorDark text-2xs font-bold px-2 py-1 rounded-full"
+                >3 NEW</span
+              >
+            </div>
+            <div class="flex flex-col">
+              <div
+                class="flex gap-3 px-5 py-4 border-l-4 border-redColorDark bg-redColorLight/20 cursor-pointer hover:bg-redColorLight/40 transition-colors"
+              >
+                <i class="fa-solid fa-circle-exclamation text-redColorDark mt-0.5"></i>
+                <div>
+                  <p class="text-xs font-bold text-redColorDark mb-0.5">Booking ending soon</p>
+                  <p class="text-2xs text-fontGray1">Studio A • 5 mins remaining</p>
+                </div>
+              </div>
+              <div class="flex gap-3 px-5 py-4 cursor-pointer hover:bg-gray-50 transition-colors">
+                <i class="fa-solid fa-circle-info text-mainColorLight mt-0.5"></i>
+                <div>
+                  <p class="text-xs font-bold text-mainColorDark mb-0.5">Invoice available</p>
+                  <p class="text-2xs text-fontGray2">July Monthly Access</p>
+                </div>
+              </div>
+            </div>
+            <a
+              href="#"
+              class="block text-center px-5 py-3 bg-gray-50 text-mainColorDark text-xs font-bold hover:bg-gray-100 transition-colors"
+            >
+              View All Notifications
+            </a>
+          </div>
+        }
+      </div>
+
+      <div class="flex flex-col gap-6 mb-12">
+        @for (item of notifications(); track item.id) {
+          <div
+            class="rounded-xl p-6 md:p-8 flex flex-col sm:flex-row gap-5 md:gap-6 relative overflow-hidden"
+            [class]="
+              item.type === 'urgent'
+                ? 'bg-white shadow-sm border-l-[6px] border-redColorDark'
+                : item.type === 'upcoming'
+                  ? 'bg-white shadow-sm border-l-[6px] border-secColorDark'
+                  : item.type === 'update'
+                    ? 'bg-white shadow-sm border-l-[6px] border-mainColorDark'
+                    : 'bg-gray-50/70 border border-gray-100 opacity-80'
+            "
+          >
+            <div class="shrink-0 mt-1">
+              <div
+                class="w-12 h-12 rounded-full flex items-center justify-center text-xl"
+                [class]="
+                  item.type === 'urgent'
+                    ? 'bg-redColorLight text-redColorDark'
+                    : item.type === 'upcoming'
+                      ? 'bg-beigeBgBadge text-secColorDark'
+                      : item.type === 'update'
+                        ? 'bg-mainExtraLight text-mainColorDark'
+                        : 'bg-gray-200 text-fontGray2'
+                "
+              >
+                @if (item.type === 'urgent') {
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                }
+                @if (item.type === 'upcoming') {
+                  <i class="fa-regular fa-clock"></i>
+                }
+                @if (item.type === 'update') {
+                  <i class="fa-regular fa-bell"></i>
+                }
+                @if (item.type === 'archived') {
+                  <i class="fa-regular fa-circle-check"></i>
+                }
+              </div>
+            </div>
+
+            <div class="flex-1">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
+                <h3
+                  class="text-lg font-extrabold"
+                  [class]="item.type === 'archived' ? 'text-fontGray1' : 'text-gray-900'"
+                >
+                  {{ item.title }}
+                </h3>
+
+                @if (item.badge || item.timeAgo) {
+                  <div class="flex items-center gap-3 shrink-0 mt-1 sm:mt-0">
+                    @if (item.badge) {
+                      <span class="text-2xs font-bold tracking-wider uppercase text-fontGray1">{{
+                        item.badge
+                      }}</span>
+                    }
+                    @if (item.timeAgo) {
+                      <span class="text-[11px] font-medium text-fontGray2">{{ item.timeAgo }}</span>
+                    }
+                  </div>
+                }
+              </div>
+
+              <p
+                class="text-sm leading-relaxed mb-5"
+                [class]="item.type === 'archived' ? 'text-fontGray2' : 'text-fontGray1'"
+                [innerHTML]="item.messageHtml"
+              ></p>
+
+              @if (item.primaryAction || item.secondaryAction) {
+                <div class="flex flex-wrap items-center gap-4">
+                  @if (item.primaryAction) {
+                    <button
+                      class="px-5 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-colors"
+                      [class]="
+                        item.type === 'urgent'
+                          ? 'bg-redColorDark hover:bg-red-800 text-white'
+                          : item.type === 'upcoming'
+                            ? 'bg-secColorDark hover:bg-[#3a2700] text-white'
+                            : 'bg-mainColorDark hover:bg-mainColorLight text-white'
+                      "
+                    >
+                      {{ item.primaryAction }}
+                    </button>
+                  }
+                  @if (item.secondaryAction) {
+                    <button class="text-sm font-bold text-fontGray1 hover:text-mainColorDark px-2">
+                      {{ item.secondaryAction }}
+                    </button>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="text-center pt-8 border-t border-gray-200">
+        <p class="text-xs text-fontGray2 mb-5 font-medium">
+          Showing recent activity from the last 30 days
+        </p>
+        <button
+          class="bg-white border border-gray-200 text-mainColorDark font-bold px-6 py-2.5 rounded-full shadow-sm hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 mx-auto text-sm"
+        >
+          <i class="fa-solid fa-clock-rotate-left"></i> View Notification History
+        </button>
+      </div>
+    </div>
+  </main>
+</div>

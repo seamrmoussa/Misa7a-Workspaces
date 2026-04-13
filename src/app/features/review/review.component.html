@@ -1,1 +1,162 @@
-<p>review works!</p>
+<div class="min-h-screen bg-mainBg py-16 px-4 sm:px-6 lg:px-8 font-sans">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-12">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-mainColorDark mb-4 tracking-tight">
+        Guest Perspectives
+      </h1>
+      <p class="text-fontGray1 text-base md:text-lg max-w-3xl leading-relaxed">
+        Honest feedback from our community of creators, architects, and visionaries who call our
+        sanctuary home.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+      <div
+        class="bg-white border border-gray-100 rounded-2xl p-8 flex flex-col items-center justify-center shadow-sm"
+      >
+        <span class="text-7xl font-black text-mainColorDark mb-2 tracking-tighter">4.9</span>
+        <div class="flex gap-1 text-secColorDark text-xl mb-3">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+        </div>
+        <p class="text-sm text-fontGray1 font-medium">Based on 1,248 reviews</p>
+      </div>
+
+      <div
+        class="lg:col-span-2 bg-[#f4f5f7] border border-gray-100 rounded-2xl p-8 shadow-sm flex flex-col justify-center"
+      >
+        <h3 class="text-lg font-bold text-mainColorDark mb-6">Review Breakdown</h3>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <span class="text-sm font-semibold text-fontGray1 w-12 shrink-0">5 Star</span>
+            <div class="flex-1 bg-gray-200/80 rounded-full h-2">
+              <div class="bg-mainColorDark h-2 rounded-full" style="width: 88%"></div>
+            </div>
+            <span class="text-sm font-medium text-fontGray1 w-10 text-right shrink-0">88%</span>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <span class="text-sm font-semibold text-fontGray1 w-12 shrink-0">4 Star</span>
+            <div class="flex-1 bg-gray-200/80 rounded-full h-2">
+              <div class="bg-linksColor2 h-2 rounded-full" style="width: 10%"></div>
+            </div>
+            <span class="text-sm font-medium text-fontGray1 w-10 text-right shrink-0">10%</span>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <span class="text-sm font-semibold text-fontGray1 w-12 shrink-0">3 Star</span>
+            <div class="flex-1 bg-gray-200/80 rounded-full h-2">
+              <div class="bg-gray-400 h-2 rounded-full" style="width: 2%"></div>
+            </div>
+            <span class="text-sm font-medium text-fontGray1 w-10 text-right shrink-0">2%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div class="flex flex-wrap gap-2">
+        @for (filter of filters; track filter) {
+          <button
+            (click)="setFilter(filter)"
+            [class]="
+              activeFilter === filter
+                ? 'bg-mainColorDark text-white px-5 py-2 rounded-full text-sm font-semibold shadow-sm transition-colors'
+                : 'bg-gray-200/70 hover:bg-gray-300/70 text-linksColor1 px-5 py-2 rounded-full text-sm font-semibold transition-colors'
+            "
+          >
+            {{ filter }}
+          </button>
+        }
+      </div>
+
+      <button
+        class="bg-white border border-gray-200 text-fontGray1 px-5 py-2 rounded-full text-sm font-semibold shadow-sm flex items-center gap-3 hover:bg-gray-50 transition-colors"
+      >
+        Filter By Room Type <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+      </button>
+    </div>
+
+    <div
+      class="bg-white border border-gray-100 rounded-2xl shadow-sm divide-y divide-gray-100 mb-10 overflow-hidden"
+    >
+      @for (review of reviews; track review.id) {
+        <div class="p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-12">
+          <div class="w-full md:w-56 shrink-0 flex flex-col items-start">
+            <img
+              [src]="review.avatar"
+              class="w-16 h-16 rounded-full object-cover mb-4 border border-gray-100 shadow-sm"
+              alt="{{ review.author }}"
+            />
+            <h4 class="text-mainColorDark font-bold text-lg leading-tight mb-1">
+              {{ review.author }}
+            </h4>
+            <p class="text-xs text-fontGray1 font-medium mb-3">{{ review.role }}</p>
+
+            <div class="flex gap-1 text-secColorDark text-2xs">
+              @for (star of getStars(review.stars); track $index) {
+                <i class="fa-solid fa-star"></i>
+              }
+              @for (empty of getStars(5 - review.stars); track $index) {
+                <i class="fa-regular fa-star text-gray-300"></i>
+              }
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
+              <span
+                class="bg-badgeBgColor text-badgeTextColor px-3 py-1.5 text-2xs font-bold uppercase rounded tracking-widest w-max"
+              >
+                {{ review.roomType }}
+              </span>
+              <span class="text-xs text-fontGray2 font-medium mt-1">{{ review.date }}</span>
+            </div>
+
+            <h3 class="text-xl font-bold text-mainColorDark mb-3">
+              {{ review.title }}
+            </h3>
+
+            <p class="text-fontGray1 text-sm leading-relaxed">
+              {{ review.content }}
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="flex justify-center items-center gap-2">
+      <button
+        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-linksColor1 hover:bg-gray-50 transition-colors shadow-sm"
+      >
+        <i class="fa-solid fa-chevron-left text-sm"></i>
+      </button>
+
+      <button
+        class="w-10 h-10 flex items-center justify-center rounded-lg bg-mainColorDark text-white font-bold shadow-sm"
+      >
+        1
+      </button>
+      <button
+        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-linksColor1 hover:bg-gray-50 font-semibold transition-colors shadow-sm"
+      >
+        2
+      </button>
+      <button
+        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-linksColor1 hover:bg-gray-50 font-semibold transition-colors shadow-sm"
+      >
+        3
+      </button>
+
+      <button
+        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-linksColor1 hover:bg-gray-50 transition-colors shadow-sm"
+      >
+        <i class="fa-solid fa-chevron-right text-sm"></i>
+      </button>
+    </div>
+  </div>
+</div>

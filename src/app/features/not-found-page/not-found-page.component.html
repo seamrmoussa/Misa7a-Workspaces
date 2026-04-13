@@ -1,1 +1,42 @@
-<p>not-found-page works!</p>
+<div
+  class="flex items-center justify-center h-screen overflow-hidden bg-[radial-gradient(circle_at_center,#ffffff_0%,#f7fafc_100%)]"
+>
+  <div class="text-center p-4 w-full max-w-2xl">
+    <i
+      class="fa-regular fa-face-frown text-mainColorDark text-[70px] md:text-[90px] leading-none mb-6"
+    ></i>
+
+    <h1 class="text-3xl md:text-4xl font-extrabold text-mainColorDark leading-tight mb-3">
+      Oops! Page not found
+    </h1>
+
+    <p class="text-sm md:text-base text-linksColor2 mb-8 max-w-md mx-auto leading-relaxed">
+      The space you are looking for doesn't exist or has been moved. Let's get you back to focus.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-center mb-10">
+      <a
+        routerLink="/home"
+        class="inline-flex items-center justify-center bg-mainColorDark text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-mainColorLight transition-colors duration-200 shadow-sm"
+      >
+        Return Home
+      </a>
+      <a
+        routerLink="/login"
+        class="inline-flex items-center justify-center bg-mainBg text-mainColorDark px-6 py-2.5 rounded-lg text-sm font-semibold border border-gray-200 hover:border-gray-300 hover:bg-gray-100 transition-colors duration-200"
+      >
+        Sign In
+      </a>
+    </div>
+
+    <div class="text-center">
+      <a
+        routerLink="/home"
+        class="inline-flex items-center gap-1.5 text-xs text-linksColor1 hover:text-mainColorDark transition-colors font-medium"
+      >
+        <span>Need help finding something? Contact Support</span>
+        <i class="fa-solid fa-arrow-right text-2xs"></i>
+      </a>
+    </div>
+  </div>
+</div>

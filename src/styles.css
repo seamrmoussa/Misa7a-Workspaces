@@ -81,6 +81,8 @@
 
 body {
   font-family: 'alexandria', sans-serif;
-  margin-top: 6rem;
   background-color: var(--color-mainBg);
+}
+body:has(app-navbar) {
+  margin-top: 6rem;
 }

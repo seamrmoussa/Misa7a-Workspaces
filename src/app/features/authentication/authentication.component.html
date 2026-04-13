@@ -1,1 +1,146 @@
-<p>authentication works!</p>
+<div class="flex h-screen bg-mainBg overflow-hidden">
+  <a
+    routerLink="/home"
+    class="hidden lg:flex lg:w-1/2 relative bg-cover bg-center bg-mainColorLight/10 cursor-pointer hover:opacity-95 transition-opacity"
+    style="background-image: url('./img/login.png')"
+  >
+    <div class="absolute inset-0 bg-linear-to-t from-mainColorDark/90 to-transparent"></div>
+    <div class="relative z-10 flex flex-col justify-center p-10 xl:p-16 w-full text-white">
+      <h1 class="text-3xl xl:text-4xl font-bold mb-4 leading-tight">Misa7a<br />Workspace</h1>
+      <p class="text-gray-200 text-sm xl:text-base mb-6 max-w-sm">
+        Enter a curated environment where design meets productivity. Your journey to a more focused
+        workspace begins with a single step.
+      </p>
+
+      <div
+        class="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-2.5 text-xs xl:text-sm font-medium text-white max-w-max"
+      >
+        <i class="fa-solid fa-lock text-secColorExtraLight me-2"></i>
+        Booking is strictly restricted to authenticated users
+      </div>
+    </div>
+  </a>
+
+  <div class="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 overflow-y-auto">
+    <div class="w-full max-w-sm xl:max-w-md my-auto">
+      <div class="mb-6">
+        <h2 class="text-2xl xl:text-3xl font-bold text-gray-900 mb-1">Welcome Back</h2>
+        <p class="text-sm text-fontGray2">
+          Please enter your details to access your concierge dashboard.
+        </p>
+      </div>
+
+      <form>
+        <div class="mb-4">
+          <label class="block mb-1 text-2xs font-bold text-linksColor1 uppercase tracking-wider"
+            >Email Address</label
+          >
+          <div class="relative">
+            <div class="absolute inset-y-0 inset-s-0 flex items-center ps-3 pointer-events-none">
+              <i class="fa-regular fa-envelope text-gray-400 text-sm"></i>
+            </div>
+            <input
+              type="email"
+              class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full ps-9 p-2 shadow-sm"
+              placeholder="name@Misa7a.com"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-2xs font-bold text-linksColor1 uppercase tracking-wider"
+              >Password</label
+            >
+            <a
+              routerLink="/forgot-password"
+              class="text-2xs font-bold text-mainColorDark hover:underline"
+              >Forgot Password?</a
+            >
+          </div>
+          <div class="relative">
+            <div class="absolute inset-y-0 inset-s-0 flex items-center ps-3 pointer-events-none">
+              <i class="fa-solid fa-key text-gray-400 text-sm"></i>
+            </div>
+            <input
+              type="password"
+              class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full ps-9 p-2 shadow-sm"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="flex items-start mb-5">
+          <div class="flex items-center h-5">
+            <input
+              id="remember"
+              type="checkbox"
+              value=""
+              class="w-4 h-4 border border-gray-300 rounded bg-white focus:ring-3 focus:ring-mainExtraLight text-mainColorDark cursor-pointer"
+            />
+          </div>
+          <label for="remember" class="ms-2 text-xs font-medium text-fontGray1"
+            >Remember this device</label
+          >
+        </div>
+
+        <button
+          type="submit"
+          class="w-full text-white bg-mainColorLight hover:bg-mainColorDark focus:ring-2 focus:outline-none focus:ring-mainExtraLight font-medium rounded-lg text-sm px-5 py-2 text-center transition-colors flex justify-center items-center gap-2 cursor-pointer"
+        >
+          Sign In<i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </form>
+
+      <div class="mt-5">
+        <div class="relative flex items-center justify-center mb-4">
+          <span
+            class="absolute px-2 font-medium text-fontGray2 bg-mainBg text-2xs uppercase tracking-wider"
+            >Or Continue With</span
+          >
+          <div class="w-full border-t border-gray-200"></div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            class="text-fontGray1 bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-xs px-4 py-2 text-center inline-flex items-center justify-center transition-colors cursor-pointer"
+          >
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              class="w-3.5 h-3.5 me-2"
+              alt="Google"
+            />
+            Google
+          </button>
+          <button
+            type="button"
+            class="text-fontGray1 bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-xs px-4 py-2 text-center inline-flex items-center justify-center transition-colors cursor-pointer"
+          >
+            <i class="fa-brands fa-facebook text-[1rem] me-2"></i>
+            Facebook
+          </button>
+        </div>
+      </div>
+
+      <p class="mt-5 text-xs font-medium text-center text-fontGray1 mb-4">
+        New to the sanctuary?
+        <a routerLink="/registration" class="text-mainColorDark hover:underline font-bold"
+          >Create an account</a
+        >
+      </p>
+
+      <div class="bg-gray-100 rounded-lg p-3 flex gap-2 items-start border border-gray-200">
+        <i class="fa-solid fa-circle-info text-secColorDark mt-0.5 text-xs"></i>
+        <div>
+          <h4 class="text-xs font-bold text-gray-900">Authenticated Access Only</h4>
+          <p class="text-2xs text-fontGray2 mt-0.5 leading-tight">
+            Booking is strictly restricted to authenticated users to ensure privacy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

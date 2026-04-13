@@ -1,1 +1,94 @@
-<p>gallery works!</p>
+<div class="min-h-screen bg-mainBg py-16 px-4 sm:px-6 lg:px-8 font-sans">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-12">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-mainColorDark mb-4 tracking-tight">
+          Misa7a<br />Workspace
+        </h1>
+        <p class="text-fontGray1 text-sm md:text-base leading-relaxed">
+          A curated visual journey through our meticulously crafted environments, designed for deep
+          focus and collaborative breakthrough.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap lg:flex-nowrap gap-2 lg:justify-end">
+        @for (category of categories; track category) {
+          <button
+            (click)="setCategory(category)"
+            class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 shadow-sm cursor-pointer grow"
+            [class]="
+              activeCategory() === category
+                ? 'bg-mainColorDark text-white shadow-md transform scale-105'
+                : 'bg-white text-linksColor1 border border-gray-200 hover:bg-gray-50 hover:text-mainColorDark'
+            "
+          >
+            {{ category }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
+      @for (image of filteredImages(); track image.id) {
+        <div
+          class="group relative rounded-2xl overflow-hidden aspect-square bg-gray-200 shadow-md border border-gray-100 cursor-pointer"
+        >
+          <img
+            [src]="image.src"
+            [alt]="image.alt"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          <div
+            class="absolute inset-0 bg-linear-to-t from-mainColorDark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6"
+          >
+            <span class="text-white font-semibold tracking-wider uppercase text-xs">
+              {{ image.category }}
+            </span>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+      <div class="absolute inset-0">
+        <img
+          src="./img/gallery7.webp"
+          alt="Workspace"
+          class="w-full h-full object-cover mix-blend-multiply"
+        />
+        <div
+          class="absolute inset-0 bg-linear-to-r from-mainColorDark/80 to-mainColorLight/70"
+        ></div>
+      </div>
+
+      <div
+        class="relative z-10 py-16 px-6 sm:py-20 sm:px-12 md:px-20 text-center flex flex-col items-center justify-center"
+      >
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+          Ready to experience it in person?
+        </h2>
+
+        <p
+          class="text-mainExtraLight text-sm md:text-base max-w-2xl mb-10 leading-relaxed font-medium"
+        >
+          Book a personal tour or reserve your workspace today to find your new center of
+          productivity.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <button
+            class="bg-white text-mainColorDark hover:bg-gray-100 px-8 py-3.5 rounded-lg font-bold text-sm transition-colors shadow-lg cursor-pointer"
+          >
+            Schedule a Tour
+          </button>
+
+          <button
+            class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-3.5 rounded-lg font-bold text-sm transition-colors backdrop-blur-sm cursor-pointer"
+          >
+            Book a Space
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

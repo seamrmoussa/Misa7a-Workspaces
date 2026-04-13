@@ -1,1 +1,252 @@
-<p>plans-and-pricing works!</p>
+<div class="min-h-screen bg-mainBg py-16 px-4 sm:px-6 lg:px-8 font-sans overflow-x-hidden">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-12">
+      <p class="text-2xs tracking-widest text-fontGray2 uppercase mb-3 font-semibold">
+        Membership Tiers
+      </p>
+      <h1
+        class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-mainColorDark mb-6 tracking-tight leading-tight"
+      >
+        Spaces designed for<br />deep work.
+      </h1>
+      <p class="text-fontGray1 max-w-2xl text-sm md:text-base leading-relaxed">
+        Choose a plan that fits your rhythm. From occasional visitors to dedicated residents, our
+        tiers offer the sanctuary you need to excel.
+      </p>
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+      <div class="bg-gray-200/60 rounded-lg p-1 flex text-sm font-medium shadow-inner">
+        <button
+          (click)="isYearly = false"
+          class="px-6 py-2.5 rounded-md transition-all cursor-pointer"
+          [class]="
+            !isYearly
+              ? 'bg-white text-mainColorDark shadow-sm font-bold'
+              : 'text-fontGray1 hover:text-mainColorDark'
+          "
+        >
+          Monthly
+        </button>
+        <button
+          (click)="isYearly = true"
+          class="px-6 py-2.5 rounded-md transition-all cursor-pointer"
+          [class]="
+            isYearly
+              ? 'bg-white text-mainColorDark shadow-sm font-bold'
+              : 'text-fontGray1 hover:text-mainColorDark'
+          "
+        >
+          Yearly (Save 20%)
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-center mb-24">
+      <div
+        class="bg-white rounded-2xl p-8 text-black shadow-md border border-gray-100 flex flex-col h-full transition-all duration-300"
+      >
+        <h3 class="text-2xl font-bold text-gray-900 mb-2">Essential</h3>
+        <p class="text-xs text-fontGray2 mb-6 min-h-10">
+          Perfect for freelancers needing a quiet home base away from home.
+        </p>
+
+        <div class="mb-8 flex items-end gap-1">
+          <span class="text-4xl font-extrabold text-mainColorDark">
+            @if (isYearly) {
+              $1,428
+            } @else {
+              $149
+            }
+          </span>
+          <span class="text-xs text-fontGray2 mb-1 font-medium">
+            @if (isYearly) {
+              /year
+            } @else {
+              /month
+            }
+          </span>
+        </div>
+
+        <ul class="space-y-4 mb-8 text-xs font-medium text-fontGray1 grow">
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            10 days per month access
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            High-speed Wi-Fi (Fiber)
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            Coffee & Tea (Unlimited)
+          </li>
+          <li class="flex items-center gap-3 text-gray-400">
+            <i class="fa-regular fa-circle-xmark text-gray-300 text-base"></i> Meeting room credits
+          </li>
+        </ul>
+
+        <button
+          class="w-full bg-gray-50 hover:bg-gray-100 text-mainColorDark font-bold py-3 px-4 rounded-lg transition-colors border border-gray-200 text-sm cursor-pointer"
+        >
+          Choose Plan
+        </button>
+      </div>
+
+      <div
+        class="relative bg-white rounded-2xl p-8 text-black border-2 border-mainColorLight shadow-[0_10px_40px_rgba(44,82,130,0.15)] lg:scale-105 z-10 flex flex-col h-full transition-all duration-300"
+      >
+        <div
+          class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-mainColorDark text-white px-4 py-1.5 rounded-full text-2xs font-bold tracking-wider uppercase whitespace-nowrap shadow-md"
+        >
+          Most Popular
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-900 mb-2 mt-2">Resident</h3>
+        <p class="text-xs text-fontGray2 mb-6 min-h-10">
+          For dedicated professionals who need full-time sanctuary access.
+        </p>
+
+        <div class="mb-8 flex items-end gap-1">
+          <span class="text-5xl font-extrabold text-mainColorDark">
+            @if (isYearly) {
+              $3,828
+            } @else {
+              $399
+            }
+          </span>
+          <span class="text-xs text-fontGray2 mb-1 font-medium">
+            @if (isYearly) {
+              /year
+            } @else {
+              /month
+            }
+          </span>
+        </div>
+
+        <ul class="space-y-4 mb-8 text-xs font-medium text-fontGray1 grow">
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            Unlimited 24/7 Access
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            Dedicated High-speed Wi-Fi
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            Coffee & Tea (Premium Blend)
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            10 Meeting room credits
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            Mailing Address Service
+          </li>
+        </ul>
+
+        <button
+          class="w-full bg-mainColorDark hover:bg-mainColorLight text-white font-bold py-3 px-4 rounded-lg transition-colors text-sm shadow-md cursor-pointer"
+        >
+          Choose Plan
+        </button>
+      </div>
+
+      <div
+        class="bg-white rounded-2xl p-8 text-black shadow-md border border-gray-100 flex flex-col h-full transition-all duration-300"
+      >
+        <h3 class="text-2xl font-bold text-gray-900 mb-2">Atelier</h3>
+        <p class="text-xs text-fontGray2 mb-6 min-h-10">
+          Custom suites for growing teams and design studios.
+        </p>
+
+        <div class="mb-8 flex items-end gap-1">
+          <span class="text-4xl font-extrabold text-mainColorDark">
+            @if (isYearly) {
+              $11,520
+            } @else {
+              $1,200
+            }
+          </span>
+          <span class="text-xs text-fontGray2 mb-1 font-medium">
+            @if (isYearly) {
+              /year
+            } @else {
+              /month
+            }
+          </span>
+        </div>
+
+        <ul class="space-y-4 mb-8 text-xs font-medium text-fontGray1 grow">
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            Private Studio space
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            Custom Network config
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            Priority Meeting access
+          </li>
+          <li class="flex items-center gap-3">
+            <i class="fa-regular fa-circle-check text-mainColorLight text-base"></i>
+            Dedicated Concierge
+          </li>
+        </ul>
+
+        <button
+          class="w-full bg-gray-50 hover:bg-gray-100 text-mainColorDark font-bold py-3 px-4 rounded-lg transition-colors border border-gray-200 text-sm cursor-pointer"
+        >
+          Contact Sales
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div
+        class="rounded-xl overflow-hidden aspect-4/3 lg:aspect-16/10 w-full bg-gray-200 shadow-lg border border-gray-100"
+      >
+        <img
+          src="./img/imgPlans.png"
+          alt="Misa7a Standard Room"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <div class="pl-0 lg:pl-8">
+        <h2 class="text-3xl lg:text-4xl font-bold text-mainColorDark mb-5">
+          The Sanctuary Standard
+        </h2>
+        <p class="text-fontGray1 text-sm leading-relaxed mb-10 max-w-lg">
+          Every membership, regardless of tier, includes access to our signature wellness pods,
+          ergonomic furniture by Herman Miller, and biophilic-designed breakout zones.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div>
+            <div class="mb-3">
+              <i class="fa-solid fa-brain text-mainColorLight text-2xl"></i>
+            </div>
+            <h4 class="text-gray-900 font-bold text-sm mb-1.5">Focus First</h4>
+            <p class="text-fontGray2 text-xs leading-relaxed">
+              Acoustically treated quiet zones for deep work.
+            </p>
+          </div>
+          <div>
+            <div class="mb-3">
+              <i class="fa-solid fa-leaf text-mainColorLight text-2xl"></i>
+            </div>
+            <h4 class="text-gray-900 font-bold text-sm mb-1.5">Sustainable</h4>
+            <p class="text-fontGray2 text-xs leading-relaxed">
+              Zero-waste pantry and solar-powered facilities.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
