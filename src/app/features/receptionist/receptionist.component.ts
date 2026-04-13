@@ -1,4 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
+import { AsideComponent } from '../aside/aside.component';
 
 interface Asset {
   id: number;
@@ -11,7 +12,7 @@ interface Asset {
 
 @Component({
   selector: 'app-receptionist',
-  imports: [],
+  imports: [AsideComponent],
   templateUrl: './receptionist.component.html',
   styleUrl: './receptionist.component.css',
 })

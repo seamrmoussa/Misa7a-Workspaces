@@ -2,5 +2,11 @@
   [notificationLoggedIn]="true"
   [notificationBasePath]="'/user/notifications'"
 ></app-navbar>
-<router-outlet></router-outlet>
+<div class="flex min-h-screen">
+  <app-aside></app-aside>
+
+  <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+    <router-outlet></router-outlet>
+  </main>
+</div>
 <app-footer [userMode]="'user'"></app-footer>
