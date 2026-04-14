@@ -17,15 +17,27 @@
         Curated workspaces designed for architectural precision and mental clarity. Your sanctuary
         for deep work.
       </p>
-      <div class="mt-8 flex flex-wrap gap-4">
-        <app-main-button [link]="'/booking'" [text]="'Book Your Space'"></app-main-button>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4">
+        <app-main-button
+          [fullWidth]="true"
+          [isBlue]="true"
+          [link]="'/booking'"
+          [text]="'Book Your Space'"
+        ></app-main-button>
 
-        <a
+        <app-main-button
+          [fullWidth]="true"
+          [isWhite]="true"
+          [link]="'/inquiry'"
+          [text]="'Special Booking'"
+        ></app-main-button>
+
+        <!-- <a
           routerLink="/inquiry"
           class="block w-full rounded-lg bg-white/80 backdrop-blur-sm border border-gray-200 px-8 py-3.5 text-sm font-semibold text-mainColorLight shadow-sm hover:text-mainColorDark hover:bg-white focus:outline-none focus:ring transition-colors sm:w-auto text-center"
         >
           Special Booking
-        </a>
+        </a> -->
       </div>
     </div>
   </div>
@@ -198,12 +210,11 @@
       </div>
 
       <div class="w-full lg:w-auto shrink-0">
-        <a
-          href="#"
-          class="block w-full text-center rounded-xl bg-mainColorDark px-8 py-2.5 text-sm font-semibold text-white shadow hover:bg-mainColorLight transition-colors"
-        >
-          Check More
-        </a>
+        <app-main-button
+          [isBlue]="true"
+          [link]="'/booking'"
+          [text]="'Check More'"
+        ></app-main-button>
       </div>
     </div>
   </div>

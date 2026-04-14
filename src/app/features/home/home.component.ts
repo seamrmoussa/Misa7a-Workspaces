@@ -7,5 +7,6 @@ import { MainButtonComponent } from '../../shared/ui/main-button/main-button.com
   imports: [RouterLink, MainButtonComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  standalone: true,
 })
 export class HomeComponent {}
