@@ -1,4 +1,8 @@
-<footer class="bg-mainBg border-t border-gray-200 font-sans">
+<footer
+  [class.lg:ms-64]="userMode()"
+  [class.ms-16]="userMode()"
+  class="bg-mainBg border-t border-gray-200 font-sans"
+>
   <div class="mx-auto w-full max-w-7xl p-4 py-8 lg:py-12">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
       <div>
