@@ -1,1 +1,47 @@
-<p>logout-message works!</p>
+<div
+  class="relative min-h-screen bg-mainBg flex flex-col items-center justify-center p-4 sm:p-8 font-sans overflow-hidden -mt-24"
+>
+  <div
+    class="bg-white rounded-4xl p-10 sm:p-14 shadow-[0_15px_50px_rgba(0,0,0,0.05)] border border-gray-100 max-w-lg w-full text-center z-10 relative"
+  >
+    <img src="./img/Logo-Misa7a.png" alt="Misaha Work Space Logo" class="w-80 mx-auto mb-15" />
+
+    <h1 class="text-4xl md:text-5xl font-extrabold text-mainColorLight mb-5 tracking-tight">
+      See you soon.
+    </h1>
+    <p class="text-fontGray1 text-base leading-relaxed mb-10 px-4">
+      You have been successfully logged out. We look forward to seeing you back in the Sanctuary
+      soon.
+    </p>
+
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+      <a
+        routerLink="/login"
+        class="w-full sm:w-auto bg-mainColorLight hover:bg-mainColorDark text-white font-bold py-3.5 px-8 rounded-xl transition-colors shadow-md flex items-center justify-center gap-2.5 text-sm"
+      >
+        Login Again <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+      </a>
+
+      <a
+        routerLink="/home"
+        class="w-full sm:w-auto bg-gray-100 hover:bg-gray-200 text-mainColorDark font-bold py-3.5 px-8 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2.5 text-sm border border-gray-200/50"
+      >
+        Return Home <i class="fa-solid fa-house text-xs"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-20 left-0 right-0 text-center z-10">
+    <p
+      class="text-2xs font-bold text-fontGray2 tracking-widest uppercase flex items-center justify-center gap-2"
+    >
+      <i class="fa-solid fa-shield-halved text-mainColorDark"></i> Session Terminated Securely
+    </p>
+  </div>
+
+  <div class="absolute bottom-8 left-8 z-10 hidden sm:block">
+    <p class="text-2xs font-bold text-fontGray2 tracking-widest uppercase">
+      Architectural Sanctuary
+    </p>
+  </div>
+</div>

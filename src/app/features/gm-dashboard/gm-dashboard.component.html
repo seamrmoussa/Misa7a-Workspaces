@@ -1,1 +1,282 @@
-<p>gm-dashboard works!</p>
+<div class="min-h-screen bg-mainBg p-4 md:p-6 lg:p-8 font-sans">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-3xl md:text-4xl font-bold text-mainColorDark mb-2">System Overview</h1>
+      <p class="text-fontGray2 text-sm md:text-base">
+        Real-time performance metrics and architectural occupancy<br class="hidden md:block" />
+        insights for Q4 2024.
+      </p>
+    </div>
+    <div class="flex items-center gap-3 w-full md:w-auto">
+      <button
+        class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-mainExtraLight text-mainColorDark font-semibold py-2.5 px-4 rounded-lg text-sm transition-colors hover:bg-blue-200"
+      >
+        <i class="fa-regular fa-calendar"></i> Last 30 Days
+      </button>
+      <button
+        class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-mainColorDark text-white font-semibold py-2.5 px-4 rounded-lg text-sm transition-colors hover:bg-mainColorLight shadow-sm"
+      >
+        <i class="fa-solid fa-download"></i> Export Report
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+    <div
+      class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between"
+    >
+      <div class="flex justify-between items-start mb-6">
+        <div
+          class="w-10 h-10 rounded-lg bg-mainExtraLight flex items-center justify-center text-mainColorDark"
+        >
+          <i class="fa-solid fa-users"></i>
+        </div>
+        <span
+          class="bg-secColorExtraLight text-secColorDark text-xs font-bold px-2.5 py-1 rounded-md"
+          >+12% vs LY</span
+        >
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-linksColor2 uppercase tracking-wider mb-1">
+          Total Creators
+        </p>
+        <h2 class="text-4xl font-bold text-mainColorDark mb-4">{{ kpis().totalCreators }}</h2>
+        <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+          <div class="bg-mainColorDark h-full" style="width: 70%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between"
+    >
+      <div class="flex justify-between items-start mb-6">
+        <div
+          class="w-10 h-10 rounded-lg bg-badgeBgColor flex items-center justify-center text-badgeTextColor"
+        >
+          <i class="fa-solid fa-photo-film"></i>
+        </div>
+        <span class="bg-mainExtraLight text-mainColorDark text-xs font-bold px-2.5 py-1 rounded-md"
+          >94% Retention</span
+        >
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-linksColor2 uppercase tracking-wider mb-1">
+          Active Subscriptions
+        </p>
+        <h2 class="text-4xl font-bold text-mainColorDark mb-4">{{ kpis().activeSubscriptions }}</h2>
+        <div class="flex items-center gap-3">
+          <div class="flex -space-x-2">
+            <img
+              class="w-8 h-8 rounded-full border-2 border-white"
+              src="https://i.pravatar.cc/100?img=1"
+              alt="User"
+            />
+            <img
+              class="w-8 h-8 rounded-full border-2 border-white"
+              src="https://i.pravatar.cc/100?img=2"
+              alt="User"
+            />
+            <img
+              class="w-8 h-8 rounded-full border-2 border-white"
+              src="https://i.pravatar.cc/100?img=3"
+              alt="User"
+            />
+          </div>
+          <span class="text-xs text-fontGray2 font-medium">+42 new today</span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between"
+    >
+      <div class="flex justify-between items-start mb-6">
+        <div
+          class="w-10 h-10 rounded-lg bg-redColorLight flex items-center justify-center text-redColorDark"
+        >
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-mainColorDark"></span>
+          <span class="text-xs font-bold text-fontGray1">Live Status</span>
+        </div>
+      </div>
+      <div>
+        <p class="text-xs font-semibold text-linksColor2 uppercase tracking-wider mb-1">
+          System Health
+        </p>
+        <h2 class="text-4xl font-bold text-mainColorDark mb-4">{{ kpis().systemHealth }}</h2>
+        <p class="text-xs text-fontGray2 font-medium">Last checked 2 mins ago</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div
+      class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden flex flex-col justify-between min-h-75"
+    >
+      <div class="flex justify-between items-start relative z-10">
+        <div>
+          <h3 class="text-lg font-bold text-mainColorDark">Monthly Revenue</h3>
+          <p class="text-sm text-fontGray2">Year-over-year revenue progression</p>
+        </div>
+        <div class="text-right">
+          <h2 class="text-2xl font-bold text-mainColorDark">$142,500</h2>
+          <p class="text-xs font-semibold text-fontGray2">Current Month</p>
+        </div>
+      </div>
+
+      <div class="absolute bottom-0 left-0 w-full h-48 pointer-events-none mt-10">
+        <svg viewBox="0 0 1000 200" class="w-full h-full" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="var(--color-mainColorLight)" stop-opacity="0.2" />
+              <stop offset="100%" stop-color="var(--color-mainBg)" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M0,150 C200,100 300,180 500,100 C700,20 800,120 1000,130 L1000,200 L0,200 Z"
+            fill="url(#gradient)"
+          ></path>
+          <path
+            d="M0,150 C200,100 300,180 500,100 C700,20 800,120 1000,130"
+            fill="none"
+            stroke="var(--color-mainColorDark)"
+            stroke-width="3"
+          ></path>
+          <circle cx="200" cy="138" r="4" fill="var(--color-mainColorDark)"></circle>
+          <circle cx="500" cy="100" r="4" fill="var(--color-mainColorDark)"></circle>
+          <circle cx="700" cy="54" r="4" fill="var(--color-mainColorDark)"></circle>
+        </svg>
+      </div>
+    </div>
+
+    <div
+      class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center justify-between"
+    >
+      <div class="w-full text-left mb-4">
+        <h3 class="text-lg font-bold text-mainColorDark">Occupancy</h3>
+        <p class="text-sm text-fontGray2">Capacity utilization by space type</p>
+      </div>
+
+      <div class="relative w-48 h-48 flex items-center justify-center">
+        <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90">
+          <path
+            class="text-secColorDark opacity-80"
+            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="4"
+          ></path>
+          <path
+            class="text-mainColorDark"
+            stroke-dasharray="82, 100"
+            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="4"
+          ></path>
+        </svg>
+        <div class="absolute flex flex-col items-center justify-center">
+          <span class="text-3xl font-bold text-mainColorDark">82%</span>
+          <span class="text-2xs font-bold text-fontGray1 uppercase tracking-widest mt-1"
+            >Avg Rate</span
+          >
+        </div>
+      </div>
+
+      <div class="w-full flex justify-between items-center mt-6 px-4">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-mainColorDark"></span>
+          <span class="text-sm text-fontGray1 font-medium">Private Suites</span>
+        </div>
+        <span class="text-sm font-bold text-mainColorDark">92%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div
+      class="lg:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col"
+    >
+      <div class="mb-8">
+        <h3 class="text-lg font-bold text-mainColorDark">Booking Volume</h3>
+        <p class="text-sm text-fontGray2">Daily meeting room reservations</p>
+      </div>
+
+      <div class="flex flex-col gap-5 flex-1 justify-center">
+        @for (item of bookingVolume(); track item.day) {
+          <div class="flex items-center gap-4">
+            <span class="text-xs font-bold text-fontGray1 w-8">{{ item.day }}</span>
+            <div class="flex-1 h-8 bg-mainBg rounded overflow-hidden flex items-center">
+              <div
+                class="h-full bg-mainColorDark rounded-r"
+                [style.width.%]="item.percentage"
+              ></div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div
+      class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 overflow-x-auto"
+    >
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-lg font-bold text-mainColorDark">Recent Sanctuary Activity</h3>
+        <a
+          href="#"
+          class="text-sm font-bold text-mainColorDark hover:text-mainColorLight transition-colors"
+          >View All</a
+        >
+      </div>
+
+      <table class="w-full text-left text-sm">
+        <thead class="text-2xs text-linksColor2 uppercase tracking-widest border-b border-gray-100">
+          <tr>
+            <th scope="col" class="pb-3 font-semibold">Member</th>
+            <th scope="col" class="pb-3 font-semibold">Location</th>
+            <th scope="col" class="pb-3 font-semibold">Action</th>
+            <th scope="col" class="pb-3 font-semibold">Value</th>
+            <th scope="col" class="pb-3 font-semibold">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          @for (activity of recentActivity(); track activity.id) {
+            <tr class="hover:bg-mainBg transition-colors">
+              <td class="py-4">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-8 h-8 rounded-full bg-mainExtraLight text-mainColorDark flex items-center justify-center text-xs font-bold"
+                  >
+                    {{ activity.initials }}
+                  </div>
+                  <span class="font-bold text-mainColorDark">{{ activity.name }}</span>
+                </div>
+              </td>
+              <td class="py-4 text-fontGray1 font-medium">{{ activity.location }}</td>
+              <td class="py-4 text-fontGray2">{{ activity.action }}</td>
+              <td class="py-4 font-bold text-mainColorDark">{{ activity.value }}</td>
+              <td class="py-4">
+                @if (activity.status === 'CONFIRMED') {
+                  <span
+                    class="inline-flex px-2 py-1 rounded text-2xs font-bold bg-greenBgBadge text-greenTextBadge uppercase tracking-wider"
+                  >
+                    {{ activity.status }}
+                  </span>
+                } @else if (activity.status === 'PENDING') {
+                  <span
+                    class="inline-flex px-2 py-1 rounded text-2xs font-bold bg-secColorExtraLight text-secColorDark uppercase tracking-wider"
+                  >
+                    {{ activity.status }}
+                  </span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

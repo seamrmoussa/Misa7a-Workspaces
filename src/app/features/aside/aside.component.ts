@@ -7,4 +7,22 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './aside.component.html',
   styleUrl: './aside.component.css',
 })
-export class AsideComponent {}
+export class AsideComponent {
+  classesProfile: string[] = [
+    'bg-white',
+    'border',
+    'border-gray-100',
+    'shadow-sm',
+    'rounded-xl',
+    'scale-[1.05]',
+  ];
+  classesAsideActiveLinks: string[] = [
+    'font-bold',
+    'text-mainColorDark',
+    'bg-white',
+    'border',
+    'border-gray-100',
+    'shadow-sm',
+    'rounded-xl',
+  ];
+}

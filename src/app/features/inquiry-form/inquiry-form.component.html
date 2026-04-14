@@ -1,1 +1,160 @@
-<p>inquiry-form works!</p>
+<div class="min-h-screen bg-mainBg py-12 px-4 sm:px-6 lg:px-8 font-sans">
+  <div class="max-w-5xl mx-auto">
+    <div class="mb-10">
+      <p class="text-2xs font-bold text-fontGray2 tracking-widest uppercase mb-3">
+        Tailored Solutions
+      </p>
+      <h1
+        class="text-2xl md:text-5xl font-bold text-mainColorDark leading-tight tracking-tight mb-4 max-w-md"
+      >
+        Design your ideal sanctuary.
+      </h1>
+      <p class="text-fontGray2 text-sm md:text-base max-w-xl leading-relaxed">
+        Tell us about your team's unique requirements, and our concierge will curate a workspace
+        that fosters productivity and inspiration.
+      </p>
+    </div>
+
+    <div
+      class="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row overflow-hidden mb-12"
+    >
+      <div class="w-full md:w-5/12 h-64 md:h-auto bg-gray-200 relative">
+        <img
+          src="/img/inqury-img.png"
+          alt="Wood Texture"
+          class="absolute inset-0 w-full h-full bg-cover bg-center"
+        />
+      </div>
+
+      <div class="w-full md:w-7/12 p-8 lg:p-12">
+        <form class="space-y-6">
+          <div>
+            <label class="block text-xs font-bold text-fontGray1 mb-2">Company Name</label>
+            <input
+              type="text"
+              placeholder="Acme Architecture Co."
+              class="w-full bg-white border border-gray-100 rounded-lg px-4 py-3 text-sm text-fontGray1 focus:ring-1 focus:ring-mainColorDark focus:border-mainColorDark transition-all shadow-sm outline-none"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-bold text-fontGray1 mb-2">Number of People</label>
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-fontGray2"
+                >
+                  <i class="fa-solid fa-user-group text-xs"></i>
+                </div>
+                <input
+                  type="text"
+                  placeholder="e.g. 12"
+                  class="w-full bg-white border border-gray-100 rounded-lg pl-9 pr-4 py-3 text-sm text-fontGray1 focus:ring-1 focus:ring-mainColorDark focus:border-mainColorDark transition-all shadow-sm outline-none"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-fontGray1 mb-2"
+                >Workspace Preference</label
+              >
+              <div class="relative">
+                <select
+                  class="w-full bg-white border border-gray-100 rounded-lg px-4 py-3 text-sm text-fontGray1 focus:ring-1 focus:ring-mainColorDark focus:border-mainColorDark transition-all shadow-sm outline-none appearance-none cursor-pointer"
+                >
+                  <option>Private Executive Suite</option>
+                  <option>Open Dedicated Desks</option>
+                  <option>Hybrid Layout</option>
+                </select>
+                <div
+                  class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-fontGray2"
+                >
+                  <i class="fa-solid fa-chevron-down text-xs"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-fontGray1 mb-3">Amenities Required</label>
+            <div class="flex flex-wrap gap-2">
+              @for (amenity of amenities(); track amenity.id) {
+                @if (amenity.selected) {
+                  <button
+                    type="button"
+                    (click)="toggleAmenity(amenity.id)"
+                    class="px-4 py-2 rounded-full text-xs font-semibold bg-mainColorDark text-white transition-colors border border-mainColorDark shadow-sm"
+                  >
+                    {{ amenity.label }}
+                  </button>
+                } @else {
+                  <button
+                    type="button"
+                    (click)="toggleAmenity(amenity.id)"
+                    class="px-4 py-2 rounded-full text-xs font-semibold bg-gray-100 text-fontGray1 hover:bg-gray-200 transition-colors border border-transparent"
+                  >
+                    {{ amenity.label }}
+                  </button>
+                }
+              }
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-fontGray1 mb-2"
+              >Additional Requirements</label
+            >
+            <textarea
+              rows="3"
+              placeholder="Describe any specialized equipment or layout needs..."
+              class="w-full bg-white border border-gray-100 rounded-lg px-4 py-3 text-sm text-fontGray1 focus:ring-1 focus:ring-mainColorDark focus:border-mainColorDark transition-all shadow-sm outline-none resize-none"
+            ></textarea>
+          </div>
+
+          <div class="pt-2">
+            <button
+              type="submit"
+              class="bg-mainColorDark hover:bg-mainColorLight text-white font-bold py-3 px-8 rounded-lg transition-colors text-sm shadow-sm mb-3"
+            >
+              Send Inquiry
+            </button>
+            <p class="text-2xs text-fontGray2">
+              Our workspace consultants typically respond within 2 business hours.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4 border-t border-gray-200/60">
+      <div class="flex items-start gap-3">
+        <i class="fa-solid fa-certificate text-mainColorDark text-lg mt-0.5"></i>
+        <div>
+          <h4 class="text-sm font-bold text-mainColorDark mb-1">Curated Selection</h4>
+          <p class="text-xs text-fontGray2 leading-relaxed">
+            Hand-picked venues that meet our strict architectural standards.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3">
+        <i class="fa-solid fa-lock text-mainColorDark text-lg mt-0.5"></i>
+        <div>
+          <h4 class="text-sm font-bold text-mainColorDark mb-1">No Hidden Fees</h4>
+          <p class="text-xs text-fontGray2 leading-relaxed">
+            Transparent pricing tailored to your specific team growth.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3">
+        <i class="fa-solid fa-headset text-mainColorDark text-lg mt-0.5"></i>
+        <div>
+          <h4 class="text-sm font-bold text-mainColorDark mb-1">Expert Support</h4>
+          <p class="text-xs text-fontGray2 leading-relaxed">
+            Dedicated planners to assist with move-in and setup.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

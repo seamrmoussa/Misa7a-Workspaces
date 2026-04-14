@@ -1,1 +1,208 @@
-<p>booking-history works!</p>
+<div class="min-h-screen bg-mainBg p-4 md:p-6 lg:p-8 font-sans">
+  <div class="mb-4">
+    <p class="text-fontGray1 font-semibold text-lg">Review your past sanctuary experiences</p>
+  </div>
+
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+    <div class="flex items-center gap-2 bg-gray-100 p-1 rounded-full">
+      @if (activeFilter() === 'All') {
+        <button
+          (click)="setFilter('All')"
+          class="px-4 py-2 rounded-full text-sm font-semibold bg-mainColorDark text-white transition-all shadow-sm"
+        >
+          All Bookings
+        </button>
+      } @else {
+        <button
+          (click)="setFilter('All')"
+          class="px-4 py-2 rounded-full text-sm font-semibold text-fontGray1 hover:bg-gray-200 transition-all"
+        >
+          All Bookings
+        </button>
+      }
+
+      @if (activeFilter() === 'Completed') {
+        <button
+          (click)="setFilter('Completed')"
+          class="px-4 py-2 rounded-full text-sm font-semibold bg-mainColorDark text-white transition-all shadow-sm"
+        >
+          Completed
+        </button>
+      } @else {
+        <button
+          (click)="setFilter('Completed')"
+          class="px-4 py-2 rounded-full text-sm font-semibold text-fontGray1 hover:bg-gray-200 transition-all"
+        >
+          Completed
+        </button>
+      }
+
+      @if (activeFilter() === 'Cancelled') {
+        <button
+          (click)="setFilter('Cancelled')"
+          class="px-4 py-2 rounded-full text-sm font-semibold bg-mainColorDark text-white transition-all shadow-sm"
+        >
+          Cancelled
+        </button>
+      } @else {
+        <button
+          (click)="setFilter('Cancelled')"
+          class="px-4 py-2 rounded-full text-sm font-semibold text-fontGray1 hover:bg-gray-200 transition-all"
+        >
+          Cancelled
+        </button>
+      }
+    </div>
+
+    <div class="relative w-full md:w-72 lg:w-96">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <i class="fa-solid fa-magnifying-glass text-linksColor2 text-sm"></i>
+      </div>
+      <input
+        type="text"
+        placeholder="Search by ID or Location..."
+        class="bg-white border border-gray-200 text-fontGray1 text-sm rounded-lg focus:ring-mainColorDark focus:border-mainColorDark block w-full pl-10 p-2.5 shadow-sm"
+      />
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    @for (booking of filteredBookings(); track booking.id) {
+      <div
+        class="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row relative overflow-hidden"
+      >
+        @if (booking.status === 'Completed') {
+          <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-mainColorDark"></div>
+        } @else {
+          <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gray-200"></div>
+        }
+
+        <div class="p-4 md:w-56 shrink-0">
+          <img
+            [src]="booking.imageUrl"
+            alt="Sanctuary Image"
+            class="w-full h-40 md:h-full object-cover rounded-lg shadow-sm"
+          />
+        </div>
+
+        <div class="flex-1 p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 items-center">
+          <div class="lg:col-span-1 space-y-1">
+            <p class="text-xs font-semibold text-linksColor2 uppercase tracking-wider">
+              Reference ID
+            </p>
+            <p class="text-mainColorDark font-bold text-lg mb-2">{{ booking.id }}</p>
+            <p class="text-fontGray1 font-bold">{{ booking.locationName }}</p>
+            <p class="text-sm text-fontGray2">{{ booking.address }}</p>
+          </div>
+
+          <div class="lg:col-span-1 space-y-1">
+            <p class="text-xs font-semibold text-linksColor2 uppercase tracking-wider">
+              Date & Time
+            </p>
+            <p class="text-fontGray1 font-bold">{{ booking.date }}</p>
+            <p class="text-sm text-fontGray2">
+              {{ booking.time }} <span class="text-linksColor2">({{ booking.duration }})</span>
+            </p>
+          </div>
+
+          <div class="lg:col-span-1 space-y-2">
+            <p class="text-xs font-semibold text-linksColor2 uppercase tracking-wider">Status</p>
+
+            @if (booking.status === 'Completed') {
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-mainColorDark"></span>
+                <span class="font-bold text-mainColorDark">Completed</span>
+              </div>
+
+              @if (booking.rating) {
+                <div class="flex text-secColorDark text-xs gap-1 mt-1">
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+              }
+
+              @if (booking.subStatus === 'View Receipt') {
+                <a
+                  href="#"
+                  class="text-mainColorDark text-sm font-semibold underline hover:text-mainColorLight block mt-1"
+                >
+                  {{ booking.subStatus }}
+                </a>
+              }
+            } @else {
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-gray-400"></span>
+                <span class="font-bold text-fontGray2">Cancelled</span>
+              </div>
+              <p class="text-redColorDark text-xs mt-1">{{ booking.subStatus }}</p>
+            }
+          </div>
+
+          <div class="lg:col-span-1 flex flex-col gap-3 justify-center">
+            <button
+              class="w-full bg-mainColorDark hover:bg-mainColorLight text-white font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm shadow-sm"
+            >
+              {{ booking.actions.primary }}
+            </button>
+
+            @if (booking.status === 'Completed') {
+              <button
+                class="w-full bg-gray-100 hover:bg-gray-200 text-mainColorDark font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm"
+              >
+                {{ booking.actions.secondary }}
+              </button>
+            } @else {
+              <button
+                class="w-full bg-gray-50 text-gray-400 font-semibold py-2.5 px-4 rounded-lg cursor-not-allowed text-sm"
+              >
+                {{ booking.actions.secondary }}
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (filteredBookings().length === 0) {
+      <div class="text-center py-10 bg-white rounded-xl border border-gray-100">
+        <p class="text-fontGray2 font-medium">No bookings found in this category.</p>
+      </div>
+    }
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+    <div class="bg-mainBg border border-gray-200 rounded-xl p-6 flex flex-col justify-center">
+      <h3 class="text-xl font-bold text-mainColorDark mb-2">Sanctuary Loyalty</h3>
+      <p class="text-sm text-fontGray1 mb-4 leading-relaxed">
+        You have spent {{ stats().loyaltyHours }} hours in our spaces over the last year. You are
+        {{ stats().hoursToElite }} hours away from "Elite Concierge" status.
+      </p>
+
+      <div class="w-full bg-gray-200 rounded-full h-2">
+        <div class="bg-mainColorDark h-2 rounded-full" style="width: 85%"></div>
+      </div>
+    </div>
+
+    <div
+      class="bg-mainColorDark text-white rounded-xl p-6 flex flex-col items-center justify-center shadow-sm"
+    >
+      <p class="text-xs font-semibold text-mainExtraLight uppercase tracking-widest mb-3">
+        Total Bookings
+      </p>
+      <h2 class="text-6xl font-bold">{{ stats().totalBookings }}</h2>
+    </div>
+
+    <div
+      class="bg-secColorExtraLight text-secColorDark rounded-xl p-6 flex flex-col items-center justify-center shadow-sm"
+    >
+      <p class="text-xs font-semibold uppercase tracking-widest mb-3">Avg Rating</p>
+      <div class="flex items-center gap-2">
+        <h2 class="text-6xl font-bold">{{ stats().avgRating }}</h2>
+        <i class="fa-solid fa-star text-3xl"></i>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,12 @@
-<aside class="hidden lg:flex flex-col w-64 bg-mainBg border-r border-gray-200 py-8 px-5 shrink-0">
+<aside class="hidden lg:flex flex-col w-64 bg-mainBg py-8 px-5 shrink-0">
   <h1 class="text-xl font-extrabold text-mainColorDark mb-8 leading-tight pl-2">
     Architectural<br />Sanctuary
   </h1>
 
-  <div
-    class="bg-white border border-gray-100 rounded-xl p-3 flex items-center gap-3 shadow-sm mb-8"
+  <a
+    routerLink="/user/user-profile"
+    [routerLinkActive]="classesProfile"
+    class="p-3 flex items-center gap-3 mb-8 cursor-pointer"
   >
     <img
       src="https://i.pravatar.cc/150?img=32"
@@ -15,48 +17,48 @@
       <h4 class="text-xs font-bold text-mainColorDark">Concierge Access</h4>
       <p class="text-[9px] text-fontGray2 uppercase tracking-wider font-semibold">Premium Member</p>
     </div>
-  </div>
+  </a>
 
   <nav class="flex flex-col gap-2 flex-1">
     <a
       routerLink="/admin/admin-panel"
-      routerLinkActive="text-font-bold text-mainColorDark bg-white shadow-sm border border-gray-100 rounded-xl"
-      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors rounded-lg"
+      [routerLinkActive]="classesAsideActiveLinks"
+      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
     >
       <i class="fa-solid fa-border-all w-5 text-center text-lg"></i> Dashboard
     </a>
     <a
       routerLink="/user/booking-history"
-      routerLinkActive="text-font-bold text-mainColorDark bg-white shadow-sm border border-gray-100 rounded-xl"
-      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors rounded-lg"
+      [routerLinkActive]="classesAsideActiveLinks"
+      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
     >
       <i class="fa-regular fa-calendar-check w-5 text-center text-lg"></i> My Bookings
     </a>
     <a
       routerLink="/user/wallet"
-      routerLinkActive="text-font-bold text-mainColorDark bg-white shadow-sm border border-gray-100 rounded-xl"
-      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors rounded-lg"
+      [routerLinkActive]="classesAsideActiveLinks"
+      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
     >
       <i class="fa-solid fa-wallet w-5 text-center text-lg"></i> Wallet
     </a>
     <a
       routerLink="/admin/gm-dashboard"
-      routerLinkActive="text-font-bold text-mainColorDark bg-white shadow-sm border border-gray-100 rounded-xl"
-      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors rounded-lg"
+      [routerLinkActive]="classesAsideActiveLinks"
+      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
     >
       <i class="fa-solid fa-chart-simple w-5 text-center text-lg"></i> Analytics
     </a>
     <a
       routerLink="/admin/receptionist"
-      routerLinkActive="text-font-bold text-mainColorDark bg-white shadow-sm border border-gray-100 rounded-xl"
-      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors rounded-lg"
+      [routerLinkActive]="classesAsideActiveLinks"
+      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
     >
       <i class="fa-solid fa-user-tie w-5 text-center text-lg"></i> Staff Portal
     </a>
     <a
       routerLink="/admin/settings"
-      routerLinkActive="text-font-bold text-mainColorDark bg-white shadow-sm border border-gray-100 rounded-xl"
-      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors rounded-lg"
+      [routerLinkActive]="classesAsideActiveLinks"
+      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
     >
       <i class="fa-solid fa-gear w-5 text-center text-lg"></i> Settings
     </a>
@@ -65,14 +67,14 @@
   <div class="mt-auto flex flex-col gap-2">
     <a
       routerLink="/admin/support"
-      routerLinkActive="text-font-bold text-mainColorDark bg-white shadow-sm border border-gray-100 rounded-xl"
-      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors rounded-lg"
+      [routerLinkActive]="classesAsideActiveLinks"
+      class="flex items-center gap-4 px-4 py-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
     >
       <i class="fa-regular fa-circle-question w-5 text-center text-lg"></i> Support
     </a>
     <a
       routerLink="/loggedout"
-      class="flex items-center gap-4 px-4 py-3 text-sm font-bold text-redColorDark hover:bg-redColorLight/30 transition-colors rounded-lg"
+      class="flex items-center gap-4 px-4 py-3 text-sm font-bold text-redColorDark hover:bg-redColorLight/30 transition-colors"
     >
       <i class="fa-solid fa-arrow-right-from-bracket w-5 text-center text-lg"></i> Logout
     </a>

@@ -1,1 +1,251 @@
-<p>support works!</p>
+<div class="min-h-screen bg-mainBg p-4 md:p-6 lg:p-8 font-sans pb-12">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
+    <div>
+      <p class="text-xs font-bold text-linksColor2 uppercase tracking-widest mb-1">
+        Admin Operations
+      </p>
+      <h1 class="text-3xl md:text-5xl font-bold text-mainColorDark leading-tight tracking-tight">
+        Unified Support <span class="text-linksColor2 font-light">&</span> Response<br
+          class="hidden md:block"
+        />
+        Management
+      </h1>
+    </div>
+
+    <div class="bg-gray-100 p-1 rounded-xl flex items-center shadow-sm">
+      @if (currentView() === 'Admin View') {
+        <button
+          (click)="setView('Admin View')"
+          class="px-6 py-2.5 rounded-lg text-sm font-bold bg-white text-mainColorDark shadow-sm transition-all"
+        >
+          Admin View
+        </button>
+        <button
+          (click)="setView('User View')"
+          class="px-6 py-2.5 rounded-lg text-sm font-semibold text-fontGray2 hover:text-fontGray1 transition-all"
+        >
+          User View
+        </button>
+      } @else {
+        <button
+          (click)="setView('Admin View')"
+          class="px-6 py-2.5 rounded-lg text-sm font-semibold text-fontGray2 hover:text-fontGray1 transition-all"
+        >
+          Admin View
+        </button>
+        <button
+          (click)="setView('User View')"
+          class="px-6 py-2.5 rounded-lg text-sm font-bold bg-white text-mainColorDark shadow-sm transition-all"
+        >
+          User View
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div
+        class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col justify-center min-h-40"
+      >
+        <i class="fa-solid fa-gauge-high text-xl text-mainColorDark mb-4"></i>
+        <h2 class="text-4xl font-bold text-mainColorDark mb-1">12m</h2>
+        <p class="text-sm text-fontGray2">Avg. Response<br />Time</p>
+      </div>
+
+      <div class="bg-mainColorDark rounded-3xl p-6 shadow-sm flex flex-col justify-center min-h-40">
+        <i class="fa-regular fa-circle-check text-xl text-mainExtraLight mb-4"></i>
+        <h2 class="text-4xl font-bold text-white mb-1">94%</h2>
+        <p class="text-sm text-mainExtraLight">Resolution Rate</p>
+      </div>
+
+      <div class="bg-badgeBgColor rounded-3xl p-6 shadow-sm flex flex-col justify-center min-h-40">
+        <i class="fa-solid fa-arrow-trend-up text-xl text-badgeTextColor mb-4"></i>
+        <h2 class="text-4xl font-bold text-badgeTextColor mb-1">+18.2%</h2>
+        <p class="text-sm text-badgeTextColor opacity-80">Efficiency vs Last<br />Week</p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-1 bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-lg font-bold text-mainColorDark">Staff Availability</h3>
+        <span
+          class="bg-greenBgBadge text-greenTextBadge text-2xs font-bold px-2 py-1 rounded uppercase tracking-wider"
+          >Live</span
+        >
+      </div>
+
+      <div class="space-y-4">
+        @for (member of staffAvailability(); track member.id) {
+          <div
+            class="flex items-center justify-between bg-mainBg rounded-xl p-3 border border-gray-100"
+          >
+            <div class="flex items-center gap-3">
+              <img [src]="member.avatar" alt="Avatar" class="w-10 h-10 rounded-full object-cover" />
+              <div>
+                <p class="text-sm font-bold text-mainColorDark">{{ member.name }}</p>
+                <p class="text-xs text-fontGray2 italic">{{ member.role }}</p>
+              </div>
+            </div>
+
+            @if (member.status === 'online') {
+              <span class="w-2 h-2 rounded-full bg-greenPointBadge shadow-sm"></span>
+            } @else {
+              <span class="w-2 h-2 rounded-full bg-beigePointBadge shadow-sm"></span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+    <div
+      class="lg:col-span-2 bg-white rounded-3xl p-6 shadow-sm border border-gray-100 overflow-x-auto"
+    >
+      <div class="flex justify-between items-center mb-6 min-w-125">
+        <h3 class="text-xl font-bold text-mainColorDark">Incoming Tickets</h3>
+        <a
+          href="#"
+          class="text-sm font-bold text-mainColorDark hover:text-mainColorLight transition-colors flex items-center gap-1"
+        >
+          View All Queue <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+
+      <table class="w-full text-left text-sm min-w-125">
+        <thead
+          class="text-xs text-linksColor2 uppercase font-bold tracking-wider bg-mainBg border-y border-gray-100"
+        >
+          <tr>
+            <th class="py-3 px-4">Priority</th>
+            <th class="py-3 px-4">Request Detail</th>
+            <th class="py-3 px-4">Requester</th>
+            <th class="py-3 px-4">Time Left</th>
+            <th class="py-3 px-4 text-right"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          @for (ticket of incomingTickets(); track ticket.id) {
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="py-4 px-4 whitespace-nowrap">
+                @if (ticket.priority === 'URGENT') {
+                  <span
+                    class="bg-redColorLight text-redColorDark text-2xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider"
+                    >Urgent</span
+                  >
+                } @else if (ticket.priority === 'MEDIUM') {
+                  <span
+                    class="bg-beigeBgBadge text-beigeTextBadge text-2xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider"
+                    >Medium</span
+                  >
+                } @else {
+                  <span
+                    class="bg-gray-200 text-fontGray1 text-2xs font-bold px-2.5 py-1 rounded-md uppercase tracking-wider"
+                    >Low</span
+                  >
+                }
+              </td>
+
+              <td class="py-4 px-4">
+                <p class="font-bold text-mainColorDark">{{ ticket.title }}</p>
+                <p class="text-xs text-fontGray2 italic">{{ ticket.location }}</p>
+              </td>
+
+              <td class="py-4 px-4 font-medium text-fontGray1">
+                {{ ticket.requester }}
+              </td>
+
+              <td class="py-4 px-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-16 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                    @if (ticket.priority === 'URGENT') {
+                      <div
+                        class="bg-redColorDark h-full rounded-full"
+                        [style.width.%]="ticket.progress"
+                      ></div>
+                    } @else if (ticket.priority === 'MEDIUM') {
+                      <div
+                        class="bg-mainColorDark h-full rounded-full"
+                        [style.width.%]="ticket.progress"
+                      ></div>
+                    } @else {
+                      <div
+                        class="bg-fontGray2 h-full rounded-full"
+                        [style.width.%]="ticket.progress"
+                      ></div>
+                    }
+                  </div>
+
+                  @if (ticket.priority === 'URGENT') {
+                    <span class="text-xs font-bold text-redColorDark w-12">{{
+                      ticket.timeLeft
+                    }}</span>
+                  } @else if (ticket.priority === 'MEDIUM') {
+                    <span class="text-xs font-bold text-mainColorDark w-12">{{
+                      ticket.timeLeft
+                    }}</span>
+                  } @else {
+                    <span class="text-xs font-bold text-fontGray1 w-12">{{ ticket.timeLeft }}</span>
+                  }
+                </div>
+              </td>
+
+              <td class="py-4 px-4 text-right">
+                <button class="text-mainColorDark hover:text-mainColorLight transition-colors px-2">
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="lg:col-span-1 bg-mainColorDark rounded-3xl p-8 shadow-sm flex flex-col justify-center relative overflow-hidden"
+    >
+      <i
+        class="fa-solid fa-circle-question absolute top-6 right-6 text-6xl text-white opacity-5"
+      ></i>
+
+      <h3 class="text-2xl font-bold text-white mb-4 relative z-10">Need assistance yourself?</h3>
+      <p class="text-mainExtraLight text-sm mb-8 leading-relaxed relative z-10">
+        Access the user portal to submit your own requests or browse the help library.
+      </p>
+
+      <button
+        class="bg-white text-mainColorDark hover:bg-gray-100 font-bold py-3 px-6 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2 w-fit relative z-10"
+      >
+        Open User Center <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <div class="flex justify-between items-end border-b border-gray-200 pb-3 mb-6">
+      <h2 class="text-2xl font-bold text-mainColorDark">Knowledge Library</h2>
+      <a
+        href="#"
+        class="text-xs font-bold text-linksColor2 uppercase tracking-widest hover:text-mainColorDark transition-colors"
+        >Explore All</a
+      >
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (card of knowledgeLibrary(); track card.id) {
+        <div
+          class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer"
+        >
+          <div
+            class="w-12 h-12 rounded-xl bg-mainBg flex items-center justify-center text-mainColorDark text-lg mb-6 border border-gray-100"
+          >
+            <i [class]="card.icon"></i>
+          </div>
+          <h4 class="text-lg font-bold text-mainColorDark mb-2">{{ card.title }}</h4>
+          <p class="text-sm text-fontGray2 leading-relaxed">{{ card.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>
