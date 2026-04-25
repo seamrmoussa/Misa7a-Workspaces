@@ -31,6 +31,25 @@ export class NavbarComponent implements OnInit {
     'admin',
   ]);
 
+  classesProfile: string[] = [
+    'bg-white',
+    'border',
+    'border-gray-100',
+    'shadow-sm',
+    'rounded-xl',
+    'scale-[1.05]',
+  ];
+
+  classesAsideActiveLinks: string[] = [
+    'font-bold',
+    'text-mainColorDark',
+    'bg-white',
+    'border',
+    'border-gray-100',
+    'shadow-sm',
+    'rounded-xl',
+  ];
+
   notificationBasePath = input<string>();
   notificationLoggedIn = input<boolean>(false);
 }

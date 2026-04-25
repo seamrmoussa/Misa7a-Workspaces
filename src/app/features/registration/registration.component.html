@@ -18,7 +18,13 @@
     </div>
   </a>
 
-  <div class="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 overflow-y-auto">
+  <div class="w-full lg:w-1/2 flex flex-col items-center justify-center p-4 lg:p-8 overflow-y-auto">
+    <a
+      routerLink="/home"
+      class="w-full sm:w-auto bg-gray-100 mb-2.5 hover:bg-gray-200 text-mainColorDark font-bold py-3.5 px-8 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2.5 text-sm border border-gray-200/50"
+    >
+      Return Home <i class="fa-solid fa-house text-xs"></i>
+    </a>
     <div class="w-full max-w-sm xl:max-w-md my-auto">
       <div class="mb-5">
         <h1 class="flex items-center gap-2 mb-2 text-mainColorDark font-bold text-lg">
@@ -31,11 +37,14 @@
 
       <form>
         <div class="mb-3">
-          <label class="block mb-1 text-2xs font-bold text-linksColor1 uppercase tracking-wider"
+          <label
+            for="fullName"
+            class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
             >Full Name</label
           >
           <input
             type="text"
+            id="fullName"
             class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
             placeholder="Enter your full name"
             required
@@ -43,11 +52,29 @@
         </div>
 
         <div class="mb-3">
-          <label class="block mb-1 text-2xs font-bold text-linksColor1 uppercase tracking-wider"
+          <label
+            for="userName"
+            class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+            >User Name "Optional"</label
+          >
+          <input
+            type="text"
+            id="userName"
+            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+            placeholder="User Name"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            for="email"
+            class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
             >Email Address</label
           >
           <input
             type="email"
+            id="email"
             class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
             placeholder="name@misa7a.com"
             required
@@ -55,35 +82,77 @@
         </div>
 
         <div class="mb-3">
-          <label class="block mb-1 text-2xs font-bold text-linksColor1 uppercase tracking-wider"
+          <label
+            for="dateOfBirth"
+            class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+            >Birth Date</label
+          >
+          <input
+            type="date"
+            id="dateOfBirth"
+            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+            placeholder="Enter your Birth Date"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label
+            for="gender"
+            class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+            >Gender</label
+          >
+          <select
+            id="gender"
+            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+            placeholder="name@misa7a.com"
+            required
+          >
+            <option selected disabled hidden>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label
+            for="phoneNumber"
+            class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
             >Phone Number</label
           >
           <input
             type="tel"
+            id="phoneNumber"
             class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
-            placeholder="+1 (555) 000-0000"
+            placeholder="01000000000"
             required
           />
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
           <div>
-            <label class="block mb-1 text-2xs font-bold text-linksColor1 uppercase tracking-wider"
+            <label
+              for="password"
+              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
               >Password</label
             >
             <input
               type="password"
+              id="password"
               class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
               placeholder="••••••••"
               required
             />
           </div>
           <div>
-            <label class="block mb-1 text-2xs font-bold text-linksColor1 uppercase tracking-wider"
+            <label
+              for="rePassword"
+              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
               >Confirm Password</label
             >
             <input
               type="password"
+              id="rePassword"
               class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
               placeholder="••••••••"
               required
@@ -103,9 +172,7 @@
           </div>
           <label for="terms" class="ms-2 text-xs font-medium text-fontGray1"
             >I agree to the
-            <a routerLink="/home" class="text-mainColorDark hover:underline"
-              >Terms and Conditions</a
-            >
+            <a routerLink="" class="text-mainColorDark hover:underline">Terms and Conditions</a>
             and
             <a routerLink="/home" class="text-mainColorDark hover:underline">Privacy Policy</a
             >.</label
@@ -129,7 +196,7 @@
           <div class="w-full border-t border-gray-200"></div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid">
           <button
             type="button"
             class="text-fontGray1 bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-xs px-4 py-2 text-center inline-flex items-center justify-center transition-colors cursor-pointer"
@@ -140,13 +207,6 @@
               alt="Google"
             />
             Google
-          </button>
-          <button
-            type="button"
-            class="text-fontGray1 bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-xs px-4 py-2 text-center inline-flex items-center justify-center transition-colors cursor-pointer"
-          >
-            <i class="fa-brands fa-facebook text-[1rem] me-2"></i>
-            Facebook
           </button>
         </div>
       </div>

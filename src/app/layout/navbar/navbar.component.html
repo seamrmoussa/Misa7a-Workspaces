@@ -28,14 +28,113 @@
           </a>
         }
 
-        <a
-          routerLink="/login"
-          routerLinkActive="text-mainColorLight"
+        <button
+          type="button"
           class="text-gray-600 hover:text-mainColorLight transition-all duration-300 focus:outline-none cursor-pointer"
-          ariaCurrentWhenActive="page"
+          id="user-menu-button"
+          aria-expanded="false"
+          data-dropdown-toggle="user-dropdown"
+          data-dropdown-placement="bottom"
         >
           <i class="fa-regular fa-circle-user text-xl"></i>
-        </a>
+        </button>
+        <!-- Dropdown menu -->
+        <div
+          class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
+          id="user-dropdown"
+        >
+          @if (notificationLoggedIn()) {
+            <a
+              routerLink="/user/user-profile"
+              [routerLinkActive]="classesAsideActiveLinks"
+              class="lg:p-3 flex lg:justify-start gap-3 cursor-pointer"
+            >
+              <div class="text-[14px] font-medium flex items-center gap-2.5">
+                <img
+                  src="https://i.pravatar.cc/150?img=32"
+                  alt="Concierge"
+                  class="size-10 rounded-full object-cover me-1"
+                />
+                <span class="text-[14px] font-medium text-mainColorLight">User Name</span>
+              </div>
+            </a>
+
+            <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
+              <li>
+                <a
+                  routerLink="/admin/settings"
+                  [routerLinkActive]="classesAsideActiveLinks"
+                  ariaCurrentWhenActive="page"
+                  class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-mainColorDark rounded"
+                  ><i class="fa-solid fa-gear text-lg me-1"></i> Settings</a
+                >
+              </li>
+              <li>
+                <a
+                  routerLink="/admin/support"
+                  [routerLinkActive]="classesAsideActiveLinks"
+                  ariaCurrentWhenActive="page"
+                  class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-mainColorDark rounded"
+                  ><i class="fa-regular fa-circle-question text-lg me-1"></i> Support</a
+                >
+              </li>
+              <li>
+                <a
+                  routerLink="/loggedout"
+                  ariaCurrentWhenActive="page"
+                  class="inline-flex items-center w-full p-2 text-red-600 hover:bg-neutral-tertiary-medium"
+                  ><i class="fa-solid fa-right-from-bracket text-xl me-1"></i> Logout</a
+                >
+              </li>
+            </ul>
+          } @else if (!notificationLoggedIn()) {
+            <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
+              <li>
+                <a
+                  routerLink="/login"
+                  routerLinkActive="text-mainColorLight"
+                  ariaCurrentWhenActive="page"
+                  class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-mainColorDark rounded text-center"
+                  ><i class="fa-solid fa-right-to-bracket text-xl me-1"></i> SignIn</a
+                >
+              </li>
+              <li>
+                <a
+                  routerLink="/registration"
+                  routerLinkActive="text-mainColorLight"
+                  ariaCurrentWhenActive="page"
+                  class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-mainColorDark rounded text-center"
+                  ><i class="fa-solid fa-user-plus text-xl me-1"></i> New Account</a
+                >
+              </li>
+            </ul>
+          }
+        </div>
+        <button
+          data-collapse-toggle="navbar-user"
+          type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+          aria-controls="navbar-user"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            class="w-6 h-6"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="2"
+              d="M5 7h14M5 12h14M5 17h14"
+            />
+          </svg>
+        </button>
 
         <app-main-button [isBlue]="true" [link]="'/booking'" [text]="'Book Now'"></app-main-button>
       </div>
@@ -63,8 +162,8 @@
             <a
               [routerLink]="`/${path}`"
               [routerLinkActiveOptions]="{ exact: true }"
-              routerLinkActive="text-mainColorLight lg:border-b-2 lg:!border-mainColorLight"
-              class="block py-2 px-3 text-linksColor1 lg:p-0 transition-all duration-300 capitalize"
+              routerLinkActive="text-mainColorLight"
+              class="block py-2 px-3 text-linksColor1 lg:p-0 transition-all duration-300 capitalize rounded-2xl hover:text-mainColorLight hover:bg-mainExtraLight lg:hover:bg-transparent"
               ariaCurrentWhenActive="page"
               >{{ path }}</a
             >
@@ -85,27 +184,74 @@
             />
           </div>
 
-          <div class="flex items-center justify-around px-2 py-2">
-            @if (notificationBasePath()) {
+          <div class="flex flex-col gap-2 justify-around px-2 py-2">
+            @if (notificationLoggedIn()) {
               <a
-                [routerLink]="notificationBasePath()"
-                routerLinkActive="text-mainColorLight"
-                class="text-gray-600 hover:text-mainColorLight flex flex-col items-center space-y-2 transition-all duration-300 cursor-pointer"
+                routerLink="/user/user-profile"
+                [routerLinkActive]="classesProfile"
+                class="lg:p-3 flex lg:justify-start gap-3 mb-4 cursor-pointer"
+              >
+                <div class="text-[14px] font-medium flex items-center gap-2.5">
+                  <img
+                    src="https://i.pravatar.cc/150?img=32"
+                    alt="Concierge"
+                    class="size-10 rounded-full object-cover me-1"
+                  />
+                  <span class="text-[14px] font-medium text-mainColorLight"> User Name</span>
+                </div>
+              </a>
+              <a
+                routerLink="/admin/settings"
+                ariaCurrentWhenActive="page"
+                class="text-gray-600 py-2 px-1 hover:text-mainColorLight flex gap-2.5 space-y-2 transition-all duration-300 cursor-pointer rounded-2xl hover:bg-mainExtraLight"
                 ariaCurrentWhenActive="page"
               >
-                <i class="fa-regular fa-bell text-2xl"></i>
-                <span class="text-xs font-medium">Notifications</span>
+                <span class="text-[14px] font-medium"
+                  ><i class="fa-solid fa-gear me-1"></i> Settings</span
+                >
+              </a>
+              <a
+                routerLink="/admin/support"
+                ariaCurrentWhenActive="page"
+                class="text-gray-600 py-2 px-1 hover:text-mainColorLight flex gap-2.5 space-y-2 transition-all duration-300 cursor-pointer rounded-2xl hover:bg-mainExtraLight"
+                ariaCurrentWhenActive="page"
+              >
+                <span class="text-[14px] font-medium"
+                  ><i class="fa-regular fa-circle-question me-1"></i> Support</span
+                >
+              </a>
+              <a
+                routerLink="/loggedout"
+                ariaCurrentWhenActive="page"
+                class="text-red-600 py-2 px-1 flex gap-2.5 space-y-2 transition-all duration-300 cursor-pointe rounded-2xl hover:bg-mainExtraLight"
+                ariaCurrentWhenActive="page"
+              >
+                <span class="text-[14px] font-medium"
+                  ><i class="fa-solid fa-right-from-bracket me-1"></i> Logout</span
+                >
+              </a>
+            } @else if (!notificationLoggedIn()) {
+              <a
+                routerLink="/login"
+                routerLinkActive="text-mainColorLight"
+                ariaCurrentWhenActive="page"
+                class="text-gray-600 py-2 px-1 hover:text-mainColorLight flex gap-2.5 space-y-2 transition-all duration-300 cursor-pointer rounded-2xl hover:bg-mainExtraLight"
+              >
+                <span class="text-[16px] font-medium"
+                  ><i class="fa-solid fa-right-to-bracket me-1"></i> Sign In</span
+                >
+              </a>
+              <a
+                routerLink="/registration"
+                routerLinkActive="text-mainColorLight"
+                ariaCurrentWhenActive="page"
+                class="text-gray-600 py-2 px-1 hover:text-mainColorLight flex gap-2.5 space-y-2 transition-all duration-300 cursor-pointer rounded-2xl hover:bg-mainExtraLight"
+              >
+                <span class="text-[16px] font-medium"
+                  ><i class="fa-solid fa-user-plus me-1"></i> New Account</span
+                >
               </a>
             }
-            <a
-              routerLink="/login"
-              routerLinkActive="text-mainColorLight"
-              class="text-gray-600 hover:text-mainColorLight flex flex-col items-center space-y-2 transition-all duration-300 cursor-pointer"
-              ariaCurrentWhenActive="page"
-            >
-              <i class="fa-regular fa-circle-user text-2xl"></i>
-              <span class="text-xs font-medium">Profile</span>
-            </a>
           </div>
 
           <app-main-button

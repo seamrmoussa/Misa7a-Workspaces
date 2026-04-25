@@ -1,27 +1,11 @@
 <aside
-  class="fixed z-10 inset-y-30 inset-x-0 block w-14 transition-[width] duration-500 lg:flex flex-col lg:w-64 bg-mainBg py-8 lg:px-2 shrink-0 border-e border-gray-200"
+  class="min-h-screen fixed z-10 inset-y-30 inset-x-0 block w-14 transition-[width] duration-500 lg:flex flex-col lg:w-64 bg-mainBg py-8 lg:px-2 shrink-0 border-e border-gray-200"
 >
   <h1 class="hidden lg:block text-xl font-extrabold text-mainColorDark mb-8 leading-tight pl-2">
     Architectural<br />Sanctuary
   </h1>
 
-  <a
-    routerLink="/user/user-profile"
-    [routerLinkActive]="classesProfile"
-    class="lg:p-3 flex items-center justify-center lg:justify-start gap-3 mb-8 cursor-pointer"
-  >
-    <img
-      src="https://i.pravatar.cc/150?img=32"
-      alt="Concierge"
-      class="size-10 rounded-full object-cover"
-    />
-    <div class="hidden lg:block">
-      <h4 class="text-xs font-bold text-mainColorDark">Concierge Access</h4>
-      <p class="text-[9px] text-fontGray2 uppercase tracking-wider font-semibold">Premium Member</p>
-    </div>
-  </a>
-
-  <nav class="flex flex-col justify-center gap-2 flex-1 px-1">
+  <nav class="flex flex-col justify-start gap-2 flex-1 px-1">
     <a
       routerLink="/admin/admin-panel"
       [routerLinkActive]="classesAsideActiveLinks"
@@ -29,6 +13,14 @@
     >
       <i class="fa-solid fa-border-all w-5 text-center text-lg hidden"></i>
       <span class="hidden lg:block">Dashboard</span>
+    </a>
+    <a
+      routerLink="/admin/notifications"
+      [routerLinkActive]="classesAsideActiveLinks"
+      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+    >
+      <i class="fa-regular fa-bell w-5 text-center text-lg hidden"></i>
+      <span class="hidden lg:block">Notifications</span>
     </a>
     <a
       routerLink="/user/booking-history"
@@ -62,31 +54,5 @@
       <i class="fa-solid fa-user-tie w-5 text-center text-lg"></i>
       <span class="hidden lg:block">Staff Portal</span>
     </a>
-    <a
-      routerLink="/admin/settings"
-      [routerLinkActive]="classesAsideActiveLinks"
-      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
-    >
-      <i class="fa-solid fa-gear w-5 text-center text-lg"></i>
-      <span class="hidden lg:block">Settings</span>
-    </a>
   </nav>
-
-  <div class="mt-auto flex flex-col gap-2">
-    <a
-      routerLink="/admin/support"
-      [routerLinkActive]="classesAsideActiveLinks"
-      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
-    >
-      <i class="fa-regular fa-circle-question w-5 text-center text-lg"></i>
-      <span class="hidden lg:block">Support</span>
-    </a>
-    <a
-      routerLink="/loggedout"
-      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-bold text-redColorDark hover:bg-redColorLight/30 transition-colors"
-    >
-      <i class="fa-solid fa-arrow-right-from-bracket w-5 text-center text-lg"></i>
-      <span class="hidden lg:block">Logout</span>
-    </a>
-  </div>
 </aside>
