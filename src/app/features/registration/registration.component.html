@@ -18,7 +18,9 @@
     </div>
   </a>
 
-  <div class="w-full lg:w-1/2 flex flex-col items-center justify-center p-4 lg:p-8 overflow-y-auto">
+  <div
+    class="w-full lg:w-1/2 flex flex-col items-center justify-center p-4 lg:px-8 overflow-y-auto"
+  >
     <a
       routerLink="/home"
       class="w-full sm:w-auto bg-gray-100 mb-2.5 hover:bg-gray-200 text-mainColorDark font-bold py-3.5 px-8 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2.5 text-sm border border-gray-200/50"
@@ -35,7 +37,7 @@
         <p class="text-sm text-fontGray2">Begin your journey in our architectural sanctuary.</p>
       </div>
 
-      <form>
+      <form [formGroup]="registrationForm" (ngSubmit)="submitForm()">
         <div class="mb-3">
           <label
             for="fullName"
@@ -43,26 +45,61 @@
             >Full Name</label
           >
           <input
+            [class]="{
+              'border-green-500': registrationForm.get('fullName')?.valid,
+              'border-red-500':
+                registrationForm.get('fullName')?.invalid &&
+                registrationForm.get('fullName')?.touched,
+            }"
+            formControlName="fullName"
             type="text"
             id="fullName"
-            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+            class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
             placeholder="Enter your full name"
             required
           />
         </div>
 
+        @if (
+          registrationForm.get('fullName')?.invalid && registrationForm.get('fullName')?.touched
+        ) {
+          <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+            @if (registrationForm.get('fullName')?.hasError('required')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Full name is required.</span>
+              </p>
+            } @else if (registrationForm.get('fullName')?.hasError('pattern')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Only letters are allowed (English or Arabic)</span>
+              </p>
+            } @else if (registrationForm.get('fullName')?.hasError('minlength')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Name must be at least 3 characters.</span>
+              </p>
+            } @else if (registrationForm.get('fullName')?.hasError('maxlength')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Name cannot exceed 35 characters.</span>
+              </p>
+            }
+          </div>
+        }
+
         <div class="mb-3">
           <label
             for="userName"
             class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
-            >User Name "Optional"</label
+            >User Name (Optional)</label
           >
           <input
+            formControlName="userName"
             type="text"
             id="userName"
-            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
-            placeholder="User Name"
-            required
+            class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+            placeholder="User Name (Optional)"
           />
         </div>
 
@@ -73,13 +110,35 @@
             >Email Address</label
           >
           <input
+            [class]="{
+              'border-green-500': registrationForm.get('email')?.valid,
+              'border-red-500':
+                registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched,
+            }"
+            formControlName="email"
             type="email"
             id="email"
-            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+            class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
             placeholder="name@misa7a.com"
             required
           />
         </div>
+
+        @if (registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched) {
+          <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+            @if (registrationForm.get('email')?.hasError('required')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Email is required.</span>
+              </p>
+            } @else if (registrationForm.get('email')?.hasError('email')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Please enter a valid email address.</span>
+              </p>
+            }
+          </div>
+        }
 
         <div class="mb-3">
           <label
@@ -88,13 +147,32 @@
             >Birth Date</label
           >
           <input
+            [class]="{
+              'border-green-500': registrationForm.get('dateOfBirth')?.valid,
+              'border-red-500':
+                registrationForm.get('dateOfBirth')?.invalid &&
+                registrationForm.get('dateOfBirth')?.touched,
+            }"
+            formControlName="dateOfBirth"
             type="date"
             id="dateOfBirth"
-            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+            class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
             placeholder="Enter your Birth Date"
             required
           />
         </div>
+
+        @if (
+          registrationForm.get('dateOfBirth')?.invalid &&
+          registrationForm.get('dateOfBirth')?.touched
+        ) {
+          <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+            <p class="flex items-start gap-2">
+              <i class="fa-solid fa-right-long p-0.5"></i>
+              <span>Birth date is required.</span>
+            </p>
+          </div>
+        }
 
         <div class="mb-3">
           <label
@@ -103,8 +181,14 @@
             >Gender</label
           >
           <select
+            [class]="{
+              'border-green-500': registrationForm.get('gender')?.valid,
+              'border-red-500':
+                registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched,
+            }"
+            formControlName="gender"
             id="gender"
-            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+            class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
             placeholder="name@misa7a.com"
             required
           >
@@ -114,6 +198,15 @@
           </select>
         </div>
 
+        @if (registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched) {
+          <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+            <p class="flex items-start gap-2">
+              <i class="fa-solid fa-right-long p-0.5"></i>
+              <span>Gender is required.</span>
+            </p>
+          </div>
+        }
+
         <div class="mb-3">
           <label
             for="phoneNumber"
@@ -121,48 +214,151 @@
             >Phone Number</label
           >
           <input
+            [class]="{
+              'border-green-500': registrationForm.get('phoneNumber')?.valid,
+              'border-red-500':
+                registrationForm.get('phoneNumber')?.invalid &&
+                registrationForm.get('phoneNumber')?.touched,
+            }"
+            formControlName="phoneNumber"
             type="tel"
             id="phoneNumber"
-            class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+            class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
             placeholder="01000000000"
             required
           />
         </div>
 
+        @if (
+          registrationForm.get('phoneNumber')?.invalid &&
+          registrationForm.get('phoneNumber')?.touched
+        ) {
+          <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+            @if (registrationForm.get('phoneNumber')?.hasError('required')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Phone number is required.</span>
+              </p>
+            } @else if (registrationForm.get('phoneNumber')?.hasError('pattern')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span
+                  >Invalid format. Must start with (010, 011, 012, or 015) and be 11 digits.</span
+                >
+              </p>
+            }
+          </div>
+        }
+
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
           <div>
-            <label
-              for="password"
-              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
-              >Password</label
-            >
-            <input
-              type="password"
-              id="password"
-              class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
-              placeholder="••••••••"
-              required
-            />
+            <div class="mb-3">
+              <label
+                for="password"
+                class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+                >Password</label
+              >
+              <div class="relative">
+                <input
+                  [class]="{
+                    'border-green-500': registrationForm.get('password')?.valid,
+                    'border-red-500':
+                      registrationForm.get('password')?.invalid &&
+                      registrationForm.get('password')?.touched,
+                  }"
+                  formControlName="password"
+                  type="password"
+                  id="password"
+                  class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+                  placeholder="Create Password"
+                  required
+                />
+                <i
+                  class="fa-solid fa-eye-slash absolute text-fontGray2 text-xs right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+                ></i>
+              </div>
+            </div>
+
+            @if (
+              registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched
+            ) {
+              <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+                @if (registrationForm.get('password')?.hasError('required')) {
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Password is required.</span>
+                  </p>
+                } @else if (registrationForm.get('password')?.hasError('pattern')) {
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span
+                      >Must be 8-14 characters, include uppercase, lowercase, and at least 2 numbers
+                      (no symbols like @,!,$,&,#).</span
+                    >
+                  </p>
+                }
+              </div>
+            }
           </div>
+
           <div>
-            <label
-              for="rePassword"
-              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
-              >Confirm Password</label
-            >
-            <input
-              type="password"
-              id="rePassword"
-              class="bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
-              placeholder="••••••••"
-              required
-            />
+            <div class="mb-3">
+              <label
+                for="rePassword"
+                class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+                >Confirm Password</label
+              >
+              <div class="relative">
+                <input
+                  [class]="{
+                    'border-green-500': registrationForm.get('rePassword')?.valid,
+                    'border-red-500':
+                      registrationForm.get('rePassword')?.invalid &&
+                      registrationForm.get('rePassword')?.touched,
+                  }"
+                  formControlName="rePassword"
+                  type="password"
+                  id="rePassword"
+                  class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+                  placeholder="Confirm Password"
+                  required
+                />
+                <i
+                  class="fa-solid fa-eye-slash absolute text-fontGray2 text-xs right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+                ></i>
+              </div>
+            </div>
+
+            @if (
+              registrationForm.get('rePassword')?.invalid &&
+              registrationForm.get('rePassword')?.touched
+            ) {
+              <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+                @if (registrationForm.get('rePassword')?.hasError('required')) {
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Please confirm your password.</span>
+                  </p>
+                } @else if (registrationForm.get('rePassword')?.hasError('mismatch')) {
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Passwords do not match.</span>
+                  </p>
+                }
+              </div>
+            }
           </div>
         </div>
 
         <div class="flex items-start mb-4">
           <div class="flex items-center h-5">
             <input
+              [class]="{
+                'border-green-500': registrationForm.get('terms')?.valid,
+                'border-red-500':
+                  registrationForm.get('terms')?.invalid && registrationForm.get('terms')?.touched,
+              }"
+              formControlName="terms"
               id="terms"
               type="checkbox"
               value=""
@@ -178,6 +374,15 @@
             >.</label
           >
         </div>
+
+        @if (registrationForm.get('terms')?.invalid && registrationForm.get('terms')?.touched) {
+          <div class="flex flex-col gap-1 text-2xs mb-4 text-red-500 -mt-4">
+            <p class="flex items-start gap-2">
+              <i class="fa-solid fa-right-long p-0.5"></i>
+              <span>You must accept the terms and conditions.</span>
+            </p>
+          </div>
+        }
 
         <button
           type="submit"

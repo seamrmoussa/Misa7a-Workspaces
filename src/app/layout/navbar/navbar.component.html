@@ -36,6 +36,7 @@
           data-dropdown-toggle="user-dropdown"
           data-dropdown-placement="bottom"
         >
+          <span class="sr-only">Open user menu</span>
           <i class="fa-regular fa-circle-user text-xl"></i>
         </button>
         <!-- Dropdown menu -->
@@ -110,36 +111,11 @@
             </ul>
           }
         </div>
-        <button
-          data-collapse-toggle="navbar-user"
-          type="button"
-          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
-          aria-controls="navbar-user"
-          aria-expanded="false"
-        >
-          <span class="sr-only">Open main menu</span>
-          <svg
-            class="w-6 h-6"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-width="2"
-              d="M5 7h14M5 12h14M5 17h14"
-            />
-          </svg>
-        </button>
 
         <app-main-button [isBlue]="true" [link]="'/booking'" [text]="'Book Now'"></app-main-button>
       </div>
 
-      <a
+      <button
         data-collapse-toggle="navbar-sticky"
         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-300 cursor-pointer aria-expanded:text-mainColorLight"
         aria-controls="navbar-sticky"
@@ -147,7 +123,7 @@
       >
         <span class="sr-only">Open main menu</span>
         <i class="fa-solid fa-bars text-xl"></i>
-      </a>
+      </button>
     </div>
 
     <div
