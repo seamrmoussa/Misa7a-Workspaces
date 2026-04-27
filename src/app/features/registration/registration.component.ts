@@ -48,9 +48,7 @@ export class RegistrationComponent {
     if (this.registrationForm.valid) {
       this.authService.signUp(this.registrationForm.value).subscribe({
         next: (res) => {
-          if (this.registrationForm.valid) {
-            console.log(res);
-          }
+          console.log(res);
         },
         error: (err) => {
           console.log(err);
