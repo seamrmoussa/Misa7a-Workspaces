@@ -260,6 +260,7 @@
               >
               <div class="relative">
                 <input
+                  #pass
                   [class]="{
                     'border-green-500': registrationForm.get('password')?.valid,
                     'border-red-500':
@@ -274,7 +275,9 @@
                   required
                 />
                 <i
-                  class="fa-solid fa-eye-slash absolute text-fontGray2 text-xs right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+                  (click)="showPassword(pass)"
+                  [class]="pass.type === 'password' ? 'fa-eye-slash' : 'fa-eye'"
+                  class="fa-solid absolute text-fontGray2 text-xs right-2 top-1/2 -translate-y-1/2 cursor-pointer"
                 ></i>
               </div>
             </div>
@@ -310,6 +313,7 @@
               >
               <div class="relative">
                 <input
+                  #rePass
                   [class]="{
                     'border-green-500': registrationForm.get('rePassword')?.valid,
                     'border-red-500':
@@ -324,7 +328,9 @@
                   required
                 />
                 <i
-                  class="fa-solid fa-eye-slash absolute text-fontGray2 text-xs right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+                  (click)="showPassword(rePass)"
+                  [class]="rePass.type === 'password' ? 'fa-eye-slash' : 'fa-eye'"
+                  class="fa-solid absolute text-fontGray2 text-xs right-2 top-1/2 -translate-y-1/2 cursor-pointer"
                 ></i>
               </div>
             </div>
@@ -343,6 +349,14 @@
                   <p class="flex items-start gap-2">
                     <i class="fa-solid fa-right-long p-0.5"></i>
                     <span>Passwords do not match.</span>
+                  </p>
+                } @else if (registrationForm.get('rePassword')?.hasError('pattern')) {
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span
+                      >Must be 8-14 characters, include uppercase, lowercase, and at least 2 numbers
+                      (no symbols like @,!,$,&,#).</span
+                    >
                   </p>
                 }
               </div>

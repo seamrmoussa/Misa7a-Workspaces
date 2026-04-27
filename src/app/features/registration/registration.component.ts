@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   AbstractControl,
@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { AuthService } from '../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -16,6 +17,7 @@ import {
 })
 export class RegistrationComponent {
   private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
 
   registrationForm: FormGroup = this.fb.group(
     {
@@ -40,7 +42,13 @@ export class RegistrationComponent {
           Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9].*[0-9])[a-zA-Z0-9]{8,14}$/),
         ],
       ],
-      rePassword: ['', Validators.required],
+      rePassword: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9].*[0-9])[a-zA-Z0-9]{8,14}$/),
+        ],
+      ],
       terms: [false, Validators.required],
     },
     { validators: [this.confirmPassword] },
@@ -58,9 +66,26 @@ export class RegistrationComponent {
     return null;
   }
 
+  showPassword(element: HTMLInputElement): void {
+    if (element.type === 'password') {
+      element.type = 'text';
+    } else {
+      element.type = 'password';
+    }
+  }
+
   submitForm(): void {
     if (this.registrationForm.valid) {
       console.log(this.registrationForm.value);
+
+      this.authService.signUp(this.registrationForm.value).subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
     } else {
       this.registrationForm.markAllAsTouched();
     }
