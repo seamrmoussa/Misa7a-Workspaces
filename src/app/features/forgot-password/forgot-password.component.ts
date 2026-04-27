@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -7,4 +7,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css',
 })
-export class ForgotPasswordComponent {}
+export class ForgotPasswordComponent {
+  currentStep = signal<number>(1);
+}

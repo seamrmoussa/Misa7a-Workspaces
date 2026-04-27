@@ -76,8 +76,6 @@ export class RegistrationComponent {
 
   submitForm(): void {
     if (this.registrationForm.valid) {
-      console.log(this.registrationForm.value);
-
       this.authService.signUp(this.registrationForm.value).subscribe({
         next: (res) => {
           console.log(res);
