@@ -4,7 +4,7 @@ import { MainButtonComponent } from '../../shared/ui/main-button/main-button.com
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, MainButtonComponent],
+  imports: [MainButtonComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
   standalone: true,
