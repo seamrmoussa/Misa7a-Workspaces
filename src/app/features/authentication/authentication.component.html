@@ -40,30 +40,54 @@
         </p>
       </div>
 
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="sendLoginData()">
         <div class="mb-4">
           <label
-            for="email"
+            for="username"
             class="block mb-1 text-2xs font-bold text-linksColor1 uppercase tracking-wider"
-            >Email Address</label
+            >User Name</label
           >
           <div class="relative">
             <div class="absolute inset-y-0 inset-s-0 flex items-center ps-3 pointer-events-none">
-              <i class="fa-regular fa-envelope text-gray-400 text-sm"></i>
+              <i class="fa-regular fa-user text-gray-400 text-sm"></i>
             </div>
             <input
-              type="email"
-              id="email"
+              [class]="{
+                'border-green-500': loginForm.get('username')?.valid,
+                'border-red-500':
+                  loginForm.get('username')?.invalid && loginForm.get('username')?.touched,
+              }"
+              formControlName="username"
+              type="text"
+              id="username"
               class="placeholder:text-xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full ps-9 p-2 shadow-sm"
-              placeholder="Enter email address"
+              placeholder="Enter User name"
               required
             />
           </div>
         </div>
 
-        <div class="mb-4">
+        @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched) {
+          <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+            @if (loginForm.get('username')?.hasError('required')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>User name is required.</span>
+              </p>
+            } @else if (loginForm.get('username')?.hasError('minlength')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>User name must be at least 3 characters.</span>
+              </p>
+            }
+          </div>
+        }
+
+        <div class="mb-7">
           <div class="flex justify-between items-center mb-1">
-            <label class="text-2xs font-bold text-linksColor1 uppercase tracking-wider"
+            <label
+              for="password"
+              class="text-2xs font-bold text-linksColor1 uppercase tracking-wider"
               >Password</label
             >
             <a
@@ -77,13 +101,45 @@
               <i class="fa-solid fa-key text-gray-400 text-sm"></i>
             </div>
             <input
+              #pass
+              [class]="{
+                'border-green-500': loginForm.get('password')?.valid,
+                'border-red-500':
+                  loginForm.get('password')?.invalid && loginForm.get('password')?.touched,
+              }"
+              formControlName="password"
               type="password"
+              id="password"
               class="placeholder:text-xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full ps-9 p-2 shadow-sm"
               placeholder="••••••••"
               required
             />
+            <i
+              (click)="showPassword(pass)"
+              [class]="pass.type === 'password' ? 'fa-eye-slash' : 'fa-eye'"
+              class="fa-solid absolute text-fontGray2 text-xs right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+            ></i>
           </div>
         </div>
+
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+            @if (loginForm.get('password')?.hasError('required')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Password is required.</span>
+              </p>
+            } @else if (loginForm.get('password')?.hasError('pattern')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span
+                  >Must be 8-14 characters, include uppercase, lowercase, and at least 2 numbers (no
+                  symbols like @,!,$,&,#).</span
+                >
+              </p>
+            }
+          </div>
+        }
 
         <button
           type="submit"
@@ -93,53 +149,12 @@
         </button>
       </form>
 
-      <div class="mt-5">
-        <div class="relative flex items-center justify-center mb-4">
-          <span
-            class="absolute px-2 font-medium text-fontGray2 bg-mainBg text-2xs uppercase tracking-wider"
-            >Or Continue With</span
-          >
-          <div class="w-full border-t border-gray-200"></div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            class="text-fontGray1 bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-xs px-4 py-2 text-center inline-flex items-center justify-center transition-colors cursor-pointer"
-          >
-            <img
-              src="https://www.svgrepo.com/show/475656/google-color.svg"
-              class="w-3.5 h-3.5 me-2"
-              alt="Google"
-            />
-            Google
-          </button>
-          <button
-            type="button"
-            class="text-fontGray1 bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-xs px-4 py-2 text-center inline-flex items-center justify-center transition-colors cursor-pointer"
-          >
-            <i class="fa-brands fa-facebook text-[1rem] me-2"></i>
-            Facebook
-          </button>
-        </div>
-      </div>
-
       <p class="mt-5 text-xs font-medium text-center text-fontGray1 mb-4">
         New to the sanctuary?
         <a routerLink="/registration" class="text-mainColorDark hover:underline font-bold"
           >Create an account</a
         >
       </p>
-
-      <div class="bg-gray-100 rounded-lg p-3 flex gap-2 items-start border border-gray-200">
-        <i class="fa-solid fa-circle-info text-secColorDark mt-0.5 text-xs"></i>
-        <div>
-          <h4 class="text-xs font-bold text-gray-900">Authenticated Access Only</h4>
-          <p class="text-2xs text-fontGray2 mt-0.5 leading-tight">
-            Booking is strictly restricted to authenticated users to ensure privacy.
-          </p>
-        </div>
-      </div>
     </div>
   </div>
 </div>

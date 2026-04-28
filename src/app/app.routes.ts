@@ -7,6 +7,8 @@ import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.compone
 import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
 import { GeneralLayoutComponent } from './layout/general-layout/general-layout.component';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
+import { guestGuard } from './core/auth/guards/guest-guard';
+import { authGuard } from './core/auth/guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -16,6 +18,7 @@ export const routes: Routes = [
   {
     path: '',
     component: AuthLayoutComponent,
+    canActivate: [guestGuard],
     children: [
       {
         path: 'registration',
@@ -49,6 +52,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'admin-panel', pathMatch: 'full' },
       {
@@ -103,6 +107,7 @@ export const routes: Routes = [
   {
     path: 'user',
     component: UserLayoutComponent,
+    canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'user-profile', pathMatch: 'full' },
       {

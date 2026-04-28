@@ -1,5 +1,5 @@
 import { Component, inject, viewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../core/auth/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -18,6 +19,11 @@ import { AuthService } from '../../core/auth/services/auth.service';
 export class RegistrationComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
+  registerSubscription: Subscription = new Subscription();
+
+  loading: boolean = false;
 
   registrationForm: FormGroup = this.fb.group({
     firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -45,13 +51,17 @@ export class RegistrationComponent {
   }
 
   submitForm(): void {
+    this.registerSubscription.unsubscribe();
+
     if (this.registrationForm.valid) {
-      this.authService.signUp(this.registrationForm.value).subscribe({
+      this.loading = true;
+      this.registerSubscription = this.authService.signUp(this.registrationForm.value).subscribe({
         next: (res) => {
-          console.log(res);
+          // console.log(res.message);
+          this.router.navigate(['/login']);
         },
-        error: (err) => {
-          console.log(err);
+        complete: () => {
+          this.loading = false;
         },
       });
     } else {

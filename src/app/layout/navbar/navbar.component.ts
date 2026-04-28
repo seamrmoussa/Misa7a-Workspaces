@@ -20,16 +20,7 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  paths = signal<string[]>([
-    'home',
-    'booking',
-    'plans',
-    'gallery',
-    'review',
-    'contact-us',
-    'help',
-    'admin',
-  ]);
+  paths = signal<string[]>(['home', 'booking', 'plans', 'gallery', 'review', 'contact-us', 'help']);
 
   classesProfile: string[] = [
     'bg-white',
