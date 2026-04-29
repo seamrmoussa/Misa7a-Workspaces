@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -8,12 +8,19 @@ import { environment } from '../../../../environments/environment';
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private readonly ngrokHeaders = new HttpHeaders({
+    'ngrok-skip-browser-warning': 'true',
+  });
 
   signUp(data: object): Observable<any> {
-    return this.http.post(environment.baseUrl + '/api/v1/users/register', data);
+    return this.http.post(environment.baseUrl + '/api/v1/users/register', data, {
+      headers: this.ngrokHeaders,
+    });
   }
 
   signIn(data: object): Observable<any> {
-    return this.http.post(environment.baseUrl + '/api/v1/auth/login', data);
+    return this.http.post(environment.baseUrl + '/api/v1/auth/login', data, {
+      headers: this.ngrokHeaders,
+    });
   }
 }
