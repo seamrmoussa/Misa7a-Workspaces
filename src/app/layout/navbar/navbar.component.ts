@@ -1,9 +1,10 @@
-import { Component, inject, input, InputSignal, OnInit, signal } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { FlowbiteService } from '../../core/service/flowbite.service';
 import { initFlowbite } from 'flowbite';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MainButtonComponent } from '../../shared/ui/main-button/main-button.component';
 import { MainLogoComponent } from '../../shared/ui/main-logo/main-logo.component';
+import { AuthService } from '../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,7 @@ import { MainLogoComponent } from '../../shared/ui/main-logo/main-logo.component
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
-  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
   constructor(private flowbiteService: FlowbiteService) {}
 
   ngOnInit(): void {
@@ -45,8 +46,7 @@ export class NavbarComponent implements OnInit {
   notificationBasePath = input<string>();
   notificationLoggedIn = input<boolean>(false);
 
-  logoutUser(): void {
-    localStorage.removeItem('misa7aUserToken');
-    this.router.navigate(['/home']);
+  logout(): void {
+    (this, this.authService.logoutUser());
   }
 }
