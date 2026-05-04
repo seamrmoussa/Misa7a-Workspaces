@@ -34,10 +34,7 @@ export class AuthenticationComponent {
     if (this.loginForm.valid) {
       this.loginSubscription = this.authService.signIn(this.loginForm.value).subscribe({
         next: (res) => {
-          // console.log(res);
-
           localStorage.setItem('misa7aUserToken', res.data.data.token);
-
           this.router.navigate(['/user/user-profile']);
         },
       });
