@@ -50,6 +50,7 @@ export class ForgotPasswordComponent implements OnInit {
         next: () => {
           this.email.reset();
           this.toastrService.success('An email has been sent to your registered account.');
+          this.loading.set(false);
         },
         error: () => {
           this.loading.set(false);
@@ -70,6 +71,7 @@ export class ForgotPasswordComponent implements OnInit {
         next: () => {
           this.newPassword.reset();
           this.toastrService.success('The password has been changed.');
+          this.loading.set(false);
           this.router.navigate(['/login']);
         },
         error: () => {
