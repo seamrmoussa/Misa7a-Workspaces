@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +15,7 @@ export class AuthenticationComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
 
-  loginSubscription: Subscription = new Subscription();
+  loginSubscription = signal<Subscription>(new Subscription());
 
   loginForm: FormGroup = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
@@ -29,15 +29,17 @@ export class AuthenticationComponent {
   });
 
   sendLoginData(): void {
-    this.loginSubscription.unsubscribe();
+    this.loginSubscription().unsubscribe();
 
     if (this.loginForm.valid) {
-      this.loginSubscription = this.authService.signIn(this.loginForm.value).subscribe({
-        next: (res) => {
-          localStorage.setItem('misa7aUserToken', res.data.data.token);
-          this.router.navigate(['/user/user-profile']);
-        },
-      });
+      this.loginSubscription.set(
+        this.authService.signIn(this.loginForm.value).subscribe({
+          next: (res) => {
+            localStorage.setItem('misa7aUserToken', res.data.data.token);
+            this.router.navigate(['/user/user-profile']);
+          },
+        }),
+      );
     } else {
       this.loginForm.markAllAsTouched();
     }

@@ -4,6 +4,7 @@ import { ForgotPassService } from '../../core/auth/services/forgot-pass.service'
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ResetPassword } from '../../reset-password.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -17,7 +18,9 @@ export class ForgotPasswordComponent implements OnInit {
   private readonly toastrService = inject(ToastrService);
   private readonly router = inject(Router);
 
-  loading = signal<boolean>(false);
+  submitEmailSubscription = signal<Subscription>(new Subscription());
+  restPassSubscription = signal<Subscription>(new Subscription());
+
   token = signal<string | null>(null);
   isRestStep = signal<boolean>(false);
   restPassData = signal<ResetPassword>({
@@ -44,40 +47,36 @@ export class ForgotPasswordComponent implements OnInit {
 
   submitSendEmail(e: Event): void {
     e.preventDefault();
-    this.loading.set(true);
+    this.submitEmailSubscription().unsubscribe();
     if (this.email.valid) {
-      this.forgotPassService.submitEmail(this.email.value).subscribe({
-        next: () => {
-          this.email.reset();
-          this.toastrService.success('An email has been sent to your registered account.');
-          this.loading.set(false);
-        },
-        error: () => {
-          this.loading.set(false);
-        },
-      });
+      this.submitEmailSubscription.set(
+        this.forgotPassService.submitEmail(this.email.value).subscribe({
+          next: () => {
+            this.email.reset();
+            this.toastrService.success('An email has been sent to your registered account.');
+          },
+        }),
+      );
     }
   }
 
   submitResetPass(e: Event): void {
     e.preventDefault();
-    this.loading.set(true);
+    this.restPassSubscription().unsubscribe();
     this.restPassData.set({
       token: this.token()!,
       newPassword: this.newPassword.value,
     });
     if (this.newPassword.valid && this.token()) {
-      this.forgotPassService.restPass(this.restPassData()).subscribe({
-        next: () => {
-          this.newPassword.reset();
-          this.toastrService.success('The password has been changed.');
-          this.loading.set(false);
-          this.router.navigate(['/login']);
-        },
-        error: () => {
-          this.loading.set(false);
-        },
-      });
+      this.restPassSubscription.set(
+        this.forgotPassService.restPass(this.restPassData()).subscribe({
+          next: () => {
+            this.newPassword.reset();
+            this.toastrService.success('The password has been changed.');
+            this.router.navigate(['/login']);
+          },
+        }),
+      );
     }
   }
 

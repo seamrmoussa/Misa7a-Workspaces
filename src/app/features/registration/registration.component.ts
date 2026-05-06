@@ -1,15 +1,8 @@
 import { Component, inject, signal, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { Subscription } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -23,8 +16,6 @@ export class RegistrationComponent {
   private readonly router = inject(Router);
 
   registerSubscription = signal<Subscription>(new Subscription());
-
-  loading = signal<boolean>(false);
 
   registrationForm: FormGroup = this.fb.group({
     firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -55,17 +46,10 @@ export class RegistrationComponent {
     this.registerSubscription().unsubscribe();
 
     if (this.registrationForm.valid) {
-      this.loading.set(true);
       this.registerSubscription.set(
         this.authService.signUp(this.registrationForm.value).subscribe({
           next: (res) => {
             this.router.navigate(['/login']);
-          },
-          error: () => {
-            this.loading.set(false);
-          },
-          complete: () => {
-            this.loading.set(false);
           },
         }),
       );

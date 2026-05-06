@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
+  private readonly toastrService = inject(ToastrService);
 
   signUp(data: object): Observable<any> {
     return this.http.post(environment.baseUrl + '/api/v1/users/register', data, {});
@@ -21,6 +23,6 @@ export class AuthService {
 
   logoutUser(): void {
     localStorage.removeItem('misa7aUserToken');
-    this.router.navigate(['/home']);
+    this.router.navigate(['/loggedout']);
   }
 }

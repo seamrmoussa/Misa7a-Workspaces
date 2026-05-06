@@ -5,6 +5,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MainButtonComponent } from '../../shared/ui/main-button/main-button.component';
 import { MainLogoComponent } from '../../shared/ui/main-logo/main-logo.component';
 import { AuthService } from '../../core/auth/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,7 @@ import { AuthService } from '../../core/auth/services/auth.service';
 })
 export class NavbarComponent implements OnInit {
   private readonly authService = inject(AuthService);
+  private readonly toastrService = inject(ToastrService);
   constructor(private flowbiteService: FlowbiteService) {}
 
   ngOnInit(): void {
