@@ -83,9 +83,7 @@ export class UserProfileComponent implements OnInit {
     const inputImg = e.target as HTMLInputElement;
     if (inputImg.files) {
       this.saveImg = inputImg.files[0];
-
       const fileReader = new FileReader();
-
       fileReader.readAsDataURL(this.saveImg);
       fileReader.onload = (e: ProgressEvent<FileReader>) => {
         this.imgUrl.set(e.target?.result);
