@@ -76,6 +76,9 @@ export class UserProfileComponent implements OnInit {
         localStorage.setItem('userProfileData', JSON.stringify(res.data));
         this.authService.trigger.set(true);
       },
+      error: (err) => {
+        console.error('Failed to get user data, so nothing is saved in localStorage:', err);
+      },
     });
   }
 
