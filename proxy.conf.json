@@ -1,7 +1,0 @@
-{
-  "/api": {
-    "target": "https://brunette-jargon-entitle.ngrok-free.dev",
-    "secure": false,
-    "changeOrigin": true
-  }
-}
