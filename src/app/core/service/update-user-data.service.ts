@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -11,7 +11,8 @@ export class UpdateUserDataService {
 
   getUserData(userId: number): Observable<any> {
     const parameter = new HttpParams().set('userId', userId);
-    return this.http.get(`${environment.baseUrl}/api/v1/users/me`, { params: parameter });
+    const headers = new HttpHeaders().set('ngrok-skip-browser-warning', '69420');
+    return this.http.get(`/api/v1/users/me`, { params: parameter, headers: headers });
   }
 
   upDateAvatar(userId: number, file: File): Observable<any> {
