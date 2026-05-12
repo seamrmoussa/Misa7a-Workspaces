@@ -36,6 +36,7 @@ export class AuthenticationComponent {
         this.authService.signIn(this.loginForm.value).subscribe({
           next: (res) => {
             localStorage.setItem('misa7aUserToken', res.data.data.token);
+            localStorage.setItem('misa7aUserId', res.data.data.id);
             this.router.navigate(['/user/user-profile']);
           },
         }),

@@ -1,9 +1,10 @@
-import { Component, input, InputSignal, signal } from '@angular/core';
+import { Component, inject, input, InputSignal, PLATFORM_ID, signal } from '@angular/core';
 import { FlowbiteService } from '../../core/service/flowbite.service';
 import { initFlowbite } from 'flowbite';
 
 import { MainLogoComponent } from '../../shared/ui/main-logo/main-logo.component';
 import { RouterLink } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-footer',
@@ -12,12 +13,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './footer.component.css',
 })
 export class FooterComponent {
+  private readonly pLATFORM_ID = inject(PLATFORM_ID);
   constructor(private flowbiteService: FlowbiteService) {}
 
   ngOnInit(): void {
-    this.flowbiteService.loadFlowbite((flowbite) => {
-      initFlowbite();
-    });
+    if (isPlatformBrowser(this.pLATFORM_ID)) {
+      this.flowbiteService.loadFlowbite((flowbite) => {
+        initFlowbite();
+      });
+    }
   }
 
   currentYear = signal(new Date().getFullYear());

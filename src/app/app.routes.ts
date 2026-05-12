@@ -88,12 +88,6 @@ export const routes: Routes = [
         title: 'Notifications',
       },
       {
-        path: 'settings',
-        loadComponent: () =>
-          import('./features/settings/settings.component').then((c) => c.SettingsComponent),
-        title: 'Settings',
-      },
-      {
         path: 'support',
         loadComponent: () =>
           import('./features/support/support.component').then((c) => c.SupportComponent),
@@ -141,12 +135,6 @@ export const routes: Routes = [
             (c) => c.NotificationsComponent,
           ),
         title: 'Notifications',
-      },
-      {
-        path: 'settings',
-        loadComponent: () =>
-          import('./features/settings/settings.component').then((c) => c.SettingsComponent),
-        title: 'Settings',
       },
       {
         path: 'support',

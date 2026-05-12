@@ -81,10 +81,14 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+    "proxyConfig": "proxy.conf.json"
+  },
           "configurations": {
             "production": {
               "buildTarget": "Misa7a:build:production"
             },
+            
             "development": {
               "buildTarget": "Misa7a:build:development"
             }

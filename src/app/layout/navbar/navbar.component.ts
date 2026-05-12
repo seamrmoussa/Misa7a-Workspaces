@@ -1,11 +1,21 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  model,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
 import { FlowbiteService } from '../../core/service/flowbite.service';
 import { initFlowbite } from 'flowbite';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MainButtonComponent } from '../../shared/ui/main-button/main-button.component';
 import { MainLogoComponent } from '../../shared/ui/main-logo/main-logo.component';
 import { AuthService } from '../../core/auth/services/auth.service';
-import { ToastrService } from 'ngx-toastr';
+import { UserProfile } from '../../user-profile.interface';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -15,16 +25,13 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class NavbarComponent implements OnInit {
   private readonly authService = inject(AuthService);
-  private readonly toastrService = inject(ToastrService);
-  constructor(private flowbiteService: FlowbiteService) {}
 
-  ngOnInit(): void {
-    this.flowbiteService.loadFlowbite((flowbite) => {
-      initFlowbite();
-    });
-  }
+  private readonly pLATFORM_ID = inject(PLATFORM_ID);
 
   paths = signal<string[]>(['home', 'booking', 'plans', 'gallery', 'review', 'contact-us', 'help']);
+  notificationBasePath = input<string>();
+  notificationLoggedIn = model<boolean>(false);
+  userProfileData = signal<UserProfile | null>(null);
 
   classesProfile: string[] = [
     'bg-white',
@@ -45,10 +52,33 @@ export class NavbarComponent implements OnInit {
     'rounded-xl',
   ];
 
-  notificationBasePath = input<string>();
-  notificationLoggedIn = input<boolean>(false);
+  constructor(private flowbiteService: FlowbiteService) {
+    effect(() => {
+      if (this.authService.trigger()) {
+        this.updateNameProfile();
+        this.authService.trigger.set(false);
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.pLATFORM_ID)) {
+      this.flowbiteService.loadFlowbite((flowbite) => {
+        initFlowbite();
+      });
+      this.updateNameProfile();
+    }
+  }
+
+  updateNameProfile() {
+    const userLocalData = localStorage.getItem('userProfileData');
+    if (userLocalData) {
+      this.userProfileData.set(JSON.parse(userLocalData));
+    }
+  }
 
   logout(): void {
-    (this, this.authService.logoutUser());
+    this.notificationLoggedIn.set(false);
+    this.authService.logoutUser();
   }
 }

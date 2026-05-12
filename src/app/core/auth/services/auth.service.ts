@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
-  private readonly toastrService = inject(ToastrService);
+
+  trigger = signal<boolean>(false);
 
   signUp(data: object): Observable<any> {
     return this.http.post(environment.baseUrl + '/api/v1/users/register', data, {});
@@ -23,6 +23,8 @@ export class AuthService {
 
   logoutUser(): void {
     localStorage.removeItem('misa7aUserToken');
+    localStorage.removeItem('misa7aUserId');
+    localStorage.removeItem('userProfileData');
     this.router.navigate(['/loggedout']);
   }
 }

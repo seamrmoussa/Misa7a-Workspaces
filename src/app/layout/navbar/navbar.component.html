@@ -37,7 +37,15 @@
           data-dropdown-placement="bottom"
         >
           <span class="sr-only">Open user menu</span>
-          <i class="fa-regular fa-circle-user text-xl"></i>
+          @if (notificationLoggedIn()) {
+            <img
+              [src]="userProfileData()?.avatarBase64"
+              alt="Concierge"
+              class="size-10 rounded-full object-cover me-1"
+            />
+          } @else {
+            <i class="fa-regular fa-circle-user text-xl"></i>
+          }
         </button>
         <!-- Dropdown menu -->
         <div
@@ -52,24 +60,21 @@
             >
               <div class="text-[14px] font-medium flex items-center gap-2.5">
                 <img
-                  src="https://i.pravatar.cc/150?img=32"
+                  [src]="
+                    userProfileData()?.avatarBase64
+                      ? userProfileData()?.avatarBase64
+                      : '/img/defaultImg.webp'
+                  "
                   alt="Concierge"
                   class="size-10 rounded-full object-cover me-1"
                 />
-                <span class="text-[14px] font-medium text-mainColorLight">User Name</span>
+                <span class="text-[14px] font-medium text-mainColorLight">{{
+                  userProfileData()?.fullName
+                }}</span>
               </div>
             </a>
 
             <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
-              <li>
-                <a
-                  routerLink="/admin/settings"
-                  [routerLinkActive]="classesAsideActiveLinks"
-                  ariaCurrentWhenActive="page"
-                  class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-mainColorDark rounded"
-                  ><i class="fa-solid fa-gear text-lg me-1"></i> Settings</a
-                >
-              </li>
               <li>
                 <a
                   routerLink="/admin/support"
@@ -84,7 +89,7 @@
                   (click)="logout()"
                   routerLink="/loggedout"
                   ariaCurrentWhenActive="page"
-                  class="inline-flex items-center w-full p-2 text-red-600 hover:bg-neutral-tertiary-medium"
+                  class="inline-flex items-center w-full p-2 text-red-600 hover:bg-neutral-tertiary-medium cursor-pointer"
                 >
                   <i class="fa-solid fa-right-from-bracket text-xl me-1"></i> Logout
                 </button>
@@ -171,22 +176,18 @@
               >
                 <div class="text-[14px] font-medium flex items-center gap-2.5">
                   <img
-                    src="https://i.pravatar.cc/150?img=32"
+                    [src]="
+                      userProfileData()?.avatarBase64
+                        ? userProfileData()?.avatarBase64
+                        : '/img/defaultImg.webp'
+                    "
                     alt="Concierge"
                     class="size-10 rounded-full object-cover me-1"
                   />
-                  <span class="text-[14px] font-medium text-mainColorLight"> User Name</span>
+                  <span class="text-[14px] font-medium text-mainColorLight">
+                    {{ userProfileData()?.fullName }}</span
+                  >
                 </div>
-              </a>
-              <a
-                routerLink="/admin/settings"
-                ariaCurrentWhenActive="page"
-                class="text-gray-600 py-2 px-1 hover:text-mainColorLight flex gap-2.5 space-y-2 transition-all duration-300 cursor-pointer rounded-2xl hover:bg-mainExtraLight"
-                ariaCurrentWhenActive="page"
-              >
-                <span class="text-[14px] font-medium"
-                  ><i class="fa-solid fa-gear me-1"></i> Settings</span
-                >
               </a>
               <a
                 routerLink="/admin/support"

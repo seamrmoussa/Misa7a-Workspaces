@@ -1,5 +1,6 @@
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-logout-message',
@@ -9,6 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class LogoutMessageComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
 
   private timeOutId = signal<any>(null);
 
@@ -19,7 +21,6 @@ export class LogoutMessageComponent implements OnInit, OnDestroy {
   toHome(): void {
     this.timeOutId.set(
       setTimeout(() => {
-        console.log('Attempting to navigate to /home');
         this.router.navigate(['/home']);
       }, 5000),
     );

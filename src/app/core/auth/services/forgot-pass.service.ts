@@ -11,10 +11,7 @@ export class ForgotPassService {
 
   submitEmail(userEmail: string): Observable<any> {
     const parameter = new HttpParams().set('email', userEmail);
-    return this.http.post(
-      environment.baseUrl + '/api/v1/auth/forgot-password',
-      {},
-      { params: parameter },
+    return this.http.post(`${environment.baseUrl}/api/v1/auth/forgot-password`,{},{ params: parameter },
     );
   }
 
