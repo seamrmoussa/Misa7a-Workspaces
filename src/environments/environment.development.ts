@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  baseUrl: '',
+  baseUrl: 'https://brunette-jargon-entitle.ngrok-free.dev',
 };
