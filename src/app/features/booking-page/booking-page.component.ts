@@ -1,4 +1,14 @@
-import { Component, computed, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { FlowbiteService } from './../../core/service/flowbite.service';
+import { Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { initFlowbite } from 'flowbite';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CallAdminDataService } from '../../core/service/call-admin-data.service';
+import { WorkspaceData } from '../../workspace-data.interface';
+import { BookRoomService } from '../../core/service/book-room.service';
+import { ToastrService } from 'ngx-toastr';
+import { ResBookData } from '../../res-book-data.interface';
+import { Router } from '@angular/router';
 
 interface Room {
   id: number;
@@ -12,100 +22,180 @@ interface Room {
 
 @Component({
   selector: 'app-booking-page',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './booking-page.component.html',
   styleUrl: './booking-page.component.css',
 })
-export class BookingPageComponent {
+export class BookingPageComponent implements OnInit {
+  constructor(private FlowbiteService: FlowbiteService) {}
+
+  private readonly callAdminDataService = inject(CallAdminDataService);
+  private readonly bookRoomService = inject(BookRoomService);
+  private readonly pLATFORM_ID = inject(PLATFORM_ID);
+  private readonly router = inject(Router);
+  private readonly toastrService = inject(ToastrService);
+  private readonly fb = inject(FormBuilder);
+
+  userId = signal<number | null>(null);
   selectedDate = signal<number>(3);
   selectedTime = signal<string>('01:00 PM');
+  workspaces = signal<WorkspaceData[]>([]);
+  totalWorkspaces = signal<WorkspaceData[]>([]);
+  selectedRoomId = signal<number>(0);
+  resAfterBooking = signal<Partial<ResBookData>>({});
+  showBtnFilter = signal<boolean>(false);
+  isModalBookVisible = signal<boolean>(false);
+  isModalConfirmBookingVisible = signal<boolean>(false);
+  isCheckModalVisible = signal<boolean>(false);
+  isCheckRoomAvailable = signal<boolean>(false);
 
-  // Time Slots Mock Data
-  timeSlots = [
-    { time: '09:00 AM', disabled: false },
-    { time: '10:30 AM', disabled: false },
-    { time: '01:00 PM', disabled: false },
-    { time: '02:30 PM', disabled: false },
-    { time: '04:00 PM', disabled: false },
-    { time: '05:30 PM', disabled: true }, // Example of a booked slot
-  ];
-
-  // Rooms Data
-  rooms = signal<Room[]>([
-    {
-      id: 1,
-      name: 'Monolith Suite',
-      price: 45,
-      capacity: '4-6 People',
-      features: 'Gig-speed',
-      description:
-        'A focused space with noise-canceling acoustics and floor-to-ceiling city views.',
-      image: './img/booking1.png', // عدل مسار الصورة
-    },
-    {
-      id: 2,
-      name: 'The Athenaeum',
-      price: 30,
-      capacity: '1-2 People',
-      features: 'Air Purified',
-      description:
-        'The ultimate quiet zone. Perfect for deep creative work or confidential strategy.',
-      image: './img/booking2.png', // عدل مسار الصورة
-    },
-  ]);
-
-  selectedRoomId = signal<number>(1);
-
-  // Computed: Get full room object based on selected ID
-  selectedRoom = computed(() => {
-    return this.rooms().find((r) => r.id === this.selectedRoomId()) || this.rooms()[0];
+  formCheckBookingAvailability: FormGroup = this.fb.group({
+    startTimeSelected: [this.getTodayAtTime('09:00'), Validators.required],
+    endTimeSelected: [this.getTodayAtTime('10:00'), Validators.required],
   });
 
-  // Add-ons Data
-  addons = signal<any[]>([
-    { id: 1, name: 'Artisan Catering', price: 25, selected: true },
-    { id: 2, name: '4K Projector', price: 15, selected: false },
-    { id: 3, name: 'Whiteboard Kit', price: 5, selected: false },
-  ]);
-
-  // Payment Method State
-  paymentMethod = signal<'online' | 'cash'>('online');
-
-  // --- Computed Totals for the Summary ---
-
-  // Calculate Add-ons Total
-  addonsTotal = computed(() => {
-    return this.addons()
-      .filter((a) => a.selected)
-      .reduce((sum, current) => sum + current.price, 0);
+  formConfirmBooking: FormGroup = this.fb.group({
+    userId: [0, Validators.required],
+    workspaceId: [0, Validators.required],
+    startDatetime: [
+      this.formCheckBookingAvailability.get('startTimeSelected')?.value,
+      Validators.required,
+    ],
+    endDatetime: [
+      this.formCheckBookingAvailability.get('endTimeSelected')?.value,
+      Validators.required,
+    ],
+    durationType: ['HOURLY', Validators.required],
+    numAttendees: [1, Validators.required],
+    purpose: ['Meeting', Validators.required],
+    promoCodeId: [1, Validators.required],
+    internalNotes: ['Nothing', Validators.required],
   });
 
-  // Calculate Grand Total
-  grandTotal = computed(() => {
-    return this.selectedRoom().price + this.addonsTotal();
-  });
-
-  // --- Methods ---
-
-  selectDate(day: number) {
-    this.selectedDate.set(day);
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.pLATFORM_ID)) {
+      this.FlowbiteService.loadFlowbite((flowbite) => {
+        initFlowbite();
+        const userIdNow = Number(localStorage.getItem('misa7aUserId'));
+        if (userIdNow) {
+          this.userId.set(userIdNow);
+        }
+      });
+    }
+    this.getWorkspaces();
   }
 
-  selectTime(time: string, disabled: boolean) {
-    if (!disabled) this.selectedTime.set(time);
+  private getTodayAtTime(time: string): string {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    return `${yyyy}-${mm}-${dd}T${time}`;
+  }
+
+  getWorkspaces() {
+    this.callAdminDataService.getAllWorkspace().subscribe({
+      next: (res) => {
+        this.totalWorkspaces.set(res.data);
+        this.workspaces.set(this.totalWorkspaces());
+      },
+    });
   }
 
   selectRoom(id: number) {
     this.selectedRoomId.set(id);
   }
 
-  toggleAddon(id: number) {
-    this.addons.update((items) =>
-      items.map((item) => (item.id === id ? { ...item, selected: !item.selected } : item)),
-    );
+  resetFilter() {
+    this.workspaces.set(this.totalWorkspaces());
+    this.showBtnFilter.set(false);
   }
 
-  setPaymentMethod(method: 'online' | 'cash') {
-    this.paymentMethod.set(method);
+  checkIsAvailableRoomId() {
+    if (this.formCheckBookingAvailability.valid && this.selectedRoomId()) {
+      this.bookRoomService
+        .checkAvailabilityRoomId(this.formCheckBookingAvailability.value, this.selectedRoomId())
+        .subscribe({
+          next: (res) => {
+            this.isCheckRoomAvailable.set(res.data.available);
+            this.isCheckModalVisible.set(true);
+          },
+        });
+    } else {
+      this.formCheckBookingAvailability.markAllAsTouched();
+    }
+  }
+
+  showAndCloseCheckModalByRoom() {
+    this.isCheckModalVisible.update((v) => !v);
+  }
+
+  checkIsvAvailableRoomDate() {
+    if (this.formCheckBookingAvailability.valid) {
+      this.bookRoomService
+        .checkAvailabilityRoomByDate(this.formCheckBookingAvailability.value)
+        .subscribe({
+          next: (res) => {
+            this.showBtnFilter.set(true);
+            this.workspaces.set(res.data);
+          },
+        });
+    } else {
+      this.formCheckBookingAvailability.markAllAsTouched();
+    }
+  }
+
+  showModalForBook(spaceId: number) {
+    const fullFormBookingData = {
+      userId: this.userId(),
+      workspaceId: spaceId,
+      startDatetime: this.formCheckBookingAvailability.get('startTimeSelected')?.value,
+      endDatetime: this.formCheckBookingAvailability.get('endTimeSelected')?.value,
+    };
+    this.formConfirmBooking.patchValue(fullFormBookingData);
+    this.isModalBookVisible.set(true);
+  }
+
+  hideModalForBook() {
+    this.isModalBookVisible.set(false);
+  }
+
+  isLoggedInUser() {
+    if (isPlatformBrowser(this.pLATFORM_ID)) {
+      const userId = localStorage.getItem('misa7aUserId');
+      if (userId) {
+        this.confirmBooking();
+      } else {
+        this.router.navigate(['/login']);
+        this.toastrService.warning('Please logIn first');
+      }
+    }
+  }
+
+  confirmBooking() {
+    const finalConfirmData = this.formConfirmBooking.value;
+
+    this.bookRoomService
+      .confirmBooking({
+        ...this.formConfirmBooking.value,
+        startDatetime: this.formConfirmBooking.value.startDatetime + ':00.000Z',
+        endDatetime: this.formConfirmBooking.value.endDatetime + ':00.000Z',
+      })
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.resAfterBooking.set(res.data);
+          this.toastrService.success('The booking request has been sent');
+          this.isModalBookVisible.set(false);
+          this.showModalSuccess();
+          this.isCheckModalVisible.set(false);
+          this.selectedRoomId.set(0);
+        },
+      });
+  }
+
+  showModalSuccess() {
+    this.isModalConfirmBookingVisible.update((v) => !v);
   }
 }

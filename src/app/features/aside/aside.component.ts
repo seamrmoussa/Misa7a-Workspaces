@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-aside',
@@ -8,6 +9,14 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './aside.component.css',
 })
 export class AsideComponent {
+  private readonly authService = inject(AuthService);
+
+  readonly roleType = computed<string>(() => this.authService.tokenData()?.roles[0]);
+
+  constructor() {
+    this.authService.decodeUserToken();
+  }
+
   classesProfile: string[] = [
     'bg-white',
     'border',

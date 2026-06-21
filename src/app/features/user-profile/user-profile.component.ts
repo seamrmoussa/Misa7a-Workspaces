@@ -1,7 +1,7 @@
 import { FlowbiteService } from '../../core/service/flowbite.service';
 import { initFlowbite } from 'flowbite';
 import { isPlatformBrowser } from '@angular/common';
-import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { UpdateUserDataService } from '../../core/service/update-user-data.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserProfile } from '../../user-profile.interface';
@@ -18,45 +18,16 @@ export class UserProfileComponent implements OnInit {
   private readonly updateUserDataService = inject(UpdateUserDataService);
   private readonly toastrService = inject(ToastrService);
   private readonly authService = inject(AuthService);
-  constructor(private flowbiteService: FlowbiteService) {}
 
   saveImg!: File;
   imgUrl = signal<string | ArrayBuffer | null | undefined>(null);
   userId = signal<number>(0);
   userProfileData = signal<UserProfile | null>(null);
-
-  recentActivity = signal([
-    {
-      id: '#BK-9021',
-      location: 'The Zenith Suite',
-      room: 'Level 42, Sky Tower',
-      date: 'Nov 24, 2024',
-      time: '09:00 AM - 01:00 PM',
-      status: 'Confirmed',
-    },
-    {
-      id: '#BK-8845',
-      location: 'Acoustic Pod B',
-      room: 'Main Lobby Annex',
-      date: 'Nov 21, 2024',
-      time: '02:00 PM - 03:00 PM',
-      status: 'Completed',
-    },
-    {
-      id: '#BK-8712',
-      location: 'The Glass Library',
-      room: 'North Wing, Floor 2',
-      date: 'Nov 18, 2024',
-      time: '10:00 AM - 05:00 PM',
-      status: 'Completed',
-    },
-  ]);
+  showModalEditProfileData = signal<boolean>(false);
+  readonly roleType = computed<string>(() => this.authService.tokenData()?.roles[0]);
 
   ngOnInit() {
     if (isPlatformBrowser(this.pLATFORM_ID)) {
-      this.flowbiteService.loadFlowbite((flowbite) => {
-        initFlowbite();
-      });
       this.userId.set(Number(localStorage.getItem('misa7aUserId')));
       const userLocalData = localStorage.getItem('userProfileData');
       if (userLocalData) {
@@ -108,5 +79,13 @@ export class UserProfileComponent implements OnInit {
 
   cancelUploadImg(): void {
     this.imgUrl.set(null);
+  }
+
+  showModalToEditProfileData() {
+    this.showModalEditProfileData.set(true);
+  }
+
+  closeModalToEditProfileData() {
+    this.showModalEditProfileData.set(false);
   }
 }

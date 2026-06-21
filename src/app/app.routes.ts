@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { BookingPageComponent } from './features/booking-page/booking-page.component';
-import { PlansAndPricingComponent } from './features/plans-and-pricing/plans-and-pricing.component';
 import { ReviewComponent } from './features/review/review.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
@@ -54,22 +53,52 @@ export const routes: Routes = [
     component: AdminLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', redirectTo: 'admin-panel', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
-        path: 'admin-panel',
+        path: 'dashboard',
         loadComponent: () =>
           import('./features/admin-control-panel/admin-control-panel.component').then(
             (c) => c.AdminControlPanelComponent,
           ),
-        title: 'Admin Panel',
+        title: 'Dashboard',
       },
       {
-        path: 'gm-dashboard',
+        path: 'add-workspace',
         loadComponent: () =>
-          import('./features/gm-dashboard/gm-dashboard.component').then(
-            (c) => c.GmDashboardComponent,
+          import('./features/add-workspaces/add-workspaces.component').then(
+            (c) => c.AddWorkspaceComponent,
           ),
-        title: 'DashBoard',
+        title: 'Create Workspace',
+      },
+      {
+        path: 'all-workspace',
+        loadComponent: () =>
+          import('./features/all-workspace/all-workspace.component').then(
+            (c) => c.AllWorkspaceComponent,
+          ),
+        title: 'All Workspace',
+      },
+      {
+        path: 'space-type',
+        loadComponent: () =>
+          import('./features/space-type/./space-type.component').then((c) => c.SpaceTypeComponent),
+        title: 'Create Space Type',
+      },
+      {
+        path: 'manage-role',
+        loadComponent: () =>
+          import('./features/manage-role/./manage-role.component').then(
+            (c) => c.ManageRoleComponent,
+          ),
+        title: 'Manage Role',
+      },
+      {
+        path: 'booking-history',
+        loadComponent: () =>
+          import('./features/booking-history/booking-history.component').then(
+            (c) => c.BookingHistoryComponent,
+          ),
+        title: 'Booking History',
       },
       {
         path: 'receptionist',
@@ -80,18 +109,12 @@ export const routes: Routes = [
         title: 'Receptionist',
       },
       {
-        path: 'notifications',
+        path: 'RequestAndSr',
         loadComponent: () =>
-          import('./features/notifications/notifications.component').then(
-            (c) => c.NotificationsComponent,
+          import('./features/request-and-sr/request-and-sr.component').then(
+            (c) => c.RequestAndSrComponent,
           ),
-        title: 'Notifications',
-      },
-      {
-        path: 'support',
-        loadComponent: () =>
-          import('./features/support/support.component').then((c) => c.SupportComponent),
-        title: 'Support',
+        title: 'Request And Sr',
       },
     ],
   },
@@ -113,34 +136,12 @@ export const routes: Routes = [
         title: 'User Profile',
       },
       {
-        path: 'wallet',
-        loadComponent: () =>
-          import('./features/wallet-and-balance/wallet-and-balance.component').then(
-            (c) => c.WalletAndBalanceComponent,
-          ),
-        title: 'Wallet & Balance',
-      },
-      {
         path: 'booking-history',
         loadComponent: () =>
           import('./features/booking-history/booking-history.component').then(
             (c) => c.BookingHistoryComponent,
           ),
         title: 'Booking History',
-      },
-      {
-        path: 'notifications',
-        loadComponent: () =>
-          import('./features/notifications/notifications.component').then(
-            (c) => c.NotificationsComponent,
-          ),
-        title: 'Notifications',
-      },
-      {
-        path: 'support',
-        loadComponent: () =>
-          import('./features/support/support.component').then((c) => c.SupportComponent),
-        title: 'Support',
       },
     ],
   },
@@ -154,7 +155,6 @@ export const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, title: 'Home Page | الصفحة الرئيسية' },
       { path: 'booking', component: BookingPageComponent, title: 'New Booking' },
-      { path: 'plans', component: PlansAndPricingComponent, title: 'Plans & Price' },
       { path: 'review', component: ReviewComponent, title: 'Previous Reviews' },
 
       {
@@ -164,24 +164,18 @@ export const routes: Routes = [
         title: 'Gallery',
       },
       {
-        path: 'help',
+        path: 'Location',
         loadComponent: () =>
-          import('./features/help-page/help-page.component').then((c) => c.HelpPageComponent),
-        title: 'Help',
+          import('./features/location-page/location-page.component').then(
+            (c) => c.LocationPageComponent,
+          ),
+        title: 'Location',
       },
       {
         path: 'contact-us',
         loadComponent: () =>
           import('./features/contact-us/contact-us.component').then((c) => c.ContactUsComponent),
         title: 'Contact Us',
-      },
-      {
-        path: 'inquiry',
-        loadComponent: () =>
-          import('./features/inquiry-form/inquiry-form.component').then(
-            (c) => c.InquiryFormComponent,
-          ),
-        title: 'Inquiry',
       },
       {
         path: 'loggedout',

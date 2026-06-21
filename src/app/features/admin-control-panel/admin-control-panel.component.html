@@ -1,7 +1,9 @@
 <div class="flex min-h-screen bg-mainBg font-sans text-fontGray1">
   <main class="flex-1 p-6 lg:p-10 xl:p-12 overflow-y-auto">
     <div class="max-w-7xl mx-auto">
-      <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+      <header
+        class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 smooth-appear"
+      >
         <div class="max-w-xl">
           <h1 class="text-3xl md:text-4xl font-extrabold text-mainColorDark mb-2 tracking-tight">
             Space Management
@@ -11,21 +13,9 @@
             sanctuary network.
           </p>
         </div>
-        <div class="flex items-center gap-3 shrink-0">
-          <button
-            class="bg-gray-200 hover:bg-gray-300 text-mainColorDark font-bold py-2.5 px-6 rounded-lg text-sm transition-colors"
-          >
-            System Settings
-          </button>
-          <button
-            class="bg-mainColorDark hover:bg-mainColorLight text-white font-bold py-2.5 px-6 rounded-lg text-sm transition-colors shadow-md"
-          >
-            Quick Book
-          </button>
-        </div>
       </header>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 smooth-appear">
         <div
           class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between"
         >
@@ -42,6 +32,39 @@
           </div>
         </div>
 
+        <div
+          class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between"
+        >
+          <div class="flex justify-between items-start mb-4">
+            <i class="fa-solid fa-ban text-secColorDark text-xl"></i>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-fontGray2 mb-1">Blackout Dates</p>
+            <h3 class="text-3xl font-extrabold text-mainColorDark">14</h3>
+          </div>
+        </div>
+        <div
+          class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between"
+        >
+          <div class="flex justify-between items-start mb-4">
+            <i class="fa-solid fa-ban text-secColorDark text-xl"></i>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-fontGray2 mb-1">Blackout Dates</p>
+            <h3 class="text-3xl font-extrabold text-mainColorDark">14</h3>
+          </div>
+        </div>
+        <div
+          class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between"
+        >
+          <div class="flex justify-between items-start mb-4">
+            <i class="fa-solid fa-ban text-secColorDark text-xl"></i>
+          </div>
+          <div>
+            <p class="text-xs font-semibold text-fontGray2 mb-1">Blackout Dates</p>
+            <h3 class="text-3xl font-extrabold text-mainColorDark">14</h3>
+          </div>
+        </div>
         <div
           class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between"
         >
@@ -74,54 +97,9 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-10">
-        <div class="xl:col-span-1 space-y-6">
-          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h2 class="text-lg font-bold text-gray-900 mb-6">Operations Control</h2>
-
-            <div class="space-y-4">
-              <button
-                class="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-900 font-bold py-3.5 px-4 rounded-xl flex items-center gap-3 transition-colors text-sm"
-              >
-                <i class="fa-solid fa-clock-rotate-left text-mainColorDark"></i> Add New Time Slot
-              </button>
-
-              <button
-                class="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-900 font-bold py-3.5 px-4 rounded-xl flex items-center gap-3 transition-colors text-sm"
-              >
-                <i class="fa-regular fa-calendar-xmark text-secColorDark"></i> Block Dates
-              </button>
-            </div>
-
-            <div class="mt-8">
-              <label class="block text-2xs font-bold text-fontGray2 uppercase tracking-widest mb-2"
-                >QUICK DATE JUMP</label
-              >
-              <input
-                type="text"
-                placeholder="mm/dd/yyyy"
-                class="w-full bg-white border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-mainColorLight focus:border-mainColorLight p-3 shadow-sm"
-              />
-            </div>
-          </div>
-
-          <div class="bg-mainColorDark rounded-2xl p-6 shadow-md text-white">
-            <h3 class="text-sm font-bold mb-3">Space Advisory</h3>
-            <p class="text-xs text-mainExtraLight leading-relaxed mb-6">
-              High demand detected for "The Obsidian Suite" on Friday. Consider adjusting premium
-              rates for peak hours.
-            </p>
-            <a
-              href="#"
-              class="text-xs font-bold underline decoration-2 underline-offset-4 hover:text-gray-200 transition-colors"
-            >
-              View Analytics
-            </a>
-          </div>
-        </div>
-
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-10 smooth-appear">
         <div
-          class="xl:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col overflow-hidden"
+          class="xl:col-span-3 bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col overflow-hidden"
         >
           <div
             class="p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
@@ -225,58 +203,6 @@
           </div>
         </div>
       </div>
-
-      <section>
-        <div
-          class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
-        >
-          <h2 class="text-xl font-bold text-gray-900">Timeline Overview</h2>
-          <div class="flex items-center gap-5 text-xs font-bold text-fontGray1">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-mainColorDark"></span> Booked
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-secColorDark"></span> Blackout
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-gray-200"></span> Available
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-8">
-          @for (timeline of timelines(); track timeline.id) {
-            <div>
-              <h3 class="text-sm font-bold text-gray-900 mb-3">{{ timeline.roomName }}</h3>
-
-              <div class="flex w-full h-10 rounded-xl overflow-hidden shadow-sm">
-                @for (segment of timeline.segments; track $index) {
-                  <div
-                    [style.width]="segment.width"
-                    [class]="
-                      segment.type === 'booked'
-                        ? 'bg-mainColorDark'
-                        : segment.type === 'blackout'
-                          ? 'bg-secColorDark'
-                          : 'bg-gray-200/80'
-                    "
-                    class="h-full border-r border-white/20 last:border-0 hover:opacity-90 transition-opacity cursor-pointer"
-                  ></div>
-                }
-              </div>
-
-              <div class="flex justify-between text-2xs font-bold text-fontGray2 mt-2 px-1">
-                <span>08:00 AM</span>
-                <span>10:00 AM</span>
-                <span>12:00 PM</span>
-                <span>02:00 PM</span>
-                <span>04:00 PM</span>
-                <span>06:00 PM</span>
-              </div>
-            </div>
-          }
-        </div>
-      </section>
     </div>
   </main>
 </div>

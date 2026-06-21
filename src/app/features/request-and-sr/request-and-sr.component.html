@@ -1,0 +1,263 @@
+<div class="flex flex-col gap-4 w-full p-4 md:p-6 bg-mainBg min-h-screen smooth-appear">
+  <div class="mb-2">
+    <h2 class="text-2xl font-bold text-mainColorDark">Contact Us Messages</h2>
+  </div>
+
+  <div class="mb-2 w-full flex flex-wrap items-start justify-center md:justify-between gap-3">
+    <div class="order-2 md:order-1 flex gap-3 w-full md:w-auto">
+      <button
+        (click)="getAllRequests()"
+        [class.border-transparent]="openReqData().length > 0 || closedReqData().length > 0"
+        class="w-full md:w-auto block text-center border-3 border-orange-700 cursor-pointer font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md bg-mainColorLight hover:bg-mainColorDark hover:text-white text-white/80"
+      >
+        All
+      </button>
+      <button
+        (click)="getReqStatus('OPEN')"
+        [class.border-orange-700]="openReqData().length > 0"
+        class="w-full md:w-auto block text-center border-3 cursor-pointer font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md bg-mainColorLight hover:bg-mainColorDark hover:text-white text-white/80"
+      >
+        Open
+      </button>
+      <button
+        (click)="getReqStatus('CLOSED')"
+        [class.border-orange-700]="closedReqData().length > 0"
+        class="w-full md:w-auto block text-center border-3 cursor-pointer font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md bg-mainColorLight hover:bg-mainColorDark hover:text-white text-white/80"
+      >
+        Close
+      </button>
+    </div>
+    <div class="order-1 md:order-2">
+      @if (reqDataForUser().length > 0 || openReqData().length > 0 || closedReqData().length > 0) {
+        <button
+          (click)="getAllRequests()"
+          class="smooth-appear grow cursor-pointer text-white bg-orange-700 hover:bg-orange-800 border border-transparent focus:ring-4 focus:ring-mainColorLight-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+        >
+          <i class="fa-solid fa-arrows-rotate"></i> Reset
+        </button>
+      }
+    </div>
+    <div
+      class="order-3 w-full md:w-auto flex flex-wrap items-start justify-center gap-3 md:self-end"
+    >
+      <button
+        (click)="getRequestForUser()"
+        class="w-full md:w-auto block text-center cursor-pointer font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md bg-mainColorLight hover:bg-mainColorDark hover:text-white text-white/80"
+      >
+        Get For This User
+      </button>
+      <div class="w-full flex-1">
+        <input
+          [class]="{
+            'border-green-500': FormUserId.valid,
+            'border-red-500': FormUserId.invalid && FormUserId.touched,
+          }"
+          type="number"
+          id="userId"
+          [formControl]="FormUserId"
+          class="w-full md:w-auto bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block px-3 py-2.5 shadow-xs placeholder:text-body"
+          placeholder="Enter User Id"
+          required
+        />
+        @if (FormUserId.invalid && FormUserId.touched && FormUserId.hasError('required')) {
+          <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+            <p class="flex items-start gap-2">
+              <i class="fa-solid fa-right-long p-0.5"></i>
+              <span>User Id is required.</span>
+            </p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  @for (msg of allRequest(); track msg.id) {
+    <div
+      class="w-full bg-white border border-mainExtraLight rounded-xl shadow-sm p-5 hover:shadow-md transition-shadow duration-200 smooth-appear"
+    >
+      <div
+        class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 border-b border-mainExtraLight pb-4"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="shrink-0 w-10 h-10 rounded-full bg-mainExtraLight flex items-center justify-center text-mainColorLight"
+          >
+            <i class="fa-solid fa-user text-lg"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-mainColorDark">{{ msg.customerName }}</h3>
+            <p class="text-xs text-fontGray2">
+              <i class="fa-regular fa-clock mr-1"></i>
+              {{ msg.createdOn | date: 'medium' }}
+            </p>
+          </div>
+        </div>
+
+        <div>
+          @if (msg.status === 'OPEN') {
+            <span
+              class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-greenBgBadge text-greenTextBadge border border-greenPointBadge/30"
+            >
+              <span class="w-2 h-2 rounded-full bg-greenPointBadge"></span>
+              Open
+            </span>
+          } @else {
+            <span
+              class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-badgeBgColor text-badgeTextColor"
+            >
+              <span class="w-2 h-2 rounded-full bg-fontGray2"></span>
+              {{ msg.status }}
+            </span>
+          }
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 mb-4 text-sm">
+        <a
+          [href]="'mailto:' + msg.email"
+          class="flex items-center gap-2 text-linksColor1 hover:text-mainColorLight transition-colors"
+        >
+          <div
+            class="w-7 h-7 rounded-full bg-mainBg flex items-center justify-center text-mainColorLight"
+          >
+            <i class="fa-solid fa-envelope text-xs"></i>
+          </div>
+          <span class="font-medium">{{ msg.email }}</span>
+        </a>
+
+        <a
+          [href]="'tel:' + msg.phoneNumber"
+          class="flex items-center gap-2 text-linksColor1 hover:text-mainColorLight transition-colors"
+        >
+          <div
+            class="w-7 h-7 rounded-full bg-mainBg flex items-center justify-center text-mainColorLight"
+          >
+            <i class="fa-solid fa-phone text-xs"></i>
+          </div>
+          <span class="font-medium" dir="ltr">{{ msg.phoneNumber }}</span>
+        </a>
+      </div>
+
+      <div class="bg-mainBg rounded-lg p-4 border border-mainExtraLight">
+        <h4 class="text-xs font-bold text-linksColor2 uppercase tracking-wider mb-2">
+          Message Content
+        </h4>
+        <p class="text-fontGray1 text-sm leading-relaxed whitespace-pre-wrap">
+          {{ msg.message }}
+        </p>
+      </div>
+      <div class="mt-4 flex items-center justify-end">
+        @if (msg.status === 'OPEN') {
+          <button
+            (click)="showModalToConfirmCloseSr(msg.id)"
+            class="block text-center font-semibold cursor-pointer rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md bg-red-400 hover:bg-red-900 hover:text-white text-white/80"
+          >
+            Close This Request
+          </button>
+        }
+      </div>
+    </div>
+  } @empty {
+    <div
+      class="flex flex-col items-center justify-center w-full py-12 bg-white border border-dashed border-mainExtraLight rounded-xl"
+    >
+      <i class="fa-regular fa-folder-open text-4xl text-mainColorLight mb-3"></i>
+      <h3 class="text-lg font-medium text-mainColorDark">No messages found</h3>
+      <p class="text-fontGray2 text-sm mt-1">
+        There are currently no contact us messages to display.
+      </p>
+    </div>
+  }
+
+  <nav aria-label="Page navigation example" class="flex items-center justify-center mt-3">
+    <ul class="flex -space-x-px text-sm">
+      <li>
+        <button
+          (click)="prevPage()"
+          [disabled]="currentPage() === 0"
+          class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+        >
+          Previous
+        </button>
+      </li>
+      @for (pageIndex of pagesArray(); track $index) {
+        <li>
+          @if (pageIndex === '...') {
+            <span
+              class="flex items-center justify-center cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium font-medium text-sm w-10 h-10 focus:outline-none"
+            >
+              ...
+            </span>
+          } @else {
+            <button
+              class="cursor-pointer disabled:cursor-not-allowed flex items-center justify-center box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+              [disabled]="currentPage() === $any(pageIndex)"
+              [class]="{
+                'text-mainColorLight': currentPage() === $any(pageIndex),
+                'bg-neutral-tertiary-medium': currentPage() === $any(pageIndex),
+
+                'text-body': currentPage() !== $any(pageIndex),
+                'bg-neutral-secondary-medium': currentPage() !== $any(pageIndex),
+                'hover:text-heading': currentPage() !== $any(pageIndex),
+                'hover:bg-neutral-tertiary-medium': currentPage() !== $any(pageIndex),
+              }"
+            >
+              {{ $any(pageIndex) }}
+            </button>
+          }
+        </li>
+      }
+
+      <li>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPage() - 1 || totalPage() === 0"
+          class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+        >
+          Next
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+@if (isOpenModalToConfirmCloseSr()) {
+  <div
+    class="smooth-appear overflow-y-auto bg-black/50 overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full md:inset-0 h-full max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <button
+          (click)="closeModalToConfirmCloseSr()"
+          type="button"
+          class="absolute top-3 cursor-pointer inset-e-2.5 text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+        >
+          <i class="fa-solid fa-x"></i>
+          <span class="sr-only">Close modal</span>
+        </button>
+        <div class="p-4 md:p-5 text-center">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <h3 class="mb-6 text-body">Are you sure you want to close this request?</h3>
+          <div class="flex items-center space-x-4 justify-center">
+            <button
+              (click)="confirmCloseSr()"
+              type="button"
+              class="text-white bg-danger cursor-pointer box-border border border-transparent hover:bg-danger-strong focus:ring-4 focus:ring-danger-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              Yes, I'm sure
+            </button>
+            <button
+              (click)="closeModalToConfirmCloseSr()"
+              type="button"
+              class="text-body bg-neutral-secondary-medium cursor-pointer box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              No, cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,8 +1,12 @@
-<a
-  [routerLink]="link()"
-  [class.w-full]="fullWidth()"
-  [class]="buttonColors()"
-  class="block text-center font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md"
+<button
+  [type]="btnType()"
+  (click)="handleClick($event)"
+  class="{{ btnClasses() }} {{
+    btnColor()
+  }} w-full flex items-center justify-center text-center gap-2 cursor-pointer opacity-90 hover:opacity-100 font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md"
 >
+  @if (btnIcon()) {
+    <i [class]="btnIcon()"></i>
+  }
   {{ text() }}
-</a>
+</button>

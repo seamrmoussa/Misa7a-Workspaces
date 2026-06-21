@@ -1,256 +1,544 @@
 <div class="min-h-screen bg-mainBg py-10 px-4 md:px-8 lg:px-12 font-sans text-fontGray1">
   <div class="max-w-7xl mx-auto">
-    
-    <div class="mb-10">
+    <div class="mb-10 smooth-appear">
       <h1 class="text-4xl font-extrabold text-mainColorDark mb-3">Reserve Your Space</h1>
-      <p class="text-fontGray1 text-sm md:text-base max-w-2xl">
-        Experience a workspace designed for focus, clarity, and architectural inspiration. Follow the steps below to secure your sanctuary.
-      </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-      
-      <div class="lg:col-span-2 space-y-12">
-        
-        <section>
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-8 h-8 rounded-full bg-mainColorDark text-white flex items-center justify-center font-bold text-sm shadow-md">1</div>
-            <h2 class="text-2xl font-bold text-gray-900">Select Date & Time</h2>
-          </div>
-          
-          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-8">
-            
-            <div class="flex-1">
-              <div class="flex justify-between items-center mb-6">
-                <h3 class="font-bold text-gray-900">October 2024</h3>
-                <div class="flex gap-2 text-fontGray2">
-                  <button class="hover:text-mainColorDark transition-colors"><i class="fa-solid fa-chevron-left text-xs"></i></button>
-                  <button class="hover:text-mainColorDark transition-colors"><i class="fa-solid fa-chevron-right text-xs"></i></button>
-                </div>
-              </div>
-              <div class="grid grid-cols-7 gap-y-4 text-center text-xs font-medium text-fontGray2 mb-2">
-                <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
-              </div>
-              <div class="grid grid-cols-7 gap-y-4 gap-x-1 text-center text-sm font-semibold">
-                <div class="text-gray-300">28</div><div class="text-gray-300">29</div><div class="text-gray-300">30</div>
-                <button (click)="selectDate(1)" [class]="selectedDate() === 1 ? 'bg-mainColorDark text-white rounded-lg w-8 h-8 mx-auto flex items-center justify-center' : 'w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg'">1</button>
-                <button (click)="selectDate(2)" [class]="selectedDate() === 2 ? 'bg-mainColorDark text-white rounded-lg w-8 h-8 mx-auto flex items-center justify-center' : 'w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg'">2</button>
-                <button (click)="selectDate(3)" [class]="selectedDate() === 3 ? 'bg-mainColorDark text-white rounded-lg w-8 h-8 mx-auto flex items-center justify-center shadow-md' : 'w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg'">3</button>
-                <button (click)="selectDate(4)" [class]="selectedDate() === 4 ? 'bg-mainColorDark text-white rounded-lg w-8 h-8 mx-auto flex items-center justify-center' : 'w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg'">4</button>
-                <button (click)="selectDate(5)" class="w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg">5</button>
-                <button (click)="selectDate(6)" class="w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg">6</button>
-                <button (click)="selectDate(7)" class="w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg">7</button>
-                <button (click)="selectDate(8)" class="w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg">8</button>
-                <button (click)="selectDate(9)" class="w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg">9</button>
-                <button (click)="selectDate(10)" class="w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg">10</button>
-                <button (click)="selectDate(11)" class="w-8 h-8 mx-auto flex items-center justify-center hover:bg-gray-100 rounded-lg">11</button>
-              </div>
-            </div>
-
-            <div class="flex-1 border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-8">
-              <h3 class="font-bold text-gray-900 mb-4">Available Slots</h3>
-              <div class="grid grid-cols-2 gap-3 mb-6">
-                @for (slot of timeSlots; track slot.time) {
-                  <button 
-                    (click)="selectTime(slot.time, slot.disabled)"
-                    [disabled]="slot.disabled"
-                    [class]="
-                      slot.disabled ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-transparent' :
-                      selectedTime() === slot.time ? 'bg-mainColorDark text-white border-mainColorDark shadow-md' : 
-                      'bg-white text-fontGray1 border-gray-200 hover:border-mainColorDark hover:text-mainColorDark'
-                    "
-                    class="py-2.5 rounded-lg text-sm font-semibold border transition-colors">
-                    {{ slot.time }}
-                  </button>
-                }
-              </div>
-              <div class="bg-beigeBgBadge rounded-lg p-3 text-[11px] text-beigeTextBadge font-medium border border-[#ece4d3]">
-                <strong class="font-bold">Note:</strong> Bookings are in 90-minute blocks to ensure space sanitization between residents.
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <section>
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-8 h-8 rounded-full bg-mainColorDark text-white flex items-center justify-center font-bold text-sm shadow-md">2</div>
-            <h2 class="text-2xl font-bold text-gray-900">Choose Room Type</h2>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            @for (room of rooms(); track room.id) {
-              <div 
-                (click)="selectRoom(room.id)"
-                [class]="selectedRoomId() === room.id ? 'border-mainColorDark ring-1 ring-mainColorDark shadow-lg scale-[1.02]' : 'border-gray-200 hover:border-gray-300 shadow-sm'"
-                class="bg-white rounded-xl overflow-hidden border cursor-pointer transition-all duration-200 relative flex flex-col">
-                
-                @if (selectedRoomId() === room.id) {
-                  <div class="absolute top-3 right-3 bg-mainColorDark text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full z-10 shadow-md">
-                    Selected
-                  </div>
-                }
-
-                <div class="h-48 bg-gray-200 overflow-hidden relative">
-                  @if (selectedRoomId() !== room.id) { <div class="absolute inset-0 bg-black/10 z-0"></div> }
-                  <img [src]="room.image" [alt]="room.name" class="w-full h-full object-cover">
-                </div>
-                
-                <div class="p-5 flex-1 flex flex-col">
-                  <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-lg font-bold text-gray-900">{{ room.name }}</h3>
-                    <div class="text-mainColorDark font-bold text-sm">${{ room.price }}<span class="text-[10px] text-fontGray2 font-medium">/hr</span></div>
-                  </div>
-                  
-                  <div class="flex items-center gap-4 text-[11px] text-fontGray2 font-semibold mb-4">
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-users"></i> {{ room.capacity }}</span>
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-wifi"></i> {{ room.features }}</span>
-                  </div>
-                  
-                  <p class="text-xs text-fontGray1 leading-relaxed mt-auto">{{ room.description }}</p>
-                </div>
-              </div>
-            }
-          </div>
-        </section>
-
-        <section>
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-8 h-8 rounded-full bg-mainColorDark text-white flex items-center justify-center font-bold text-sm shadow-md">3</div>
-            <h2 class="text-2xl font-bold text-gray-900">Additional Services</h2>
-          </div>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            @for (addon of addons(); track addon.id) {
-              <div 
-                (click)="toggleAddon(addon.id)"
-                [class]="addon.selected ? 'border-mainColorDark bg-white shadow-md' : 'border-gray-200 bg-gray-50/50 hover:bg-white'"
-                class="rounded-xl p-4 border cursor-pointer flex items-start gap-3 transition-colors">
-                
-                <div 
-                  [class]="addon.selected ? 'bg-mainColorDark border-mainColorDark text-white' : 'bg-white border-gray-300 text-transparent'"
-                  class="w-5 h-5 rounded border flex items-center justify-center mt-0.5 shrink-0 transition-colors">
-                  <i class="fa-solid fa-check text-[10px]"></i>
-                </div>
-                
-                <div>
-                  <h4 class="text-sm font-bold text-gray-900 mb-0.5">{{ addon.name }}</h4>
-                  <p class="text-xs font-semibold text-fontGray2">+${{ addon.price }}.00</p>
-                </div>
-              </div>
-            }
-          </div>
-        </section>
-
-        <section>
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-8 h-8 rounded-full bg-mainColorDark text-white flex items-center justify-center font-bold text-sm shadow-md">4</div>
-            <h2 class="text-2xl font-bold text-gray-900">Payment Method</h2>
-          </div>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div 
-              (click)="setPaymentMethod('online')"
-              [class]="paymentMethod() === 'online' ? 'border-mainColorDark ring-1 ring-mainColorDark bg-white shadow-md' : 'border-gray-200 bg-white hover:border-gray-300'"
-              class="rounded-xl p-5 border cursor-pointer flex items-center justify-between transition-all">
-              <div class="flex items-center gap-4">
-                <i class="fa-regular fa-credit-card text-mainColorDark text-xl"></i>
-                <div>
-                  <h4 class="text-sm font-bold text-gray-900">Online Visa</h4>
-                  <p class="text-[10px] text-fontGray2 mt-0.5">Secure instant payment</p>
-                </div>
-              </div>
-              @if (paymentMethod() === 'online') {
-                <i class="fa-solid fa-circle-check text-mainColorDark text-lg"></i>
-              }
-            </div>
-
-            <div 
-              (click)="setPaymentMethod('cash')"
-              [class]="paymentMethod() === 'cash' ? 'border-mainColorDark ring-1 ring-mainColorDark bg-white shadow-md' : 'border-gray-200 bg-white hover:border-gray-300'"
-              class="rounded-xl p-5 border cursor-pointer flex items-center justify-between transition-all">
-              <div class="flex items-center gap-4">
-                <i class="fa-solid fa-money-bill-wave text-fontGray1 text-xl"></i>
-                <div>
-                  <h4 class="text-sm font-bold text-gray-900">Cash on Arrival</h4>
-                  <p class="text-[10px] text-fontGray2 mt-0.5">Pay at the concierge desk</p>
-                </div>
-              </div>
-              @if (paymentMethod() === 'cash') {
-                <i class="fa-solid fa-circle-check text-mainColorDark text-lg"></i>
-              }
-            </div>
-          </div>
-        </section>
-
-      </div>
-
-      <div class="lg:col-span-1 lg:sticky lg:top-8 space-y-6">
-        
-        <div class="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-100">
-          <h2 class="text-xl font-extrabold text-gray-900 mb-6">Reservation Summary</h2>
-          
-          <div class="space-y-5">
-            <div>
-              <div class="flex justify-between items-start mb-1">
-                <span class="text-[10px] font-bold text-fontGray2 uppercase tracking-wider">Space</span>
-                <span class="text-sm font-bold text-gray-900">${{ selectedRoom().price }}.00</span>
-              </div>
-              <p class="text-sm font-bold text-mainColorDark">{{ selectedRoom().name }}</p>
-            </div>
-
-            <div>
-              <div class="flex justify-between items-start mb-1">
-                <span class="text-[10px] font-bold text-fontGray2 uppercase tracking-wider">Date & Time</span>
-                <span class="text-[10px] font-semibold text-fontGray2">90 mins</span>
-              </div>
-              <p class="text-sm font-bold text-mainColorDark">Oct {{ selectedDate() }}, 2024</p>
-              <p class="text-[11px] text-fontGray2 mt-0.5">{{ selectedTime() }} - {{ selectedTime() }} (+90m)</p>
-            </div>
-
-            @if (addonsTotal() > 0) {
-              <div>
-                <div class="flex justify-between items-start mb-1">
-                  <span class="text-[10px] font-bold text-fontGray2 uppercase tracking-wider">Add-ons</span>
-                  <span class="text-sm font-bold text-gray-900">${{ addonsTotal() }}.00</span>
-                </div>
-                <div class="flex flex-col gap-1">
-                  @for (addon of addons(); track addon.id) {
-                    @if (addon.selected) {
-                      <p class="text-sm font-bold text-mainColorDark">{{ addon.name }}</p>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start smooth-appear">
+      <div class="lg:col-span-4 space-y-12">
+        <section class="mb-4">
+          <form
+            [formGroup]="formCheckBookingAvailability"
+            (ngSubmit)="checkIsvAvailableRoomDate()"
+            class="flex flex-col items-center gap-6 grow bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+          >
+            <div class="flex flex-row flex-wrap lg:flex-nowrap gap-4">
+              <div class="flex flex-row flex-wrap lg:flex-nowrap gap-4 grow">
+                <div class="grow">
+                  <label for="startTime" class="block mb-2 text-sm font-medium text-heading"
+                    >Start time:</label
+                  >
+                  <div class="relative">
+                    <input
+                      formControlName="startTimeSelected"
+                      type="datetime-local"
+                      id="startTime"
+                      class="block w-full p-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight shadow-xs placeholder:text-body"
+                      required
+                    />
+                    @if (
+                      formCheckBookingAvailability.get('startTimeSelected')?.invalid &&
+                      formCheckBookingAvailability.get('startTimeSelected')?.touched &&
+                      formCheckBookingAvailability.get('startTimeSelected')?.hasError('required')
+                    ) {
+                      <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                        <p class="flex items-start gap-2">
+                          <i class="fa-solid fa-right-long p-0.5"></i>
+                          <span>Start time is required.</span>
+                        </p>
+                      </div>
                     }
-                  }
+                  </div>
+                </div>
+                <div class="grow">
+                  <label for="endTime" class="block mb-2 text-sm font-medium text-heading"
+                    >End time:</label
+                  >
+                  <div class="relative">
+                    <input
+                      type="datetime-local"
+                      id="endTime"
+                      formControlName="endTimeSelected"
+                      class="block w-full p-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight shadow-xs placeholder:text-body"
+                      required
+                    />
+                    @if (
+                      formCheckBookingAvailability.get('endTimeSelected')?.invalid &&
+                      formCheckBookingAvailability.get('endTimeSelected')?.touched &&
+                      formCheckBookingAvailability.get('endTimeSelected')?.hasError('required')
+                    ) {
+                      <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                        <p class="flex items-start gap-2">
+                          <i class="fa-solid fa-right-long p-0.5"></i>
+                          <span>End time is required.</span>
+                        </p>
+                      </div>
+                    }
+                  </div>
                 </div>
               </div>
-            }
 
-            <div class="border-t border-gray-100 my-4"></div>
+              <button
+                type="submit"
+                class="grow cursor-pointer text-white bg-mainColorLight border border-transparent hover:bg-mainColorDark focus:ring-4 focus:ring-mainColorLight-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+              >
+                Check availability
+              </button>
+            </div>
+          </form>
+        </section>
 
-            <div class="flex justify-between items-end mb-8">
-              <span class="text-base font-bold text-gray-900">Total</span>
-              <span class="text-3xl font-black text-mainColorDark">${{ grandTotal() }}.00</span>
+        <section
+          class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-center flex-col gap-8"
+        >
+          @if (showBtnFilter()) {
+            <button
+              (click)="resetFilter()"
+              class="smooth-appear grow cursor-pointer text-white bg-orange-700 hover:bg-orange-800 border border-transparent focus:ring-4 focus:ring-mainColorLight-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              <i class="fa-solid fa-arrows-rotate"></i>
+              Reset Filter
+            </button>
+          }
+
+          <div class="max-w-[95%] mx-auto mt-5 smooth-appear">
+            <div class="flex items-center justify-between mb-6">
+              @if (workspaces().length > 0) {
+                <h2 class="text-2xl font-bold text-mainColorDark">Available Workspaces</h2>
+
+                <span
+                  class="bg-badgeBgColor text-badgeTextColor text-sm font-medium px-3 py-1 rounded-full"
+                >
+                  {{ workspaces().length }} Spaces
+                </span>
+              }
             </div>
 
-            <button class="w-full bg-mainColorDark hover:bg-mainColorLight text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-colors text-sm">
-              Confirm Reservation
-            </button>
+            <div class="flex flex-col gap-4 mb-5">
+              @if (workspaces().length > 0) {
+                <div
+                  class="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border border-gray-100 rounded-xl text-xs font-bold text-fontGray1 uppercase tracking-wider"
+                >
+                  <div class="text-start col-span-1">Id</div>
+                  <div class="text-center col-span-3">Workspace Details</div>
+                  <div class="text-center col-span-2">Type & Status</div>
+                  <div class="text-center col-span-4">Location & Capacity</div>
+                  <div class="text-end col-span-2">Price</div>
+                </div>
+              }
 
-            <p class="text-[9px] text-center text-fontGray2 mt-4 leading-relaxed max-w-[250px] mx-auto">
-              By confirming, you agree to our <a href="#" class="underline hover:text-mainColorDark">Terms of Service</a> and the <a href="#" class="underline hover:text-mainColorDark">Sanctuary Code of Conduct</a>.
-            </p>
+              @for (workspace of workspaces(); track workspace.id; let i = $index) {
+                <div
+                  (click)="selectRoom(workspace.id)"
+                  class="smooth-appear cursor-pointer items-center bg-white border border-gray-100 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-200 relative overflow-hidden"
+                  [class]="
+                    selectedRoomId() === workspace.id
+                      ? 'border-mainColorDark ring-1 ring-mainColorDark shadow-lg smooth-scale'
+                      : 'border-gray-200 hover:border-gray-300 shadow-sm'
+                  "
+                >
+                  @if (selectedRoomId() === workspace.id) {
+                    <button
+                      (click)="checkIsAvailableRoomId()"
+                      class="opacity-scale cursor-pointer absolute inset-be-0 inset-s-0 bg-yellow-700 hover:bg-yellow-900 text-white text-2xs font-bold uppercase tracking-wider px-3 py-3 rounded-tr z-10 shadow-md"
+                    >
+                      Check
+                    </button>
+                    <button
+                      (click)="showModalForBook(workspace.id)"
+                      class="opacity-scale cursor-pointer absolute inset-be-0 inset-e-0 bg-green-700 hover:bg-green-900 text-white text-2xs font-bold uppercase tracking-wider px-3 py-3 rounded-tl z-10 shadow-md"
+                    >
+                      Book Now
+                    </button>
+                  }
+                  <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                    @if (workspace.isFeatured === 1) {
+                      <div
+                        class="absolute top-0 left-0 w-1.5 h-full bg-secColorLight"
+                        title="Custom Workspace"
+                      ></div>
+                    }
+
+                    <div class="col-span-1 lg:col-span-1 flex flex-col items-start">
+                      <h3
+                        class="text-base font-bold text-mainColorDark truncate"
+                        [title]="workspace.workspaceName"
+                      >
+                        {{ workspace.id }}
+                      </h3>
+                    </div>
+
+                    <div class="flex items-center col-span-1 lg:col-span-3 flex-col pl-2">
+                      <div class="flex items-center gap-2">
+                        <h3
+                          class="text-base font-bold text-mainColorDark truncate"
+                          [title]="workspace.workspaceName"
+                        >
+                          {{ workspace.workspaceName }}
+                        </h3>
+                        @if (workspace.isFeatured === 1) {
+                          <i class="fa-solid fa-star text-secColorLight text-xs" title="VIP"></i>
+                        }
+                      </div>
+                      <p class="text-xs font-medium text-mainColorLight mt-1">
+                        {{ workspace.workspaceCode }}
+                      </p>
+                    </div>
+
+                    <div
+                      class="col-span-1 lg:col-span-2 flex flex-row lg:flex-col gap-2 lg:gap-1.5 items-center"
+                    >
+                      <span
+                        class="px-2.5 py-1 bg-mainExtraLight text-mainColorDark text-xs font-medium rounded-full"
+                      >
+                        {{ workspace.typeName }}
+                      </span>
+                    </div>
+
+                    <div
+                      class="col-span-1 lg:col-span-4 flex flex-row lg:flex-col items-center gap-4 lg:gap-1.5 text-sm text-fontGray1"
+                    >
+                      <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-users text-linksColor2 text-xs w-4"></i>
+                        <span
+                          ><strong class="text-mainColorDark">{{ workspace.capacity }}</strong>
+                          Persons</span
+                        >
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-building text-linksColor2 text-xs w-4"></i>
+                        <span
+                          >Floor:
+                          <strong class="text-mainColorDark">{{ workspace.floorNumber }}</strong>
+                          | Room:
+                          <strong class="text-mainColorDark">{{
+                            workspace.roomNumber
+                          }}</strong></span
+                        >
+                      </div>
+                    </div>
+
+                    <div
+                      class="col-span-1 lg:col-span-2 flex flex-row lg:flex-col items-end border-t lg:border-0 border-gray-100 pt-3 lg:pt-0 mt-2 lg:mt-0"
+                    >
+                      <span class="text-xs text-fontGray1 block lg:hidden">Hourly Rate: </span>
+                      <div>
+                        <span class="text-lg font-bold text-mainColorDark">{{
+                          workspace.priceHourly
+                        }}</span>
+                        <span class="text-xs font-medium text-fontGray2 ml-1">EGP/hr</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex flex-col text-center">
+                    <p class="pt-5 mt-5 border-t border-fontGray2/15">
+                      {{ workspace.description }}
+                    </p>
+                  </div>
+                </div>
+              } @empty {
+                <div class="py-16 text-center">
+                  <i class="fa-solid fa-people-roof text-5xl text-gray-200 mb-4"></i>
+                  <h3 class="text-lg font-bold text-mainColorDark">No Workspaces Found</h3>
+                </div>
+              }
+            </div>
           </div>
-        </div>
-
-        <div class="bg-gray-100 rounded-xl p-5 border border-gray-200 flex items-start gap-4">
-          <img src="https://i.pravatar.cc/150?img=32" alt="Concierge" class="w-10 h-10 rounded-full shadow-sm object-cover shrink-0">
-          <div>
-            <h4 class="text-xs font-bold text-mainColorDark mb-1">Need Assistance?</h4>
-            <p class="text-[11px] text-fontGray1 leading-relaxed">Sarah is online to help with custom layouts or special requests.</p>
-          </div>
-        </div>
-
+        </section>
       </div>
-
     </div>
   </div>
 </div>
+
+@if (isCheckModalVisible()) {
+  <div
+    class="smooth-appear bg-black/50 overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full md:inset-0 h-full max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <button
+          (click)="showAndCloseCheckModalByRoom()"
+          type="button"
+          class="absolute cursor-pointer top-3 inset-e-2.5 text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+        >
+          <i class="fa-solid fa-x"></i>
+          <span class="sr-only">Close modal</span>
+        </button>
+        <div class="p-4 md:p-5 flex flex-col gap-10 items-center">
+          @if (isCheckRoomAvailable()) {
+            <i class="fa-solid fa-circle-check scale-500 text-green-600"></i>
+            <h3 class="text-body font-bold text-2xl">Room Is Available</h3>
+            <div class="flex items-center space-x-4 justify-center">
+              <button
+                (click)="showModalForBook(selectedRoomId())"
+                type="button"
+                class="text-white bg-green-700 cursor-pointer box-border border border-default-medium hover:bg-green-900 focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+              >
+                Book Now
+              </button>
+            </div>
+          } @else {
+            <i class="fa-solid fa-x scale-500 text-red-600"></i>
+            <h3 class="text-body font-bold text-2xl">Room Is Not Available</h3>
+            <div class="flex items-center space-x-4 justify-center">
+              <button
+                (click)="showAndCloseCheckModalByRoom()"
+                type="button"
+                class="text-white bg-red-700 cursor-pointer box-border border border-default-medium hover:bg-red-900 focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+              >
+                Cancel
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (isModalBookVisible()) {
+  <div
+    class="smooth-appear overflow-y-auto overflow-x-hidden fixed z-50 flex justify-center items-center w-full inset-0 h-full max-h-full bg-black/50"
+  >
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Confirm New Booking</h3>
+          <button
+            (click)="hideModalForBook()"
+            type="button"
+            class="cursor-pointer text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-x"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+
+        <form [formGroup]="formConfirmBooking" (ngSubmit)="isLoggedInUser()">
+          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+            <div class="col-span-2 sm:col-span-1">
+              <label for="startDatetime" class="block mb-2.5 text-sm font-medium text-heading"
+                >Start Time</label
+              >
+              <input
+                required
+                type="datetime-local"
+                formControlName="startDatetime"
+                id="startDatetime"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              />
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <label for="endDatetime" class="block mb-2.5 text-sm font-medium text-heading"
+                >End Time</label
+              >
+              <input
+                required
+                type="datetime-local"
+                id="endDatetime"
+                formControlName="endDatetime"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              />
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <label for="durationType" class="block mb-2.5 text-sm font-medium text-heading"
+                >Duration Type</label
+              >
+              <select
+                required
+                id="durationType"
+                formControlName="durationType"
+                class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight shadow-xs placeholder:text-body"
+              >
+                <option selected value="HOURLY" selected>Hourly</option>
+                <option value="DAILY">Daily</option>
+                <option value="MONTHLY">Monthly</option>
+              </select>
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <label for="numAttendees" class="block mb-2.5 text-sm font-medium text-heading"
+                >Number of Attendees</label
+              >
+              <input
+                required
+                type="number"
+                id="numAttendees"
+                formControlName="numAttendees"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                min="1"
+              />
+            </div>
+
+            <div class="col-span-2">
+              <label for="purpose" class="block mb-2.5 text-sm font-medium text-heading"
+                >Purpose</label
+              >
+              <input
+                required
+                type="text"
+                id="purpose"
+                formControlName="purpose"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                value="Meeting"
+              />
+            </div>
+
+            <div class="col-span-2">
+              <label for="internalNotes" class="block mb-2.5 text-sm font-medium text-heading"
+                >Internal Notes</label
+              >
+              <textarea
+                required
+                id="internalNotes"
+                formControlName="internalNotes"
+                rows="3"
+                class="block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight w-full p-3.5 shadow-xs placeholder:text-body"
+                placeholder="Write any internal notes here..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+            <button
+              type="submit"
+              class="cursor-pointer inline-flex items-center gap-1 text-white bg-mainColorLight hover:bg-mainColorDark box-border border border-transparent focus:ring-4 focus:ring-mainColorLight-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              <i class="fa-solid fa-plus"></i>
+              Confirm Booking
+            </button>
+            <button
+              (click)="hideModalForBook()"
+              type="button"
+              class="cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
+
+@if (isModalConfirmBookingVisible()) {
+  <div
+    class="smooth-appear flex items-center justify-center fixed inset-0 z-50 w-full p-4 bg-black/50 overflow-x-hidden overflow-y-auto md:inset-0 h-full max-h-full"
+  >
+    <div class="relative w-full max-w-md max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm px-2 py-4"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-1">
+          <h3 class="text-lg font-medium text-center text-heading">Confirm payment details</h3>
+          <button
+            (click)="showModalSuccess()"
+            type="button"
+            class="cursor-pointer text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-x"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <p class="text-[1rem] font-medium text-center text-orange-600 pt-1">
+          Send the booking fee using any of these methods
+        </p>
+        <div
+          class="text-[1rem] font-medium text-center text-mainColorDark pt-1 flex flex-row flex-wrap items-center justify-between"
+        >
+          <p>
+            Booking Ref:
+            <Span class="text-green-600 font-bold">{{ resAfterBooking().bookingRef }}</Span>
+          </p>
+          <p>
+            Number Attendees:
+            <Span class="text-green-600 font-bold">{{ resAfterBooking().numAttendees }}</Span>
+          </p>
+        </div>
+        <div
+          class="text-[1rem] font-medium text-center text-mainColorDark pt-1 flex flex-row flex-wrap items-center justify-between"
+        >
+          <p>
+            Status:
+            <Span class="text-red-600 font-bold">{{ resAfterBooking().status }}</Span>
+          </p>
+          <p>
+            Total Amount:
+            <Span class="text-green-600 font-bold"
+              >{{ resAfterBooking().totalAmount }} {{ resAfterBooking().currency }}</Span
+            >
+          </p>
+        </div>
+
+        <div class="space-y-4 md:space-y-6 py-4 md:py-6">
+          <ul class="flex flex-col gap-4 text-sm text-gray-600 w-full">
+            <li class="flex items-center gap-3">
+              <div
+                class="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-600"
+              >
+                <i class="fa-solid fa-building-columns text-lg"></i>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-bold text-gray-800">Bank transfer (account number)</span>
+                <span class="text-gray-500 font-medium">1234 5678 9012 3456</span>
+              </div>
+            </li>
+
+            <li class="flex items-center gap-3">
+              <div
+                class="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-purple-50 text-purple-600"
+              >
+                <i class="fa-solid fa-bolt text-lg"></i>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-bold text-gray-800">InstaPay address</span>
+                <span class="text-gray-500 font-medium">misa7a@instapay</span>
+              </div>
+            </li>
+
+            <li class="flex items-center gap-3">
+              <div
+                class="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-red-50 text-red-500"
+              >
+                <i class="fa-solid fa-wallet text-lg"></i>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-bold text-gray-800">Electronic wallet (cash)</span>
+                <span class="text-gray-500 font-medium">01012345678</span>
+              </div>
+            </li>
+
+            <li class="flex items-start gap-3 pt-3 mt-1 border-t border-gray-200">
+              <div
+                class="shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-green-50 text-green-600"
+              >
+                <i class="fa-solid fa-envelope-open-text text-lg"></i>
+              </div>
+              <div class="flex flex-col leading-relaxed">
+                <span class="font-bold text-gray-800">Payment confirmation</span>
+                <span class="text-gray-500"
+                  >Send the transfer receipt (screenshot) with
+                  <span class="text-green-600 font-bold">Booking Ref</span>
+                  Number to:</span
+                >
+                <a
+                  href="mailto:payments@misa7a.com"
+                  class="text-mainColorLight hover:underline font-bold mt-1"
+                >
+                  payments@misa7a.com
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="flex items-center justify-center border-t border-default space-x-4 pt-4 md:pt-5"
+        >
+          <button
+            (click)="showModalSuccess()"
+            type="button"
+            class="cursor-pointer text-white bg-mainColorLight box-border border border-transparent hover:bg-mainColorDark focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+          >
+            Informed
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

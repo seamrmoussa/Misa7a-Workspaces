@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-mainBg py-16 px-4 sm:px-6 lg:px-8 font-sans">
   <div class="max-w-6xl mx-auto">
-    <div class="mb-12">
+    <div class="mb-12 smooth-appear">
       <h1 class="text-4xl md:text-5xl font-extrabold text-mainColorDark mb-4 tracking-tight">
         Guest Perspectives
       </h1>
@@ -10,153 +10,234 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+    <div class="flex flex-wrap gap-3 smooth-appear">
       <div
-        class="bg-white border border-gray-100 rounded-2xl p-8 flex flex-col items-center justify-center shadow-sm"
+        class="grow md:grow-2 bg-white border border-gray-100 rounded-2xl p-8 flex flex-col items-center justify-center shadow-sm"
       >
-        <span class="text-7xl font-black text-mainColorDark mb-2 tracking-tighter">4.9</span>
-        <div class="flex gap-1 text-secColorDark text-xl mb-3">
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-          <i class="fa-solid fa-star"></i>
-        </div>
-        <p class="text-sm text-fontGray1 font-medium">Based on 1,248 reviews</p>
-      </div>
-
-      <div
-        class="lg:col-span-2 bg-[#f4f5f7] border border-gray-100 rounded-2xl p-8 shadow-sm flex flex-col justify-center"
-      >
-        <h3 class="text-lg font-bold text-mainColorDark mb-6">Review Breakdown</h3>
-
-        <div class="space-y-4">
-          <div class="flex items-center gap-4">
-            <span class="text-sm font-semibold text-fontGray1 w-12 shrink-0">5 Star</span>
-            <div class="flex-1 bg-gray-200/80 rounded-full h-2">
-              <div class="bg-mainColorDark h-2 rounded-full" style="width: 88%"></div>
-            </div>
-            <span class="text-sm font-medium text-fontGray1 w-10 text-right shrink-0">88%</span>
+        <span class="text-7xl font-black text-mainColorDark mb-2 tracking-tighter">{{
+          totalAvg().averageRating | number: '1.1-1'
+        }}</span>
+        <div class="relative inline-flex items-center text-xl mb-3">
+          <div class="flex gap-1 text-mainExtraLight">
+            @for (star of [1, 2, 3, 4, 5]; track star) {
+              <i class="fa-solid fa-star"></i>
+            }
           </div>
-
-          <div class="flex items-center gap-4">
-            <span class="text-sm font-semibold text-fontGray1 w-12 shrink-0">4 Star</span>
-            <div class="flex-1 bg-gray-200/80 rounded-full h-2">
-              <div class="bg-linksColor2 h-2 rounded-full" style="width: 10%"></div>
-            </div>
-            <span class="text-sm font-medium text-fontGray1 w-10 text-right shrink-0">10%</span>
-          </div>
-
-          <div class="flex items-center gap-4">
-            <span class="text-sm font-semibold text-fontGray1 w-12 shrink-0">3 Star</span>
-            <div class="flex-1 bg-gray-200/80 rounded-full h-2">
-              <div class="bg-gray-400 h-2 rounded-full" style="width: 2%"></div>
-            </div>
-            <span class="text-sm font-medium text-fontGray1 w-10 text-right shrink-0">2%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-      <div class="flex flex-wrap gap-2">
-        @for (filter of filters; track filter) {
-          <button
-            (click)="setFilter(filter)"
-            [class]="
-              activeFilter === filter
-                ? 'bg-mainColorDark text-white px-5 py-2 rounded-full text-sm font-semibold shadow-sm transition-colors'
-                : 'bg-gray-200/70 hover:bg-gray-300/70 text-linksColor1 px-5 py-2 rounded-full text-sm font-semibold transition-colors'
-            "
+          <div
+            class="absolute top-0 left-0 h-full overflow-hidden"
+            [style.width.%]="(totalAvg().averageRating / 5) * 100"
           >
-            {{ filter }}
-          </button>
-        }
-      </div>
-
-      <button
-        class="bg-white border border-gray-200 text-fontGray1 px-5 py-2 rounded-full text-sm font-semibold shadow-sm flex items-center gap-3 hover:bg-gray-50 transition-colors"
-      >
-        Filter By Room Type <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
-      </button>
-    </div>
-
-    <div
-      class="bg-white border border-gray-100 rounded-2xl shadow-sm divide-y divide-gray-100 mb-10 overflow-hidden"
-    >
-      @for (review of reviews; track review.id) {
-        <div class="p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-12">
-          <div class="w-full md:w-56 shrink-0 flex flex-col items-start">
-            <img
-              [src]="review.avatar"
-              class="w-16 h-16 rounded-full object-cover mb-4 border border-gray-100 shadow-sm"
-              alt="{{ review.author }}"
-            />
-            <h4 class="text-mainColorDark font-bold text-lg leading-tight mb-1">
-              {{ review.author }}
-            </h4>
-            <p class="text-xs text-fontGray1 font-medium mb-3">{{ review.role }}</p>
-
-            <div class="flex gap-1 text-secColorDark text-2xs">
-              @for (star of getStars(review.stars); track $index) {
+            <div class="flex gap-1 text-beigePointBadge w-max">
+              @for (star of [1, 2, 3, 4, 5]; track star) {
                 <i class="fa-solid fa-star"></i>
               }
-              @for (empty of getStars(5 - review.stars); track $index) {
-                <i class="fa-regular fa-star text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+        <p class="text-sm text-fontGray1 font-medium">
+          Based on {{ totalAvg().totalReviews | number }} reviews
+        </p>
+      </div>
+      <div class="grow-2 md:grow">
+        <div
+          class="bg-white border border-gray-100 rounded-2xl p-8 shadow-sm flex flex-col items-center justify-center"
+        >
+          <h3 class="text-lg font-bold text-mainColorDark mb-6">Review Breakdown</h3>
+
+          <div class="gap-4 flex flex-col-reverse w-full">
+            @for (rateCount of ratingCounts(); track $index) {
+              <div class="flex flex-wrap items-center justify-between lg:justify-around">
+                <div class="flex items-center justify-start">
+                  <span class="flex gap-0.5 text-sm font-semibold text-fontGray1 w-12 shrink-0"
+                    >{{ rateCount.rating }} <span> - </span>
+                    @for (star of getStarsArray(rateCount.rating); track $index) {
+                      <i class="fa-solid fa-star text-beigePointBadge text-sm md:text-lg"></i>
+                    }
+                  </span>
+                </div>
+                <div class="flex items-center justify-start gap-4">
+                  <p>Total Review</p>
+                  <span class="text-sm font-medium text-fontGray1 text-right shrink-0">{{
+                    rateCount.totalReviews
+                  }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-6 w-full p-4 md:p-6 bg-mainBg min-h-screen">
+      @for (eval of allReviewData(); track eval.id) {
+        <div
+          class="smooth-appear w-full bg-white border border-mainExtraLight rounded-2xl shadow-sm p-5 md:p-6 hover:shadow-md transition-shadow duration-200"
+        >
+          <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+            <div class="flex items-center gap-3">
+              <div
+                class="shrink-0 w-12 h-12 rounded-full bg-mainExtraLight flex items-center justify-center text-mainColorLight"
+              >
+                <i class="fa-solid fa-user text-xl"></i>
+              </div>
+
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-lg font-bold text-mainColorDark">{{ eval.userFullName }}</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col items-end gap-2">
+              <p class="text-xs text-fontGray2">
+                {{ eval.createdOn | date: 'dd MMM yyyy, h:mm a' }}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 mb-3">
+            <div class="flex items-center gap-1 flex-row">
+              @for (star of [1, 2, 3, 4, 5]; track star) {
+                @if (eval.rating >= star) {
+                  <i class="fa-solid fa-star text-beigePointBadge text-sm"></i>
+                } @else {
+                  <i class="fa-regular fa-star text-mainExtraLight text-sm"></i>
+                }
               }
             </div>
+            <span class="text-sm font-bold text-mainColorDark">{{
+              eval.rating | number: '1.1-1'
+            }}</span>
           </div>
 
-          <div class="flex-1">
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
-              <span
-                class="bg-badgeBgColor text-badgeTextColor px-3 py-1.5 text-2xs font-bold uppercase rounded tracking-widest w-max"
-              >
-                {{ review.roomType }}
-              </span>
-              <span class="text-xs text-fontGray2 font-medium mt-1">{{ review.date }}</span>
-            </div>
-
-            <h3 class="text-xl font-bold text-mainColorDark mb-3">
-              {{ review.title }}
-            </h3>
-
-            <p class="text-fontGray1 text-sm leading-relaxed">
-              {{ review.content }}
+          <div class="mb-5">
+            <h4 class="text-md font-bold text-mainColorDark mb-1">{{ eval.title }}</h4>
+            <p class="text-fontGray1 text-sm leading-relaxed whitespace-pre-wrap">
+              {{ eval.body }}
             </p>
           </div>
+          @if (eval.adminResponse) {
+            <div class="mt-4 bg-mainBg border border-mainExtraLight rounded-xl p-4 relative pr-12">
+              <div
+                class="absolute right-4 top-4 w-6 h-6 rounded-full bg-mainColorLight flex items-center justify-center text-white"
+              >
+                <i class="fa-solid fa-reply text-xs scale-x-[-1]"></i>
+              </div>
+
+              <div class="flex items-center justify-between mb-2">
+                <h5 class="text-sm font-bold text-mainColorDark">
+                  Misa7a response
+                  <span class="text-xs font-normal text-fontGray2 mr-1">
+                    By: ({{ eval.adminResponse.responderFullName }})</span
+                  >
+                </h5>
+                <span class="text-xs text-fontGray2">{{
+                  eval.adminResponse.createdOn | date: 'mediumDate'
+                }}</span>
+              </div>
+              <p class="text-sm text-linksColor1 leading-relaxed whitespace-pre-wrap">
+                {{ eval.adminResponse.responseBody }}
+              </p>
+            </div>
+          } @else {
+            @if (roleType() === 'ADMIN' || roleType() === 'RECEPTIONIST') {
+              <div class="mt-4 pt-4 border-t border-mainExtraLight flex justify-end">
+                <button
+                  (click)="showModalAdminReply(eval.id)"
+                  type="submit"
+                  class="text-sm font-medium text-mainColorLight hover:text-mainColorDark cursor-pointer flex items-center gap-2 transition-colors"
+                >
+                  <i class="fa-solid fa-reply scale-x-[-1]"></i>
+                  Add a reply
+                </button>
+              </div>
+            }
+          }
+        </div>
+      } @empty {
+        <div
+          class="flex flex-col items-center justify-center w-full py-16 bg-white border border-dashed border-mainExtraLight rounded-2xl"
+        >
+          <i class="fa-regular fa-star-half-stroke text-5xl text-mainExtraLight mb-4"></i>
+          <h3 class="text-lg font-bold text-mainColorDark">No reviews</h3>
+          <p class="text-fontGray2 text-sm mt-1">No client has evaluated the workspaces yet.</p>
         </div>
       }
     </div>
-
-    <div class="flex justify-center items-center gap-2">
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-linksColor1 hover:bg-gray-50 transition-colors shadow-sm"
-      >
-        <i class="fa-solid fa-chevron-left text-sm"></i>
-      </button>
-
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg bg-mainColorDark text-white font-bold shadow-sm"
-      >
-        1
-      </button>
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-linksColor1 hover:bg-gray-50 font-semibold transition-colors shadow-sm"
-      >
-        2
-      </button>
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-linksColor1 hover:bg-gray-50 font-semibold transition-colors shadow-sm"
-      >
-        3
-      </button>
-
-      <button
-        class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-linksColor1 hover:bg-gray-50 transition-colors shadow-sm"
-      >
-        <i class="fa-solid fa-chevron-right text-sm"></i>
-      </button>
-    </div>
   </div>
 </div>
+
+@if (isModalAdminReplayVisible()) {
+  <div
+    class="smooth-appear bg-black/50 overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full md:inset-0 h-full max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Reply to customer</h3>
+          <button
+            (click)="closeModalAdminReply()"
+            type="button"
+            class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading cursor-pointer rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-x"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form [formGroup]="FormRateAdmin" (ngSubmit)="sendAdminReply()">
+          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+            <div class="col-span-2">
+              <label for="replyContent" class="block mb-2.5 text-sm font-medium text-heading"
+                >Reply Content</label
+              >
+              <textarea
+                [class]="{
+                  'border-green-500': FormRateAdmin.get('responseBody')?.valid,
+                  'border-red-500':
+                    FormRateAdmin.get('responseBody')?.invalid &&
+                    FormRateAdmin.get('responseBody')?.touched,
+                }"
+                id="replyContent"
+                formControlName="responseBody"
+                rows="4"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full p-3.5 shadow-xs placeholder:text-body"
+                placeholder="Write Reply Content Here"
+              ></textarea>
+              @if (
+                FormRateAdmin.get('responseBody')?.invalid &&
+                FormRateAdmin.get('responseBody')?.touched &&
+                FormRateAdmin.get('responseBody')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Reply Content is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+            <button
+              type="submit"
+              class="inline-flex items-center gap-2 text-white bg-mainColorLight hover:bg-mainColorDark cursor-pointer box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              <i class="fa-solid fa-check"></i>
+              Done
+            </button>
+            <button
+              (click)="closeModalAdminReply()"
+              type="button"
+              class="text-body bg-neutral-secondary-medium cursor-pointer box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}

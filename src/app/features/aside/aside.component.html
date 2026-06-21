@@ -1,58 +1,86 @@
 <aside
   class="min-h-screen fixed z-10 inset-y-30 inset-x-0 block w-14 transition-[width] duration-500 lg:flex flex-col lg:w-64 bg-mainBg py-8 lg:px-2 shrink-0 border-e border-gray-200"
 >
-  <h1 class="hidden lg:block text-xl font-extrabold text-mainColorDark mb-8 leading-tight pl-2">
-    Architectural<br />Sanctuary
-  </h1>
-
   <nav class="flex flex-col justify-start gap-2 flex-1 px-1">
+    @if (roleType() === 'ADMIN') {
+      <a
+        title="Dashboard"
+        routerLink="/admin/dashboard"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-solid fa-border-all w-5 text-center text-lg hidden"></i>
+        <span class="hidden lg:block">Dashboard</span>
+      </a>
+      <a
+        title="Add/Edit Workspace"
+        routerLink="/admin/add-workspace"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-regular fa-square-plus w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">Add/Edit Workspace</span>
+      </a>
+      <a
+        title="Get/Delete Workspace"
+        routerLink="/admin/all-workspace"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-solid fa-people-roof w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">Get/Delete Workspace</span>
+      </a>
+      <a
+        title="Manage Space Type"
+        routerLink="/admin/space-type"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-solid fa-users-gear w-5 text-center text-l"></i>
+        <span class="hidden lg:block">Manage Space Type</span>
+      </a>
+      <a
+        title="Manage Role"
+        routerLink="/admin/manage-role"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-solid fa-screwdriver-wrench w-5 text-center text-l"></i>
+        <span class="hidden lg:block">Manage Role</span>
+      </a>
+    }
+    @if (roleType() === 'ADMIN' || roleType() === 'RECEPTIONIST') {
+      <a
+        title="Staff Portal"
+        routerLink="/admin/receptionist"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-solid fa-user-pen w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">Staff Portal</span>
+      </a>
+      <a
+        title="Request And Sr"
+        routerLink="/admin/RequestAndSr"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-solid fa-code-pull-request w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">Request And Sr</span>
+      </a>
+    }
     <a
-      routerLink="/admin/admin-panel"
-      [routerLinkActive]="classesAsideActiveLinks"
-      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
-    >
-      <i class="fa-solid fa-border-all w-5 text-center text-lg hidden"></i>
-      <span class="hidden lg:block">Dashboard</span>
-    </a>
-    <a
-      routerLink="/admin/notifications"
-      [routerLinkActive]="classesAsideActiveLinks"
-      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
-    >
-      <i class="fa-regular fa-bell w-5 text-center text-lg hidden"></i>
-      <span class="hidden lg:block">Notifications</span>
-    </a>
-    <a
-      routerLink="/user/booking-history"
+      title="My Bookings"
+      [routerLink]="
+        roleType() === 'ADMIN' || roleType() === 'RECEPTIONIST'
+          ? '/admin/booking-history'
+          : '/user/booking-history'
+      "
       [routerLinkActive]="classesAsideActiveLinks"
       class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
     >
       <i class="fa-regular fa-calendar-check w-5 text-center text-lg"></i>
       <span class="hidden lg:block">My Bookings</span>
-    </a>
-    <a
-      routerLink="/user/wallet"
-      [routerLinkActive]="classesAsideActiveLinks"
-      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
-    >
-      <i class="fa-solid fa-wallet w-5 text-center text-lg"></i>
-      <span class="hidden lg:block">Wallet</span>
-    </a>
-    <a
-      routerLink="/admin/gm-dashboard"
-      [routerLinkActive]="classesAsideActiveLinks"
-      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
-    >
-      <i class="fa-solid fa-chart-simple w-5 text-center text-lg"></i>
-      <span class="hidden lg:block">Analytics</span>
-    </a>
-    <a
-      routerLink="/admin/receptionist"
-      [routerLinkActive]="classesAsideActiveLinks"
-      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
-    >
-      <i class="fa-solid fa-user-tie w-5 text-center text-lg"></i>
-      <span class="hidden lg:block">Staff Portal</span>
     </a>
   </nav>
 </aside>

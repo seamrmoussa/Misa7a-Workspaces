@@ -19,13 +19,7 @@ export class AuthenticationComponent {
 
   loginForm: FormGroup = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9].*[0-9])[a-zA-Z0-9]{8,14}$/),
-      ],
-    ],
+    password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{5,14}$/)]],
   });
 
   sendLoginData(): void {
@@ -37,6 +31,7 @@ export class AuthenticationComponent {
           next: (res) => {
             localStorage.setItem('misa7aUserToken', res.data.data.token);
             localStorage.setItem('misa7aUserId', res.data.data.id);
+            this.authService.decodeUserToken();
             this.router.navigate(['/user/user-profile']);
           },
         }),

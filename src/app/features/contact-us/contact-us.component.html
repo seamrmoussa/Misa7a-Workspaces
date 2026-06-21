@@ -1,152 +1,164 @@
-<div class="min-h-screen bg-mainBg py-16 px-4 sm:px-6 lg:px-12 font-sans">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-    <div class="flex flex-col">
-      <div class="mb-10">
-        <p class="text-2xs font-bold text-fontGray2 uppercase tracking-widest mb-4">
-          Connect With Our Concierge
-        </p>
-        <h1
-          class="text-4xl md:text-5xl lg:text-[54px] font-extrabold text-mainColorDark mb-6 leading-[1.1] tracking-tight"
-        >
-          Find Your Path to<br />
-          <span class="text-secColorDark">Focused</span> Work.
-        </h1>
-        <p class="text-fontGray1 text-sm md:text-base leading-relaxed max-w-md">
-          Whether you're seeking a quiet corner for deep thought or a dynamic environment for team
-          collaboration, our sanctuary is open. Reach out to discuss memberships, tours, or custom
-          workspaces.
-        </p>
-      </div>
+<div
+  class="min-h-screen bg-mainBg py-5 md:px-23 lg:px-35 xl:px-55 2xl:px-75 font-sans smooth-appear"
+>
+  <h1
+    class="text-4xl md:text-5xl lg:text-[54px] font-extrabold text-mainColorDark mb-6 leading-[1.1] tracking-tight"
+  >
+    Tell us what is you
+    <span class="text-secColorDark">inquiry</span>
+  </h1>
 
-      <div
-        class="bg-white rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex-1"
-      >
-        <form (submit)="onSubmit($event)" class="flex flex-col gap-6">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div>
-              <label for="name" class="block text-sm font-bold text-mainColorDark mb-2">Name</label>
-              <input
-                type="text"
-                id="name"
-                class="block w-full p-3.5 text-sm text-gray-900 bg-gray-50/50 rounded-xl border border-gray-200 focus:ring-mainColorLight focus:border-mainColorLight shadow-sm transition-colors"
-                placeholder="Elias Thorne"
-                required
-              />
-            </div>
-            <div>
-              <label for="email" class="block text-sm font-bold text-mainColorDark mb-2"
-                >Email</label
-              >
-              <input
-                type="email"
-                id="email"
-                class="block w-full p-3.5 text-sm text-gray-900 bg-gray-50/50 rounded-xl border border-gray-200 focus:ring-mainColorLight focus:border-mainColorLight shadow-sm transition-colors"
-                placeholder="elias@studio.com"
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <label for="subject" class="block text-sm font-bold text-mainColorDark mb-2"
-              >Subject</label
-            >
-            <select
-              id="subject"
-              class="block w-full p-3.5 text-sm text-gray-900 bg-gray-50/50 rounded-xl border border-gray-200 focus:ring-mainColorLight focus:border-mainColorLight shadow-sm transition-colors appearance-none cursor-pointer"
-            >
-              <option value="inquiry">Workspace Inquiry</option>
-              <option value="tour">Schedule a Tour</option>
-              <option value="support">Member Support</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="message" class="block text-sm font-bold text-mainColorDark mb-2"
-              >Message</label
-            >
-            <textarea
-              id="message"
-              rows="5"
-              class="block w-full p-3.5 text-sm text-gray-900 bg-gray-50/50 rounded-xl border border-gray-200 focus:ring-mainColorLight focus:border-mainColorLight shadow-sm transition-colors resize-none"
-              placeholder="Tell us about your space requirements..."
-              required
-            ></textarea>
-          </div>
-
-          <button
-            type="submit"
-            class="w-full text-white bg-mainColorDark hover:bg-mainColorLight font-bold rounded-xl text-sm px-5 py-4 text-center transition-colors shadow-md mt-2"
-          >
-            Send Inquiry
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <div class="flex flex-col gap-6 pt-4 lg:pt-0 lg:mt-12">
+  <div
+    class="bg-white rounded-3xl p-6 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 flex-1"
+  >
+    <form [formGroup]="formContactUs" (ngSubmit)="isLoggedInUser()" class="flex flex-col gap-6">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div
-          class="bg-beigeBgBadge border border-[#e8e8df] rounded-2xl p-6 shadow-sm flex flex-col justify-center"
-        >
-          <i class="fa-solid fa-phone-volume text-fontGray1 text-xl mb-4"></i>
-          <h3 class="text-lg font-bold text-mainColorDark mb-1">Direct Line</h3>
-          <p class="text-sm font-semibold text-fontGray1">+1 (555) 234-8901</p>
-          <p class="text-xs text-fontGray2 mt-1">Mon-Fri: 8am - 7pm</p>
-        </div>
-
-        <div
-          class="bg-beigeBgBadge border border-[#e8e8df] rounded-2xl p-6 shadow-sm flex flex-col justify-center"
-        >
-          <i class="fa-regular fa-envelope text-fontGray1 text-xl mb-4"></i>
-          <h3 class="text-lg font-bold text-mainColorDark mb-1">Concierge Email</h3>
-          <p class="text-sm font-semibold text-fontGray1">hello&#64;thesanctuary.com</p>
-          <p class="text-xs text-fontGray2 mt-1">24hr response target</p>
-        </div>
-      </div>
-
-      <div
-        class="relative w-full h-80rounded-3xl overflow-hidden shadow-sm border border-gray-200 mt-2"
-      >
-        <img
-          src="./img/contact-us-location.png"
-          alt="Map Location"
-          class="w-full h-full object-cover grayscale"
-        />
-
-        <div class="absolute inset-0 bg-black/20"></div>
-
-        <div
-          class="absolute bottom-6 left-6 right-6 sm:right-auto sm:w-75 bg-white/95 backdrop-blur-sm rounded-2xl p-5 shadow-lg border border-gray-100"
-        >
-          <div class="flex items-start gap-3">
-            <i class="fa-solid fa-location-dot text-mainColorDark mt-1"></i>
-            <div>
-              <h4 class="text-sm font-bold text-mainColorDark mb-1">Main Sanctuary</h4>
-              <p class="text-xs text-fontGray1 leading-relaxed">
-                882 Obsidian Plaza, Floor 14<br />
-                Creative District<br />
-                Chicago, IL 60601
-              </p>
+        <div>
+          <label for="customerName" class="block text-sm font-bold text-mainColorDark mb-2"
+            >Name</label
+          >
+          <input
+            [class]="{
+              'border-green-500': formContactUs.get('customerName')?.valid,
+              'border-red-500':
+                formContactUs.get('customerName')?.invalid &&
+                formContactUs.get('customerName')?.touched,
+            }"
+            type="text"
+            id="customerName"
+            formControlName="customerName"
+            class="block w-full p-3.5 text-sm text-gray-900 bg-gray-50/50 rounded-xl border border-gray-200 focus:ring-mainColorLight focus:border-mainColorLight shadow-sm transition-colors"
+            placeholder="Your Name"
+            required
+          />
+          @if (
+            formContactUs.get('customerName')?.invalid && formContactUs.get('customerName')?.touched
+          ) {
+            <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+              @if (formContactUs.get('customerName')?.hasError('required')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Your name is required.</span>
+                </p>
+              } @else if (formContactUs.get('customerName')?.hasError('minlength')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Your name must be at least 3 characters.</span>
+                </p>
+              }
             </div>
-          </div>
+          }
+        </div>
+        <div>
+          <label for="phoneNumber" class="block text-sm font-bold text-mainColorDark mb-2"
+            >Phone Number</label
+          >
+          <input
+            [class]="{
+              'border-green-500': formContactUs.get('phoneNumber')?.valid,
+              'border-red-500':
+                formContactUs.get('phoneNumber')?.invalid &&
+                formContactUs.get('phoneNumber')?.touched,
+            }"
+            type="tel"
+            id="phoneNumber"
+            formControlName="phoneNumber"
+            class="block w-full p-3.5 text-sm text-gray-900 bg-gray-50/50 rounded-xl border border-gray-200 focus:ring-mainColorLight focus:border-mainColorLight shadow-sm transition-colors"
+            placeholder="01000000000"
+            required
+          />
+          @if (
+            formContactUs.get('phoneNumber')?.invalid && formContactUs.get('phoneNumber')?.touched
+          ) {
+            <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+              @if (formContactUs.get('phoneNumber')?.hasError('required')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Phone Number is required.</span>
+                </p>
+              } @else if (formContactUs.get('phoneNumber')?.hasError('pattern')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span
+                    >Invalid format. Must start with (010, 011, 012, or 015) and be 11 digits.</span
+                  >
+                </p>
+              }
+            </div>
+          }
         </div>
       </div>
 
-      <div
-        class="bg-gray-50/80 border border-gray-200 rounded-2xl p-5 flex items-center justify-between shadow-sm mt-2"
-      >
-        <div class="flex items-center gap-3">
-          <i class="fa-solid fa-certificate text-secColorDark text-lg"></i>
-          <span class="text-sm font-bold text-mainColorDark">Priority Booking Enabled</span>
-        </div>
-        <a
-          href="#"
-          class="text-xs font-bold text-mainColorDark hover:text-mainColorLight underline decoration-2 underline-offset-4 transition-colors"
-        >
-          See Member Perks
-        </a>
+      <div>
+        <label for="email" class="block text-sm font-bold text-mainColorDark mb-2">Email</label>
+        <input
+          [class]="{
+            'border-green-500': formContactUs.get('email')?.valid,
+            'border-red-500':
+              formContactUs.get('email')?.invalid && formContactUs.get('email')?.touched,
+          }"
+          type="email"
+          id="email"
+          formControlName="email"
+          class="block w-full p-3.5 text-sm text-gray-900 bg-gray-50/50 rounded-xl border border-gray-200 focus:ring-mainColorLight focus:border-mainColorLight shadow-sm transition-colors"
+          placeholder="your-email@misa7a.com"
+          required
+        />
+        @if (formContactUs.get('email')?.invalid && formContactUs.get('email')?.touched) {
+          <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+            @if (formContactUs.get('email')?.hasError('required')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Email is required.</span>
+              </p>
+            } @else if (formContactUs.get('email')?.hasError('email')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Please enter a valid email address.</span>
+              </p>
+            }
+          </div>
+        }
       </div>
-    </div>
+
+      <div>
+        <label for="message" class="block text-sm font-bold text-mainColorDark mb-2">Message</label>
+        <textarea
+          [class]="{
+            'border-green-500': formContactUs.get('message')?.valid,
+            'border-red-500':
+              formContactUs.get('message')?.invalid && formContactUs.get('message')?.touched,
+          }"
+          id="message"
+          formControlName="message"
+          rows="5"
+          class="block w-full p-3.5 text-sm text-gray-900 bg-gray-50/50 rounded-xl border border-gray-200 focus:ring-mainColorLight focus:border-mainColorLight shadow-sm transition-colors resize-none"
+          placeholder="Tell us what's' your inquiry..."
+          required
+        ></textarea>
+        @if (formContactUs.get('message')?.invalid && formContactUs.get('message')?.touched) {
+          <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+            @if (formContactUs.get('message')?.hasError('required')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Message is required.</span>
+              </p>
+            } @else if (formContactUs.get('message')?.hasError('minlength')) {
+              <p class="flex items-start gap-2">
+                <i class="fa-solid fa-right-long p-0.5"></i>
+                <span>Message must be at least 10 characters.</span>
+              </p>
+            }
+          </div>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="w-full text-white bg-mainColorLight hover:bg-mainColorDark cursor-pointer font-bold rounded-xl text-sm px-5 py-4 text-center transition-colors shadow-md mt-2"
+      >
+        Submit
+      </button>
+    </form>
   </div>
 </div>

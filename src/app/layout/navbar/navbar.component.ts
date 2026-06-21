@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   effect,
   inject,
   input,
@@ -11,7 +12,6 @@ import {
 import { FlowbiteService } from '../../core/service/flowbite.service';
 import { initFlowbite } from 'flowbite';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MainButtonComponent } from '../../shared/ui/main-button/main-button.component';
 import { MainLogoComponent } from '../../shared/ui/main-logo/main-logo.component';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { UserProfile } from '../../user-profile.interface';
@@ -19,7 +19,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive, MainButtonComponent, MainLogoComponent],
+  imports: [RouterLink, RouterLinkActive, MainLogoComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
@@ -28,10 +28,10 @@ export class NavbarComponent implements OnInit {
 
   private readonly pLATFORM_ID = inject(PLATFORM_ID);
 
-  paths = signal<string[]>(['home', 'booking', 'plans', 'gallery', 'review', 'contact-us', 'help']);
-  notificationBasePath = input<string>();
-  notificationLoggedIn = model<boolean>(false);
+  paths = signal<string[]>(['home', 'booking', 'gallery', 'review', 'contact-us', 'Location']);
+  isUserLoggedIn = model<boolean>(false);
   userProfileData = signal<UserProfile | null>(null);
+  readonly roleType = computed<string>(() => this.authService.tokenData()?.roles[0]);
 
   classesProfile: string[] = [
     'bg-white',
@@ -57,6 +57,7 @@ export class NavbarComponent implements OnInit {
       if (this.authService.trigger()) {
         this.updateNameProfile();
         this.authService.trigger.set(false);
+        this.authService.decodeUserToken();
       }
     });
   }
@@ -65,8 +66,8 @@ export class NavbarComponent implements OnInit {
     if (isPlatformBrowser(this.pLATFORM_ID)) {
       this.flowbiteService.loadFlowbite((flowbite) => {
         initFlowbite();
+        this.updateNameProfile();
       });
-      this.updateNameProfile();
     }
   }
 
@@ -78,7 +79,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    this.notificationLoggedIn.set(false);
+    this.isUserLoggedIn.set(false);
     this.authService.logoutUser();
   }
 }

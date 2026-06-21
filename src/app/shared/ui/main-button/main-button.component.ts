@@ -1,26 +1,28 @@
-import { Component, computed, input, InputSignal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, computed, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-main-button',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './main-button.component.html',
   styleUrl: './main-button.component.css',
 })
 export class MainButtonComponent {
-  fullWidth = input<boolean>(false);
-  isBlue = input<boolean>(false);
-  isWhite = input<boolean>(false);
-  link: InputSignal<string> = input.required();
-  text = input<string>('Click Here');
+  btnType = input('button');
+  btnIcon = input('');
+  text = input.required<string>();
+  btnClick = output<MouseEvent>();
 
-  buttonColors = computed(() => {
-    if (this.isBlue()) {
-      return 'bg-mainColorLight hover:bg-mainColorDark text-white/80 hover:text-white';
+  btnColor = input<string>('bg-mainColorDark text-white/80 hover:text-white');
+  btnClasses = input<string>('');
+
+  handleClick(event: MouseEvent) {
+    if (this.btnType() === 'button') {
+      event.preventDefault();
+      event.stopPropagation();
     }
-    if (this.isWhite()) {
-      return 'bg-white/80 hover:bg-white text-mainColorLight hover:text-mainColorDark';
-    }
-    return '';
-  });
+
+    this.btnClick.emit(event);
+  }
+
+  classComponent = computed(() => {});
 }

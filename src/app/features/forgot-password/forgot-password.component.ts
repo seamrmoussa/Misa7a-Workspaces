@@ -31,7 +31,7 @@ export class ForgotPasswordComponent implements OnInit {
   email: FormControl = new FormControl('', [Validators.required, Validators.email]);
   newPassword: FormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9].*[0-9])[a-zA-Z0-9]{8,14}$/),
+    Validators.pattern(/^[a-zA-Z0-9]{5,14}$/),
   ]);
 
   ngOnInit() {

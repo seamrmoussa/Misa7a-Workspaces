@@ -301,7 +301,7 @@
                 registrationForm.get('phone')?.invalid && registrationForm.get('phone')?.touched,
             }"
             formControlName="phone"
-            type="text"
+            type="tel"
             id="phone"
             class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
             placeholder="01000000000"
@@ -369,10 +369,7 @@
             } @else if (registrationForm.get('password')?.hasError('pattern')) {
               <p class="flex items-start gap-2">
                 <i class="fa-solid fa-right-long p-0.5"></i>
-                <span
-                  >Must be 8-14 characters, include uppercase, lowercase, and at least 2 numbers (no
-                  symbols like @,!,$,&,#).</span
-                >
+                <span>Must be 5-14 characters.</span>
               </p>
             }
           </div>

@@ -6,28 +6,6 @@
 
     <div class="flex items-center lg:order-2 space-x-4">
       <div class="hidden lg:flex items-center space-x-5 transition-all duration-300">
-        <div class="relative">
-          <div class="absolute inset-y-0 inset-s-0 flex items-center ps-4 pointer-events-none">
-            <i class="fa-solid fa-magnifying-glass text-gray-400 text-sm"></i>
-          </div>
-          <input
-            type="text"
-            class="block w-55 p-2 ps-10 text-sm text-gray-900 border-none bg-[#F1F3F5] rounded-full focus:ring-0 focus:outline-none transition-all duration-300"
-            placeholder="Search spaces..."
-          />
-        </div>
-
-        @if (notificationLoggedIn()) {
-          <a
-            [routerLink]="notificationBasePath()"
-            routerLinkActive="text-mainColorLight"
-            class="text-gray-600 hover:text-mainColorLight transition-all duration-300 focus:outline-none cursor-pointer"
-            ariaCurrentWhenActive="page"
-          >
-            <i class="fa-regular fa-bell text-xl"></i>
-          </a>
-        }
-
         <button
           type="button"
           class="text-gray-600 hover:text-mainColorLight transition-all duration-300 focus:outline-none cursor-pointer"
@@ -37,7 +15,7 @@
           data-dropdown-placement="bottom"
         >
           <span class="sr-only">Open user menu</span>
-          @if (notificationLoggedIn()) {
+          @if (isUserLoggedIn()) {
             <img
               [src]="userProfileData()?.avatarBase64"
               alt="Concierge"
@@ -52,7 +30,7 @@
           class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
           id="user-dropdown"
         >
-          @if (notificationLoggedIn()) {
+          @if (isUserLoggedIn()) {
             <a
               routerLink="/user/user-profile"
               [routerLinkActive]="classesAsideActiveLinks"
@@ -76,15 +54,6 @@
 
             <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
               <li>
-                <a
-                  routerLink="/admin/support"
-                  [routerLinkActive]="classesAsideActiveLinks"
-                  ariaCurrentWhenActive="page"
-                  class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-mainColorDark rounded"
-                  ><i class="fa-regular fa-circle-question text-lg me-1"></i> Support</a
-                >
-              </li>
-              <li>
                 <button
                   (click)="logout()"
                   routerLink="/loggedout"
@@ -95,7 +64,7 @@
                 </button>
               </li>
             </ul>
-          } @else if (!notificationLoggedIn()) {
+          } @else if (!isUserLoggedIn()) {
             <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
               <li>
                 <a
@@ -119,7 +88,11 @@
           }
         </div>
 
-        <app-main-button [isBlue]="true" [link]="'/booking'" [text]="'Book Now'"></app-main-button>
+        <a
+          routerLink="/booking"
+          class="block text-center text-white/80 bg-mainColorDark hover:text-white opacity-90 hover:opacity-100 font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md"
+          >Book Now</a
+        >
       </div>
 
       <button
@@ -168,7 +141,7 @@
           </div>
 
           <div class="flex flex-col gap-2 justify-around px-2 py-2">
-            @if (notificationLoggedIn()) {
+            @if (isUserLoggedIn()) {
               <a
                 routerLink="/user/user-profile"
                 [routerLinkActive]="classesProfile"
@@ -210,7 +183,7 @@
                   ><i class="fa-solid fa-right-from-bracket me-1"></i> Logout</span
                 >
               </button>
-            } @else if (!notificationLoggedIn()) {
+            } @else if (!isUserLoggedIn()) {
               <a
                 routerLink="/login"
                 routerLinkActive="text-mainColorLight"
@@ -234,12 +207,11 @@
             }
           </div>
 
-          <app-main-button
-            [fullWidth]="true"
-            [isBlue]="true"
-            [link]="'/booking'"
-            [text]="'Book Now'"
-          ></app-main-button>
+          <a
+            routerLink="/booking"
+            class="block text-center text-white/80 bg-mainColorDark hover:text-white opacity-90 hover:opacity-100 font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md w-full"
+            >Book Now</a
+          >
         </li>
       </ul>
     </div>

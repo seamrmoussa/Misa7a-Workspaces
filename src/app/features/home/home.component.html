@@ -1,5 +1,5 @@
 <section
-  class="relative bg-cover bg-center bg-no-repeat min-h-[85vh] flex items-center"
+  class="relative bg-cover bg-center bg-no-repeat min-h-[85vh] flex items-center smooth-appear"
   style="background-image: url('./img/mainBg.webp')"
 >
   <div
@@ -18,26 +18,11 @@
         for deep work.
       </p>
       <div class="mt-8 flex flex-col sm:flex-row gap-4">
-        <app-main-button
-          [fullWidth]="true"
-          [isBlue]="true"
-          [link]="'/booking'"
-          [text]="'Book Your Space'"
-        ></app-main-button>
-
-        <app-main-button
-          [fullWidth]="true"
-          [isWhite]="true"
-          [link]="'/inquiry'"
-          [text]="'Special Booking'"
-        ></app-main-button>
-
-        <!-- <a
-          routerLink="/inquiry"
-          class="block w-full rounded-lg bg-white/80 backdrop-blur-sm border border-gray-200 px-8 py-3.5 text-sm font-semibold text-mainColorLight shadow-sm hover:text-mainColorDark hover:bg-white focus:outline-none focus:ring transition-colors sm:w-auto text-center"
+        <a
+          routerLink="/booking"
+          class="block text-center text-white/80 bg-mainColorDark hover:text-white opacity-90 hover:opacity-100 font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md"
+          >Book Now</a
         >
-          Special Booking
-        </a> -->
       </div>
     </div>
   </div>
@@ -142,8 +127,8 @@
 
         <div class="grid grid-cols-3 gap-4">
           <div>
-            <p class="text-3xl font-bold text-mainColorLight">12</p>
-            <p class="mt-1 text-xs font-bold uppercase tracking-widest text-fontGray2">Locations</p>
+            <p class="text-3xl font-bold text-mainColorLight">25</p>
+            <p class="mt-1 text-xs font-bold uppercase tracking-widest text-fontGray2">Rooms</p>
           </div>
           <div>
             <p class="text-3xl font-bold text-mainColorLight">24/7</p>
@@ -165,56 +150,6 @@
           <img alt="Desk Lamp Detail" src="./img/img2.png" class="h-full w-full rounded-2xl" />
           <img alt="Conference Room" src="./img/img3.png" class="h-full w-full rounded-2xl" />
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="py-8 bg-white border-b border-gray-50">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div
-      class="flex flex-col lg:flex-row items-center justify-between rounded-2xl bg-mainBg p-4 sm:p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] gap-6"
-    >
-      <div class="flex items-center gap-4 w-full lg:w-auto shrink-0">
-        <div class="rounded-xl bg-white p-3 shadow-sm text-mainColorLight">
-          <i class="fa-regular fa-calendar-check text-2xl"></i>
-        </div>
-        <div>
-          <p class="font-bold text-mainColorDark text-sm sm:text-base">Instant Availability</p>
-          <p class="text-xs text-fontGray2">Live slot bookings for today</p>
-        </div>
-      </div>
-
-      <div class="flex flex-wrap items-center justify-center gap-2 flex-1 w-full">
-        <span
-          class="rounded-full bg-mainColorLight px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-pointer hover:bg-mainColorDark transition-colors"
-          >10:00</span
-        >
-        <span
-          class="rounded-full bg-mainColorLight px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-pointer hover:bg-mainColorDark transition-colors"
-          >11:00</span
-        >
-        <span
-          class="rounded-full bg-secColorDark px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-not-allowed"
-          >BOOKED</span
-        >
-        <span
-          class="rounded-full bg-mainColorLight px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-pointer hover:bg-mainColorDark transition-colors"
-          >13:00</span
-        >
-        <span
-          class="rounded-full bg-mainColorLight px-5 py-2 text-xs font-semibold tracking-wide text-white cursor-pointer hover:bg-mainColorDark transition-colors"
-          >14:00</span
-        >
-        <span class="rounded-full bg-white border border-gray-200 px-8 py-2 h-8 w-16"></span>
-      </div>
-
-      <div class="w-full lg:w-auto shrink-0">
-        <app-main-button
-          [isBlue]="true"
-          [link]="'/booking'"
-          [text]="'Check More'"
-        ></app-main-button>
       </div>
     </div>
   </div>

@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -13,6 +14,7 @@ import { Subscription } from 'rxjs';
 export class RegistrationComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly toastrService = inject(ToastrService);
   private readonly router = inject(Router);
 
   registerSubscription = signal<Subscription>(new Subscription());
@@ -25,13 +27,7 @@ export class RegistrationComponent {
     companyName: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required, Validators.pattern(/^(010|011|012|015)[0-9]{8}$/)]],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9].*[0-9])[a-zA-Z0-9]{8,14}$/),
-      ],
-    ],
+    password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{5,14}$/)]],
   });
 
   showPassword(element: HTMLInputElement): void {
@@ -49,6 +45,7 @@ export class RegistrationComponent {
       this.registerSubscription.set(
         this.authService.signUp(this.registrationForm.value).subscribe({
           next: (res) => {
+            this.toastrService.success('Your account has been successfully created');
             this.router.navigate(['/login']);
           },
         }),

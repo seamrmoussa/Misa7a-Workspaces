@@ -1,208 +1,484 @@
-<div class="min-h-screen bg-mainBg p-4 md:p-6 lg:p-8 font-sans">
+<div class="min-h-screen bg-mainBg p-4 md:p-6 lg:p-8 font-sans space-y-4 smooth-appear">
   <div class="mb-4">
-    <p class="text-fontGray1 font-semibold text-lg">Review your past sanctuary experiences</p>
+    <p class="text-fontGray1 font-semibold text-xl">Review All Your Reservations</p>
   </div>
 
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-    <div class="flex items-center gap-2 bg-gray-100 p-1 rounded-full">
-      @if (activeFilter() === 'All') {
-        <button
-          (click)="setFilter('All')"
-          class="px-4 py-2 rounded-full text-sm font-semibold bg-mainColorDark text-white transition-all shadow-sm"
-        >
-          All Bookings
-        </button>
-      } @else {
-        <button
-          (click)="setFilter('All')"
-          class="px-4 py-2 rounded-full text-sm font-semibold text-fontGray1 hover:bg-gray-200 transition-all"
-        >
-          All Bookings
-        </button>
-      }
-
-      @if (activeFilter() === 'Completed') {
-        <button
-          (click)="setFilter('Completed')"
-          class="px-4 py-2 rounded-full text-sm font-semibold bg-mainColorDark text-white transition-all shadow-sm"
-        >
-          Completed
-        </button>
-      } @else {
-        <button
-          (click)="setFilter('Completed')"
-          class="px-4 py-2 rounded-full text-sm font-semibold text-fontGray1 hover:bg-gray-200 transition-all"
-        >
-          Completed
-        </button>
-      }
-
-      @if (activeFilter() === 'Cancelled') {
-        <button
-          (click)="setFilter('Cancelled')"
-          class="px-4 py-2 rounded-full text-sm font-semibold bg-mainColorDark text-white transition-all shadow-sm"
-        >
-          Cancelled
-        </button>
-      } @else {
-        <button
-          (click)="setFilter('Cancelled')"
-          class="px-4 py-2 rounded-full text-sm font-semibold text-fontGray1 hover:bg-gray-200 transition-all"
-        >
-          Cancelled
-        </button>
-      }
-    </div>
-
-    <div class="relative w-full md:w-72 lg:w-96">
-      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-        <i class="fa-solid fa-magnifying-glass text-linksColor2 text-sm"></i>
-      </div>
-      <input
-        type="text"
-        placeholder="Search by ID or Location..."
-        class="bg-white border border-gray-200 text-fontGray1 text-sm rounded-lg focus:ring-mainColorDark focus:border-mainColorDark block w-full pl-10 p-2.5 shadow-sm"
-      />
-    </div>
-  </div>
-
-  <div class="space-y-6">
-    @for (booking of filteredBookings(); track booking.id) {
+  @for (book of bookingHistory(); track book.id) {
+    <div class="space-y-6 smooth-appear">
       <div
-        class="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row relative overflow-hidden"
+        class="bg-white rounded-xl shadow-sm border border-gray-100 flex flex-col md:flex-row flex-wrap relative overflow-hidden"
       >
-        @if (booking.status === 'Completed') {
-          <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-mainColorDark"></div>
-        } @else {
-          <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gray-200"></div>
-        }
+        <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-mainColorDark"></div>
 
         <div class="p-4 md:w-56 shrink-0">
           <img
-            [src]="booking.imageUrl"
+            src="/img/Logo-Misa7a-icon.png"
             alt="Sanctuary Image"
             class="w-full h-40 md:h-full object-cover rounded-lg shadow-sm"
           />
         </div>
 
-        <div class="flex-1 p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 items-center">
-          <div class="lg:col-span-1 space-y-1">
-            <p class="text-xs font-semibold text-linksColor2 uppercase tracking-wider">
-              Reference ID
-            </p>
-            <p class="text-mainColorDark font-bold text-lg mb-2">{{ booking.id }}</p>
-            <p class="text-fontGray1 font-bold">{{ booking.locationName }}</p>
-            <p class="text-sm text-fontGray2">{{ booking.address }}</p>
+        <div class="flex-1 p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+          <div class="col-span-3 sm:col-span-2 xl:col-span-1 space-y-1 order-1">
+            <div class="flex flex-col gap-3">
+              <div>
+                <p class="text-fontGray1 font-bold text-xl">
+                  ID: <span class="text-mainColorLight">{{ book.id }}</span>
+                </p>
+              </div>
+              <div>
+                <p class="text-fontGray1 font-bold">Reference ID</p>
+                <p class="text-mainColorLight font-bold text-sm">{{ book.bookingRef }}</p>
+              </div>
+              <div>
+                <p class="text-fontGray1 font-bold">Room type</p>
+                <p class="text-mainColorLight font-bold text-sm">
+                  {{ book.workspaceName }} - Room Id: {{ book.workspaceId }}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div class="lg:col-span-1 space-y-1">
-            <p class="text-xs font-semibold text-linksColor2 uppercase tracking-wider">
-              Date & Time
+          <div class="col-span-3 sm:col-span-2 xl:col-span-1 space-y-1 order-2">
+            <p class="text-fontGray1 font-bold">
+              Date & Time <span class="text-orange-500">"{{ book.durationType }}"</span>
             </p>
-            <p class="text-fontGray1 font-bold">{{ booking.date }}</p>
             <p class="text-sm text-fontGray2">
-              {{ booking.time }} <span class="text-linksColor2">({{ booking.duration }})</span>
+              <span class="text-mainColorLight font-bold">From: </span
+              >{{ book.startDatetime | date: 'dd/MM/yyyy , hh:mm a' }}
+            </p>
+            <p class="text-sm text-fontGray2">
+              <span class="text-mainColorLight font-bold">To: </span
+              >{{ book.endDatetime | date: 'dd/MM/yyyy , hh:mm a' }}
+            </p>
+            <p class="text-fontGray1 font-bold mt-4">
+              <span class="text-fontGray1 font-bold">Attendance: </span
+              ><span class="text-mainColorLight font-bold text-sm">{{ book.numAttendees }}</span>
             </p>
           </div>
 
-          <div class="lg:col-span-1 space-y-2">
-            <p class="text-xs font-semibold text-linksColor2 uppercase tracking-wider">Status</p>
-
-            @if (booking.status === 'Completed') {
-              <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-mainColorDark"></span>
-                <span class="font-bold text-mainColorDark">Completed</span>
-              </div>
-
-              @if (booking.rating) {
-                <div class="flex text-secColorDark text-xs gap-1 mt-1">
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                  <i class="fa-solid fa-star"></i>
-                </div>
-              }
-
-              @if (booking.subStatus === 'View Receipt') {
-                <a
-                  href="#"
-                  class="text-mainColorDark text-sm font-semibold underline hover:text-mainColorLight block mt-1"
+          <div class="col-span-2 sm:col-span-2 xl:col-span-1 space-y-4 order-3">
+            <div class="text-fontGray1 font-bold">
+              <span class="text-fontGray1 font-bold">Total Amount: </span
+              ><span class="text-mainColorLight font-bold text-sm">{{
+                book.totalAmount | currency: 'EGP '
+              }}</span>
+            </div>
+            <div class="text-fontGray1 font-bold flex items-center">
+              <span>Status: <span class="text-transparent">-</span></span>
+              @if (isPastDate(book.startDatetime)) {
+                <span
+                  class="flex items-center gap-2 text-[12px]"
+                  [class]="{
+                    'text-red-500': book.status === 'PENDING',
+                    'text-green-500': book.status === 'COMPLETE',
+                    'text-yellow-700': book.status === 'CANCELED',
+                  }"
                 >
-                  {{ booking.subStatus }}
-                </a>
+                  {{ book.status }}
+                </span>
+              } @else {
+                <span class="flex items-center gap-2 text-[14px] text-fontGray2 line-through">
+                  Ended
+                </span>
               }
-            } @else {
-              <div class="flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-gray-400"></span>
-                <span class="font-bold text-fontGray2">Cancelled</span>
-              </div>
-              <p class="text-redColorDark text-xs mt-1">{{ booking.subStatus }}</p>
-            }
+            </div>
+
+            <!-- <div class="flex text-secColorDark text-xs gap-1 mt-1">
+              <i class="fa-solid fa-star text-yellow-400"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div> -->
           </div>
 
-          <div class="lg:col-span-1 flex flex-col gap-3 justify-center">
-            <button
-              class="w-full bg-mainColorDark hover:bg-mainColorLight text-white font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm shadow-sm"
-            >
-              {{ booking.actions.primary }}
-            </button>
-
-            @if (booking.status === 'Completed') {
+          <div
+            class="flex flex-col self-center gap-3 justify-center col-span-4 xl:col-span-1 order-5 xl:order-4"
+          >
+            @if (isPastDate(book.startDatetime)) {
               <button
-                class="w-full bg-gray-100 hover:bg-gray-200 text-mainColorDark font-semibold py-2.5 px-4 rounded-lg transition-colors text-sm"
+                (click)="isModalCancelVisible(book)"
+                class="w-full bg-red-900 hover:bg-red-700 disabled:hover:bg-red-900 disabled:opacity-50 text-white font-semibold cursor-pointer disabled:cursor-not-allowed py-2.5 px-4 rounded-lg transition-colors text-sm"
               >
-                {{ booking.actions.secondary }}
-              </button>
-            } @else {
-              <button
-                class="w-full bg-gray-50 text-gray-400 font-semibold py-2.5 px-4 rounded-lg cursor-not-allowed text-sm"
-              >
-                {{ booking.actions.secondary }}
+                Cancel this booking
               </button>
             }
+            @if (!isPastDate(book.startDatetime)) {
+              <button
+                (click)="isModalRatedVisible(book)"
+                class="w-full bg-gray-100 hover:bg-gray-200 text-mainColorDark font-semibold cursor-pointer py-2.5 px-4 rounded-lg transition-colors text-sm"
+              >
+                Rate this room
+              </button>
+            }
+          </div>
+          <div
+            class="border-t border-gray-300 flex items-center justify-center col-span-4 p-3 order-4 xl:order-5"
+          >
+            <p class="">
+              <span class="text-mainColorLight font-bold">Customer note:</span> {{ book.purpose }}
+            </p>
           </div>
         </div>
       </div>
-    }
-
-    @if (filteredBookings().length === 0) {
-      <div class="text-center py-10 bg-white rounded-xl border border-gray-100">
-        <p class="text-fontGray2 font-medium">No bookings found in this category.</p>
-      </div>
-    }
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-    <div class="bg-mainBg border border-gray-200 rounded-xl p-6 flex flex-col justify-center">
-      <h3 class="text-xl font-bold text-mainColorDark mb-2">Sanctuary Loyalty</h3>
-      <p class="text-sm text-fontGray1 mb-4 leading-relaxed">
-        You have spent {{ stats().loyaltyHours }} hours in our spaces over the last year. You are
-        {{ stats().hoursToElite }} hours away from "Elite Concierge" status.
-      </p>
-
-      <div class="w-full bg-gray-200 rounded-full h-2">
-        <div class="bg-mainColorDark h-2 rounded-full" style="width: 85%"></div>
-      </div>
     </div>
-
-    <div
-      class="bg-mainColorDark text-white rounded-xl p-6 flex flex-col items-center justify-center shadow-sm"
-    >
-      <p class="text-xs font-semibold text-mainExtraLight uppercase tracking-widest mb-3">
-        Total Bookings
-      </p>
-      <h2 class="text-6xl font-bold">{{ stats().totalBookings }}</h2>
+  } @empty {
+    <div class="text-center py-10 bg-white rounded-xl border border-gray-100">
+      <p class="text-fontGray2 font-medium">No bookings found.</p>
     </div>
+  }
+  @if (bookingHistory().length > 0) {
+    <div class="flex items-center justify-center">
+      <ul class="flex -space-x-px text-sm">
+        <li>
+          <button
+            (click)="prevPage()"
+            [disabled]="currentPage() === 0"
+            class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+          >
+            Previous
+          </button>
+        </li>
+        @for (pageNumber of pagesArray(); track $index) {
+          <li>
+            @if (pageNumber === '...') {
+              <span
+                class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+              >
+                ...
+              </span>
+            } @else {
+              <button
+                (click)="goToPage($any(pageNumber))"
+                [disabled]="currentPage() === $any(pageNumber)"
+                class="cursor-pointer disabled:cursor-not-allowed flex items-center justify-center box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+                [class]="{
+                  'text-mainColorLight': currentPage() === $any(pageNumber),
+                  'bg-neutral-tertiary-medium': currentPage() === $any(pageNumber),
 
-    <div
-      class="bg-secColorExtraLight text-secColorDark rounded-xl p-6 flex flex-col items-center justify-center shadow-sm"
-    >
-      <p class="text-xs font-semibold uppercase tracking-widest mb-3">Avg Rating</p>
-      <div class="flex items-center gap-2">
-        <h2 class="text-6xl font-bold">{{ stats().avgRating }}</h2>
-        <i class="fa-solid fa-star text-3xl"></i>
-      </div>
+                  'text-body': currentPage() !== $any(pageNumber),
+                  'bg-neutral-secondary-medium': currentPage() !== $any(pageNumber),
+                  'hover:text-heading': currentPage() !== $any(pageNumber),
+                  'hover:bg-neutral-tertiary-medium': currentPage() !== $any(pageNumber),
+                }"
+              >
+                {{ $any(pageNumber) + 1 }}
+              </button>
+            }
+          </li>
+        }
+        <li>
+          <button
+            (click)="nextPage()"
+            [disabled]="currentPage() === totalPage() - 1 || totalPage() === 0"
+            class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
     </div>
-  </div>
+  }
 </div>
+<!-- Modal Cancel Booking -->
+@if (showCancelModal()) {
+  <div
+    class="smooth-appear bg-black/50 overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full md:inset-0 h-full max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Cancellation Confirmation</h3>
+          <button
+            (click)="closeCancelModal()"
+            type="button"
+            class="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto cursor-pointer inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-x"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <form [formGroup]="formCancellation" (ngSubmit)="cancelBooking()">
+          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+            <div class="col-span-2 bg-neutral-tertiary px-2 flex items-center justify-center">
+              <button
+                (click)="cancelPartTime()"
+                type="button"
+                class="w-full h-15 text-body hover:text-mainColorLight rounded-base text-sm cursor-pointer flex items-center justify-between"
+              >
+                Cancel part of the booking time
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+            </div>
+            @if (cancelBookingPartTime()) {
+              <div class="col-span-2 gap-0 smooth-appear">
+                <div>
+                  <label
+                    for="cancelStartDatetime"
+                    class="block mb-2.5 text-sm font-medium text-heading"
+                    >Start Time</label
+                  >
+                  <input
+                    [class]="{
+                      'border-green-500': formCancellation.get('cancelStartDatetime')?.valid,
+                      'border-red-500':
+                        formCancellation.get('cancelStartDatetime')?.invalid &&
+                        formCancellation.get('cancelStartDatetime')?.touched,
+                    }"
+                    type="datetime-local"
+                    id="cancelStartDatetime"
+                    formControlName="cancelStartDatetime"
+                    class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                    required
+                  />
+                  @if (
+                    formCancellation.get('cancelStartDatetime')?.invalid &&
+                    formCancellation.get('cancelStartDatetime')?.touched &&
+                    formCancellation.get('cancelStartDatetime')?.hasError('required')
+                  ) {
+                    <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                      <p class="flex items-start gap-2">
+                        <i class="fa-solid fa-right-long p-0.5"></i>
+                        <span>Start Time is required.</span>
+                      </p>
+                    </div>
+                  }
+                </div>
+                <div>
+                  <label
+                    for="cancelEndDatetime"
+                    class="block mb-2.5 text-sm font-medium text-heading"
+                    >End Time</label
+                  >
+                  <input
+                    [class]="{
+                      'border-green-500': formCancellation.get('cancelEndDatetime')?.valid,
+                      'border-red-500':
+                        formCancellation.get('cancelEndDatetime')?.invalid &&
+                        formCancellation.get('cancelEndDatetime')?.touched,
+                    }"
+                    type="datetime-local"
+                    id="cancelEndDatetime"
+                    formControlName="cancelEndDatetime"
+                    class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                    required
+                  />
+                  @if (
+                    formCancellation.get('cancelEndDatetime')?.invalid &&
+                    formCancellation.get('cancelEndDatetime')?.touched &&
+                    formCancellation.get('cancelEndDatetime')?.hasError('required')
+                  ) {
+                    <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                      <p class="flex items-start gap-2">
+                        <i class="fa-solid fa-right-long p-0.5"></i>
+                        <span>End Time is required.</span>
+                      </p>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <div class="col-span-2">
+              <label for="reason" class="block mb-2.5 text-sm font-medium text-heading"
+                >Reason</label
+              >
+              <textarea
+                [class]="{
+                  'border-green-500': formCancellation.get('reason')?.valid,
+                  'border-red-500':
+                    formCancellation.get('reason')?.invalid &&
+                    formCancellation.get('reason')?.touched,
+                }"
+                id="reason"
+                formControlName="reason"
+                rows="4"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full p-3.5 shadow-xs placeholder:text-body"
+                placeholder="Write Reason For Cancellation here"
+              ></textarea>
+              @if (
+                formCancellation.get('reason')?.invalid &&
+                formCancellation.get('reason')?.touched &&
+                formCancellation.get('reason')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Reason is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+            <button
+              [disabled]="formCancellation.invalid"
+              type="submit"
+              class="inline-flex items-center gap-2 text-white bg-mainColorLight hover:bg-mainColorDark disabled:hover:bg-mainColorLight disabled:cursor-not-allowed disabled:opacity-50 box-border cursor-pointer border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              <i class="fa-regular fa-pen-to-square"></i>
+              Confirm Cancellation
+            </button>
+            <button
+              (click)="closeCancelModal()"
+              type="button"
+              class="text-body bg-neutral-secondary-medium box-border border cursor-pointer border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Modal Rated Booking -->
+@if (showRatedModal()) {
+  <div
+    class="smooth-appear overflow-y-auto overflow-x-hidden fixed z-50 flex justify-center items-center w-full inset-0 h-full max-h-full bg-black/50"
+  >
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Submit a Review</h3>
+          <button
+            (click)="closeRatedModal()"
+            type="button"
+            class="cursor-pointer text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-x"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+
+        <form [formGroup]="formRatedBooking" (ngSubmit)="submitRated()">
+          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+            <div class="col-span-2 sm:col-span-1">
+              <label for="title" class="block mb-2.5 text-sm font-medium text-heading"
+                >Review Title</label
+              >
+              <input
+                [class]="{
+                  'border-green-500': formRatedBooking.get('title')?.valid,
+                  'border-red-500':
+                    formRatedBooking.get('title')?.invalid &&
+                    formRatedBooking.get('title')?.touched,
+                }"
+                required
+                type="text"
+                id="title"
+                formControlName="title"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="e.g., Great workspace, very quiet!"
+              />
+              @if (
+                formRatedBooking.get('title')?.invalid &&
+                formRatedBooking.get('title')?.touched &&
+                formRatedBooking.get('title')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Review Title is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <label for="rating" class="block mb-2.5 text-sm font-medium text-heading"
+                >Rating (1 - 5)</label
+              >
+              <select
+                [class]="{
+                  'border-green-500': formRatedBooking.get('rating')?.valid,
+                  'border-red-500':
+                    formRatedBooking.get('rating')?.invalid &&
+                    formRatedBooking.get('rating')?.touched,
+                }"
+                required
+                id="rating"
+                formControlName="rating"
+                class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight shadow-xs placeholder:text-body"
+              >
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Very Good</option>
+                <option value="3">3 - Good</option>
+                <option value="2">2 - Fair</option>
+                <option value="1">1 - Poor</option>
+              </select>
+              @if (
+                formRatedBooking.get('rating')?.invalid &&
+                formRatedBooking.get('rating')?.touched &&
+                formRatedBooking.get('rating')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Rating is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2">
+              <label for="body" class="block mb-2.5 text-sm font-medium text-heading"
+                >Comment</label
+              >
+              <textarea
+                [class]="{
+                  'border-green-500': formRatedBooking.get('body')?.valid,
+                  'border-red-500':
+                    formRatedBooking.get('body')?.invalid && formRatedBooking.get('body')?.touched,
+                }"
+                required
+                id="body"
+                formControlName="body"
+                rows="4"
+                class="block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight w-full p-3.5 shadow-xs placeholder:text-body"
+                placeholder="Share your experience about this workspace..."
+              ></textarea>
+              @if (
+                formRatedBooking.get('body')?.invalid &&
+                formRatedBooking.get('body')?.touched &&
+                formRatedBooking.get('body')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Comment is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+            <button
+              [disabled]="formRatedBooking.invalid"
+              type="submit"
+              class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-mainColorLight inline-flex items-center gap-1 text-white bg-mainColorLight hover:bg-mainColorDark box-border border border-transparent focus:ring-4 focus:ring-mainColorLight-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              <i class="fa-solid fa-star"></i>
+              Submit Review
+            </button>
+
+            <button
+              (click)="closeRatedModal()"
+              type="button"
+              class="cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}

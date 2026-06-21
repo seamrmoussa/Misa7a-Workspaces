@@ -1,0 +1,326 @@
+<div class="min-h-screen bg-mainBg p-6 font-sans smooth-appear">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div>
+      <h1 class="text-3xl font-bold text-mainColorDark mb-2">Roles Management</h1>
+    </div>
+  </div>
+
+  <div class="mx-auto my-6 bg-white border border-gray-100 rounded-xl shadow-sm">
+    <button
+      type="button"
+      (click)="toggleCollapseAssignNewUserRole()"
+      class="flex items-center justify-between w-full p-6 font-medium text-left text-slate-800 rounded-xl hover:bg-gray-50 focus:ring-4 focus:ring-gray-100 transition-all duration-200 cursor-pointer"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="flex items-center justify-center p-2 size-15 bg-blue-50 text-mainColorLight rounded-full"
+        >
+          <i class="fa-regular fa-square-plus text-2xl"></i>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-mainColorDark">Assign New Role To User</h2>
+          <p class="text-sm text-gray-500 font-normal">Give some members more privileges.</p>
+        </div>
+      </div>
+
+      <i
+        [class.rotate-180]="openAssignUserRole()"
+        class="fa-solid fa-chevron-down size-6 transition-transform duration-500 text-mainColorDark"
+      ></i>
+    </button>
+
+    @if (openAssignUserRole()) {
+      <div class="p-6 border-t border-gray-100 smooth-appear">
+        <form [formGroup]="formAssignNewUserRole" (ngSubmit)="DoneAssignNewUserRole()">
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label for="userRole" class="block mb-2.5 text-sm font-medium text-heading"
+                >User Name</label
+              >
+              <select
+                required
+                type="text"
+                id="userRole"
+                formControlName="userRole"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              >
+                <option selected disabled hidden value="">Select Role</option>
+                <option value="ADMIN">Admin</option>
+                <option value="STAFF">Staff</option>
+                <option value="MEMBER">Member</option>
+              </select>
+              @if (
+                formAssignNewUserRole.get('userRole')?.invalid &&
+                formAssignNewUserRole.get('userRole')?.touched &&
+                formAssignNewUserRole.get('userRole')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>User Name is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+            <div>
+              <label for="userId" class="block mb-2.5 text-sm font-medium text-heading"
+                >User Id</label
+              >
+              <input
+                required
+                type="text"
+                id="userId"
+                formControlName="userId"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              />
+              @if (
+                formAssignNewUserRole.get('userId')?.invalid &&
+                formAssignNewUserRole.get('userId')?.touched &&
+                formAssignNewUserRole.get('userId')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>User Id is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="w-full flex items-center justify-center">
+            <app-main-button
+              class="w-[50%] mx-auto"
+              [text]="'Assign New Role'"
+              [btnType]="'submit'"
+              [btnIcon]="'fa-solid fa-user-tie scale-125'"
+            ></app-main-button>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+
+  <div class="flex flex-row flex-wrap gap-2 justify-between py-2.5">
+    <div>
+      @if (selectValue.value) {
+        <button
+          (click)="getAllUsersByRole(selectValue.value)"
+          class="smooth-appear grow lg:grow-0 bg-mainColorDark hover:bg-mainColorLight text-white cursor-pointer px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium transition-colors shadow-sm"
+        >
+          <i class="fa-solid fa-arrows-rotate scale-125"></i>
+          Get All <span class="text-orange-400">{{ selectRoleValue() }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="gap-2.5 grow lg:grow-0 lg:w-[20%]">
+      <select
+        (change)="setRollOnButton(selectValue.value)"
+        #selectValue
+        id="selectRole"
+        class="block w-full px-3 py-2.5 cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight shadow-xs placeholder:text-body"
+      >
+        <option selected disabled hidden value="">Select Role</option>
+        <option value="ADMIN">Admin</option>
+        <option value="STAFF">Staff</option>
+        <option value="MEMBER">Member</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    @if (allAdminUsers().length > 0) {
+      <div
+        class="grid grid-cols-12 gap-4 p-5 border-b border-gray-100 text-xs font-bold text-linksColor2 uppercase tracking-wider"
+      >
+        <div class="text-start col-span-1">ID</div>
+        <div class="text-start col-span-2">Employee Name</div>
+        <div class="text-center col-span-2">User Name</div>
+        <div class="text-center col-span-2">Company</div>
+        <div class="text-center col-span-2">Job Title</div>
+        <div class="text-center col-span-1">Role</div>
+        <div class="text-center col-span-2">Actions</div>
+      </div>
+    }
+
+    @for (item of allAdminUsers(); track item.id) {
+      <div class="grid grid-cols-12 gap-4 p-5 items-center hover:bg-gray-50 transition-colors">
+        <div class="col-span-1 flex items-center justify-start">
+          <div class="font-bold text-fontGray1">{{ item.id }}</div>
+        </div>
+
+        <div class="col-span-2 flex items-center justify-start gap-3">
+          <div class="relative">
+            <img
+              [src]="item.avatarBase64"
+              [alt]="`${'User Avatar: '}${item.firstName}${' '}${item.lastName}${' '}`"
+              class="size-10 rounded-full object-cover"
+            />
+          </div>
+
+          <div>
+            <div class="font-bold text-fontGray1">{{ item.firstName }} {{ item.lastName }}</div>
+            <div class="text-xs text-linksColor2">{{ item.email }}</div>
+          </div>
+        </div>
+
+        <div class="col-span-2 flex flex-col items-center justify-center">
+          <div class="font-medium text-fontGray1">{{ item.username }}</div>
+        </div>
+
+        <div class="col-span-2 flex flex-col items-center justify-center">
+          <div class="font-medium text-fontGray1">{{ item.companyName }}</div>
+        </div>
+
+        <div class="col-span-2 flex items-center justify-center">
+          <div class="font-medium text-fontGray1">{{ item.jobTitle }}</div>
+        </div>
+
+        <div class="col-span-1 flex flex-col items-center justify-center">
+          <span
+            class="px-3 py-1 text-2xs font-bold rounded-full tracking-wide inline-block"
+            [class]="
+              item.roles[0] === 'ADMIN'
+                ? 'bg-badgeTextColor text-badgeBgColor'
+                : 'bg-badgeBgColor text-mainColorDark'
+            "
+          >
+            {{ item.roles[0] }}
+          </span>
+        </div>
+
+        <div class="col-span-2 flex flex-col gap-2.5 items-center justify-center">
+          <app-main-button
+            (btnClick)="openModalToUpdateRole(item.id)"
+            [text]="'Update Role'"
+          ></app-main-button>
+          <app-main-button
+            (btnClick)="openModalToRemoveRole(item.id)"
+            [text]="'Remove Role'"
+            [btnColor]="'bg-red-800 text-white/80 hover:text-white'"
+          ></app-main-button>
+        </div>
+      </div>
+    } @empty {
+      <div class="font-bold text-3xl p-8 text-center text-red-700">
+        No users found in this role.
+      </div>
+    }
+  </div>
+</div>
+<!-- Main modal To Update-->
+@if (startModalToUpdateRole()) {
+  <div
+    class="smooth-appear bg-black/50 overflow-y-auto overflow-x-hidden fixed inset-0 flex justify-center items-center top-0 right-0 left-0 z-50 w-full md:inset-0 h-full max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Select new role</h3>
+          <button
+            (click)="closeUpdateModal()"
+            type="button"
+            class="text-body cursor-pointer bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-xmark flex items-center justify-center scale-150"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <form>
+          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+            <div class="col-span-2">
+              <label for="selectNewRole" class="block mb-2.5 text-sm font-medium text-heading"
+                >New Role</label
+              >
+              <select
+                #selectValueToUpdateRole
+                required
+                type="text"
+                id="selectNewRole"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              >
+                <option selected disabled hidden value="">Select Role</option>
+                <option value="ADMIN">Admin</option>
+                <option value="STAFF">Staff</option>
+                <option value="MEMBER">Member</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+            <app-main-button
+              (btnClick)="doneRoleUserUpdateRole(selectValueToUpdateRole.value)"
+              [text]="'Done Update Role'"
+              [btnIcon]="'fa-regular fa-pen-to-square scale-125'"
+            ></app-main-button>
+            <app-main-button
+              (btnClick)="closeUpdateModal()"
+              [text]="'Cancel'"
+              [btnColor]="'bg-neutral-secondary-medium text-body hover:text-heading'"
+            ></app-main-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Main modal To Delete-->
+@if (startModalToRemoveRole()) {
+  <div
+    class="smooth-appear bg-black/50 overflow-y-auto overflow-x-hidden fixed inset-0 flex justify-center items-center top-0 right-0 left-0 z-50 w-full md:inset-0 h-full max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Select role to remove</h3>
+          <button
+            (click)="closeRemoveModal()"
+            type="button"
+            class="text-body cursor-pointer bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-xmark flex items-center justify-center scale-150"></i>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <form>
+          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+            <div class="col-span-2">
+              <label for="selectNewRole" class="block mb-2.5 text-sm font-medium text-heading"
+                >Role will be deleted</label
+              >
+              <select
+                #selectValueToRemoveRole
+                required
+                type="text"
+                id="selectNewRole"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              >
+                <option selected disabled hidden value="">Select Role</option>
+                <option value="ADMIN">Admin</option>
+                <option value="STAFF">Staff</option>
+                <option value="MEMBER">Member</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+            <app-main-button
+              (btnClick)="doneRoleUserRemoveRole(selectValueToRemoveRole.value)"
+              [text]="'Done Remove Role'"
+              [btnIcon]="'fa-solid fa-arrows-rotate scale-125'"
+              [btnColor]="'bg-red-800 text-white/80 hover:text-white'"
+            ></app-main-button>
+            <app-main-button
+              (btnClick)="closeRemoveModal()"
+              [text]="'Cancel'"
+              [btnColor]="'bg-neutral-secondary-medium text-body hover:text-heading'"
+            ></app-main-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
