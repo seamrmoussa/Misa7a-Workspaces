@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal, PLATFORM_ID } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { CallAdminDataService } from '../../core/service/call-admin-data.service';
 import { WorkspaceData } from '../../workspace-data.interface';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-all-workspace',
@@ -21,7 +22,9 @@ export class AllWorkspaceComponent implements OnInit {
   isModalOpen = signal(false);
 
   ngOnInit(): void {
-    this.getWorkspaces();
+    if (isPlatformBrowser(this.pLATFORM_ID)) {
+      this.getWorkspaces();
+    }
   }
 
   getWorkspaces() {

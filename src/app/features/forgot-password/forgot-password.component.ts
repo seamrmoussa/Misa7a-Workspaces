@@ -1,10 +1,11 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ForgotPassService } from '../../core/auth/services/forgot-pass.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ResetPassword } from '../../reset-password.interface';
 import { Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-forgot-password',
@@ -16,30 +17,35 @@ export class ForgotPasswordComponent implements OnInit {
   private readonly forgotPassService = inject(ForgotPassService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly toastrService = inject(ToastrService);
+  private readonly pLATFORM_ID = inject(PLATFORM_ID);
   private readonly router = inject(Router);
 
-
-  private  token = signal<string | null>(null);
-  private  initialRestPassData = signal<ResetPassword>({
+  private token = signal<string | null>(null);
+  private initialRestPassData = signal<ResetPassword>({
     token: '',
     newPassword: '',
   });
   isRestStep = signal<boolean>(false);
   submitEmailSubscription = signal<Subscription>(new Subscription());
   restPassSubscription = signal<Subscription>(new Subscription());
-  
+
   email: FormControl = new FormControl('', [Validators.required, Validators.email]);
-  newPassword: FormControl = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{5,14}$/),]);
+  newPassword: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/^[a-zA-Z0-9]{5,14}$/),
+  ]);
 
   ngOnInit() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
-      this.token.set(params.get('token'));
-      if (this.token()) {
-        this.isRestStep.set(true);
-      } else {
-        this.isRestStep.set(false);
-      }
-    });
+    if (isPlatformBrowser(this.pLATFORM_ID)) {
+      this.activatedRoute.queryParamMap.subscribe((params) => {
+        this.token.set(params.get('token'));
+        if (this.token()) {
+          this.isRestStep.set(true);
+        } else {
+          this.isRestStep.set(false);
+        }
+      });
+    }
   }
 
   submitSendEmail(e: Event): void {
@@ -72,12 +78,13 @@ export class ForgotPasswordComponent implements OnInit {
             this.toastrService.success('The password has been changed.');
             this.initialRestPassData.update(() => ({
               token: '',
-              newPassword: '',}));
-              this.router.navigate(['/login']);
-            },
-            error:()=>{
-              this.toastrService.success('Error Changing Password.');
-          }
+              newPassword: '',
+            }));
+            this.router.navigate(['/login']);
+          },
+          error: () => {
+            this.toastrService.success('Error Changing Password.');
+          },
         }),
       );
     }

@@ -81,8 +81,8 @@ export class BookingPageComponent implements OnInit {
           this.userId.set(userIdNow);
         }
       });
+      this.getWorkspaces();
     }
-    this.getWorkspaces();
   }
 
   private getTodayAtTime(time: string): string {

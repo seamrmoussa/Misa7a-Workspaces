@@ -1,6 +1,7 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth/services/auth.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-logout-message',
@@ -10,12 +11,14 @@ import { AuthService } from '../../core/auth/services/auth.service';
 })
 export class LogoutMessageComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
-  private readonly authService = inject(AuthService);
+  private readonly pLATFORM_ID = inject(PLATFORM_ID);
 
   private timeOutId = signal<any>(null);
 
   ngOnInit(): void {
-    this.toHome();
+    if (isPlatformBrowser(this.pLATFORM_ID)) {
+      this.toHome();
+    }
   }
 
   toHome(): void {
