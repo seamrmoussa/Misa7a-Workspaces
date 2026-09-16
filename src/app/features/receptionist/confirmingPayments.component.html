@@ -1,0 +1,455 @@
+<div class="flex min-h-screen bg-mainBg font-sans text-fontGray1">
+  <main class="flex-1 p-6 lg:p-10 xl:p-12 relative overflow-y-auto">
+    <div>
+      <header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-mainColorDark mb-2 tracking-tight">
+          Confirming Payments
+        </h1>
+        <div class="order-2 md:order-1 flex flex-wrap sm:flex-nowrap gap-3 w-full md:w-auto">
+          <button
+            (click)="checkConfirmPaymentStatus(statusSelect.value)"
+            class="w-full md:w-auto block text-center border-3 border-orange-700 cursor-pointer font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md bg-mainColorLight hover:bg-mainColorDark hover:text-white text-white/80"
+          >
+            Get
+          </button>
+          <select
+            #statusSelect
+            required
+            id="status"
+            class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight shadow-xs placeholder:text-body"
+          >
+            <option value="ALL" selected>All</option>
+            <option value="PENDING">Pending</option>
+            <option value="CONFIRMED">Confirmed</option>
+            <option value="REJECTED">Rejected</option>
+            <option value="PAYMENT">Payment</option>
+            <option value="REFUND">Refund</option>
+          </select>
+        </div>
+      </header>
+
+      @if (allDataToConfirm().length > 0) {
+        <div class="flex items-center justify-center py-4">
+          <ul class="flex -space-x-px text-sm">
+            <li>
+              <button
+                (click)="prevPage()"
+                [disabled]="currentPage() === 0"
+                class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+              >
+                Previous
+              </button>
+            </li>
+            @for (pageNumber of pagesArray(); track $index) {
+              <li>
+                @if (pageNumber === '...') {
+                  <span
+                    class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+                  >
+                    ...
+                  </span>
+                } @else {
+                  <button
+                    (click)="goToPage($any(pageNumber))"
+                    [disabled]="currentPage() === $any(pageNumber)"
+                    class="cursor-pointer disabled:cursor-not-allowed flex items-center justify-center box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+                    [class]="{
+                      'text-mainColorLight': currentPage() === $any(pageNumber),
+                      'bg-neutral-tertiary-medium': currentPage() === $any(pageNumber),
+
+                      'text-body': currentPage() !== $any(pageNumber),
+                      'bg-neutral-secondary-medium': currentPage() !== $any(pageNumber),
+                      'hover:text-heading': currentPage() !== $any(pageNumber),
+                      'hover:bg-neutral-tertiary-medium': currentPage() !== $any(pageNumber),
+                    }"
+                  >
+                    {{ $any(pageNumber) + 1 }}
+                  </button>
+                }
+              </li>
+            }
+            <li>
+              <button
+                (click)="nextPage()"
+                [disabled]="currentPage() === totalPage() - 1 || totalPage() === 0"
+                class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-e-base text-sm px-3 h-10 focus:outline-none"
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </div>
+      }
+
+      @if (allDataToConfirm().length > 0) {
+        <div class="space-y-6">
+          @for (confirmReq of allDataToConfirm(); track confirmReq.id) {
+            <div
+              class="relative bg-white rounded-xl border border-gray-100 border-s-4 border-s-mainColorDark shadow-sm p-5 md:p-6 overflow-hidden flex flex-col gap-4"
+            >
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+                <div class="md:col-span-2 flex justify-center md:justify-start">
+                  <div
+                    (click)="isReceiptImgModalOpen(confirmReq.screenshotFilename)"
+                    class="relative w-28 h-28 sm:w-32 sm:h-32 md:w-full md:h-auto aspect-square rounded-xl border border-gray-200 bg-neutral-100 overflow-hidden shadow-inner group"
+                  >
+                    @if (confirmReq.screenshotFilename) {
+                      <img
+                        [src]="confirmReq.screenshotFilename"
+                        alt="Receipt Proof"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                      />
+                    } @else {
+                      <div
+                        class="w-full h-full flex flex-col items-center justify-center text-gray-400 gap-1.5 p-2 text-center"
+                      >
+                        <i class="fa-regular fa-image text-2xl"></i>
+                        <span class="text-2xs font-medium leading-tight">No Receipt</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <div class="md:col-span-4 space-y-3">
+                  <div>
+                    <p class="block text-xs font-semibold text-fontGray1">
+                      Reference ID:
+                      <span class="text-sm font-bold text-mainColorDark">{{
+                        confirmReq.bookingRef
+                      }}</span>
+                    </p>
+                  </div>
+
+                  <div>
+                    <p class="block text-xs font-semibold text-fontGray1">
+                      User ID:
+                      <span class="text-sm font-bold text-mainColorDark">{{
+                        confirmReq.userId
+                      }}</span>
+                    </p>
+                  </div>
+
+                  <div>
+                    <p class="block text-xs font-semibold text-fontGray1">
+                      Customer Email:
+                      <span class="ttext-sm font-semibold text-mainColorDark break-all">{{
+                        confirmReq.customerEmail
+                      }}</span>
+                    </p>
+                  </div>
+
+                  <div>
+                    <p class="block text-xs font-semibold text-fontGray1">
+                      Total Amount:
+                      <span class="text-sm font-bold text-mainColorDark"
+                        >EGP {{ confirmReq.amount }}</span
+                      >
+                    </p>
+                  </div>
+
+                  <div>
+                    <p class="block text-xs font-semibold text-fontGray1">
+                      Refund Amount:
+                      @if (confirmReq.refundAmount) {
+                        <span class="text-xs font-bold text-red-600"
+                          >EGP {{ confirmReq.refundAmount }}</span
+                        >
+                      }
+                    </p>
+                  </div>
+
+                  <div>
+                    <p class="block text-xs font-semibold text-fontGray1">
+                      Transaction:
+                      <span class="text-sm font-bold text-amber-600"
+                        >"{{ confirmReq.transactionType }}"</span
+                      >
+                    </p>
+                  </div>
+                  <div class="md:col-span-2 space-y-2.5">
+                    <div class="space-y-1">
+                      <p class="block text-xs font-semibold text-fontGray1">
+                        Status:
+                        @if (confirmReq.status === 'CONFIRMED') {
+                          <span
+                            class="inline-block font-bold text-greenTextBadge bg-greenBgBadge px-2 py-0.5 rounded text-xs"
+                          >
+                            {{ confirmReq.status }}
+                          </span>
+                        } @else if (confirmReq.status === 'PENDING') {
+                          <span
+                            class="inline-block font-bold text-beigeTextBadge bg-beigeBgBadge px-2 py-0.5 rounded text-xs"
+                          >
+                            {{ confirmReq.status }}
+                          </span>
+                        } @else {
+                          <span
+                            class="inline-block font-bold text-redColorDark bg-redColorLight px-2 py-0.5 rounded text-xs"
+                          >
+                            {{ confirmReq.status }}
+                          </span>
+                        }
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="md:col-span-4 space-y-4 text-xs text-fontGray1">
+                  <div>
+                    <span class="font-bold text-mainColorDark">From: </span>
+                    <span class="font-medium">{{ confirmReq.senderNumber }}</span>
+                  </div>
+                  <div>
+                    <span class="font-bold text-mainColorDark">To: </span>
+                    <span class="font-medium">{{ confirmReq.paidToNumber }}</span>
+                  </div>
+                  <div>
+                    <span class="font-bold text-fontGray1">Ref Code: </span>
+                    <span class="font-semibold text-mainColorDark break-all">{{
+                      confirmReq.referenceCode
+                    }}</span>
+                  </div>
+                  <div>
+                    <span class="font-bold text-fontGray1">Date: </span>
+                    <span class="font-medium text-fontGray2">{{
+                      confirmReq.createdOn | date: 'dd/MM/yyyy , hh:mm a'
+                    }}</span>
+                  </div>
+                  @if (confirmReq.adminDecisionAt) {
+                    <div>
+                      <span class="font-bold text-fontGray1">Decision At: </span>
+                      <span class="font-medium text-fontGray2">{{
+                        confirmReq.adminDecisionAt | date: 'dd/MM/yyyy , hh:mm a'
+                      }}</span>
+                    </div>
+                  }
+
+                  <div>
+                    <span class="font-bold text-fontGray1">Method: </span>
+                    <span
+                      class="inline-block text-xs font-bold text-secColorDark bg-secColorExtraLight px-2 py-0.5 rounded"
+                      >{{ confirmReq.depositMethod }}</span
+                    >
+                  </div>
+                </div>
+
+                <div class="hidden md:flex md:col-span-2 flex-col gap-2.5 w-full">
+                  <button
+                    (click)="openConfirmPaymentModal(confirmReq.id)"
+                    type="button"
+                    class="w-full py-2 px-3 rounded-xl text-xs font-semibold cursor-pointer text-white bg-green-600 hover:opacity-90 transition shadow-sm"
+                  >
+                    Take Action
+                  </button>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-gray-200 text-center text-xs">
+                <span class="font-bold text-mainColorDark">Decision Note: </span>
+                <span class="text-fontGray1">{{
+                  confirmReq.reasonOfReject || 'No notes provided'
+                }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div
+          class="relative bg-white rounded-xl text-center font-bold border border-gray-100 shadow-sm p-5 md:p-6 overflow-hidden flex flex-col gap-4"
+        >
+          There are no requests available at the moment.
+        </div>
+      }
+    </div>
+
+    @if (allDataToConfirm().length > 0) {
+      <div class="flex items-center justify-center py-4">
+        <ul class="flex -space-x-px text-sm">
+          <li>
+            <button
+              (click)="prevPage()"
+              [disabled]="currentPage() === 0"
+              class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+            >
+              Previous
+            </button>
+          </li>
+          @for (pageNumber of pagesArray(); track $index) {
+            <li>
+              @if (pageNumber === '...') {
+                <span
+                  class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+                >
+                  ...
+                </span>
+              } @else {
+                <button
+                  (click)="goToPage($any(pageNumber))"
+                  [disabled]="currentPage() === $any(pageNumber)"
+                  class="cursor-pointer disabled:cursor-not-allowed flex items-center justify-center box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+                  [class]="{
+                    'text-mainColorLight': currentPage() === $any(pageNumber),
+                    'bg-neutral-tertiary-medium': currentPage() === $any(pageNumber),
+
+                    'text-body': currentPage() !== $any(pageNumber),
+                    'bg-neutral-secondary-medium': currentPage() !== $any(pageNumber),
+                    'hover:text-heading': currentPage() !== $any(pageNumber),
+                    'hover:bg-neutral-tertiary-medium': currentPage() !== $any(pageNumber),
+                  }"
+                >
+                  {{ $any(pageNumber) + 1 }}
+                </button>
+              }
+            </li>
+          }
+          <li>
+            <button
+              (click)="nextPage()"
+              [disabled]="currentPage() === totalPage() - 1 || totalPage() === 0"
+              class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-e-base text-sm px-3 h-10 focus:outline-none"
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </div>
+    }
+  </main>
+</div>
+
+@if (showReceiptImgModal()) {
+  <div
+    class="smooth-appear overflow-y-auto overflow-x-hidden fixed z-50 flex justify-center items-center w-full inset-0 h-full max-h-full bg-black/50"
+  >
+    <div class="relative p-4 w-full max-w-3xl max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Receipt Image</h3>
+          <button
+            (click)="isReceiptImgModalClose()"
+            type="button"
+            class="cursor-pointer text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-x"></i>
+          </button>
+        </div>
+        <div>
+          <img
+            [src]="ReceiptImgSelected()"
+            alt="Receipt Proof"
+            class="w-full h-[full] object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+          />
+        </div>
+        <div class="flex items-center space-x-4 pt-4 md:pt-6">
+          <button
+            (click)="isReceiptImgModalClose()"
+            type="button"
+            class="cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showPaymentModal()) {
+  <div
+    class="smooth-appear overflow-y-auto overflow-x-hidden fixed z-50 flex justify-center items-center w-full inset-0 h-full max-h-full bg-black/50"
+  >
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Submit Payment</h3>
+          <button
+            (click)="closeConfirmPaymentModal()"
+            type="button"
+            class="cursor-pointer text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-x"></i>
+          </button>
+        </div>
+
+        <form [formGroup]="formPayment" (ngSubmit)="approvalOfPaymenT()">
+          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+            <div class="col-span-1 sm:col-span-2">
+              <label for="status" class="block mb-2.5 text-sm font-medium text-heading"
+                >Status</label
+              >
+              <select
+                required
+                id="status"
+                formControlName="status"
+                class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight shadow-xs placeholder:text-body"
+              >
+                <option value="PENDING">Pending</option>
+                <option value="CONFIRMED">Confirmed</option>
+                <option value="REJECTED">Rejected</option>
+              </select>
+              @if (formPayment.get('status')?.invalid && formPayment.get('status')?.touched) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  @if (formPayment.get('status')?.hasError('required')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Please select the desired status.</span>
+                    </p>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2">
+              <label for="reasonOfReject" class="block mb-2.5 text-sm font-medium text-heading"
+                >Reason For The Transaction</label
+              >
+              <textarea
+                required
+                id="reasonOfReject"
+                formControlName="reasonOfReject"
+                rows="3"
+                class="block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight w-full p-3.5 shadow-xs placeholder:text-body"
+                placeholder="Write any internal notes here..."
+              ></textarea>
+              @if (
+                formPayment.get('reasonOfReject')?.invalid &&
+                formPayment.get('reasonOfReject')?.touched
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  @if (formPayment.get('reasonOfReject')?.hasError('required')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Please enter a reason for the transaction.</span>
+                    </p>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+            <button
+              [disabled]="formPayment.invalid"
+              type="submit"
+              class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-mainColorLight inline-flex items-center gap-1 text-white bg-mainColorLight hover:bg-mainColorDark box-border border border-transparent focus:ring-4 focus:ring-mainColorLight-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              submit
+            </button>
+
+            <button
+              (click)="closeConfirmPaymentModal()"
+              type="button"
+              class="cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}

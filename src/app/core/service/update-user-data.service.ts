@@ -22,4 +22,15 @@ export class UpdateUserDataService {
     formData.append('file', file);
     return this.http.post(`${environment.baseUrl}/api/v1/users/${userId}/avatar`, formData);
   }
+
+  updateUserData(userId: number, data: object): Observable<any> {
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': '69420',
+    });
+    const parameter = new HttpParams().set('userId', userId);
+    return this.http.put(`/api/v1/users/update`, data, {
+      params: parameter,
+      headers,
+    });
+  }
 }

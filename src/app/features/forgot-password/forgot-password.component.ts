@@ -18,21 +18,18 @@ export class ForgotPasswordComponent implements OnInit {
   private readonly toastrService = inject(ToastrService);
   private readonly router = inject(Router);
 
-  submitEmailSubscription = signal<Subscription>(new Subscription());
-  restPassSubscription = signal<Subscription>(new Subscription());
 
-  token = signal<string | null>(null);
-  isRestStep = signal<boolean>(false);
-  restPassData = signal<ResetPassword>({
+  private  token = signal<string | null>(null);
+  private  initialRestPassData = signal<ResetPassword>({
     token: '',
     newPassword: '',
   });
-
+  isRestStep = signal<boolean>(false);
+  submitEmailSubscription = signal<Subscription>(new Subscription());
+  restPassSubscription = signal<Subscription>(new Subscription());
+  
   email: FormControl = new FormControl('', [Validators.required, Validators.email]);
-  newPassword: FormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern(/^[a-zA-Z0-9]{5,14}$/),
-  ]);
+  newPassword: FormControl = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{5,14}$/),]);
 
   ngOnInit() {
     this.activatedRoute.queryParamMap.subscribe((params) => {
@@ -63,18 +60,24 @@ export class ForgotPasswordComponent implements OnInit {
   submitResetPass(e: Event): void {
     e.preventDefault();
     this.restPassSubscription().unsubscribe();
-    this.restPassData.set({
+    this.initialRestPassData.set({
       token: this.token()!,
       newPassword: this.newPassword.value,
     });
     if (this.newPassword.valid && this.token()) {
       this.restPassSubscription.set(
-        this.forgotPassService.restPass(this.restPassData()).subscribe({
+        this.forgotPassService.restPass(this.initialRestPassData()).subscribe({
           next: () => {
             this.newPassword.reset();
             this.toastrService.success('The password has been changed.');
-            this.router.navigate(['/login']);
-          },
+            this.initialRestPassData.update(() => ({
+              token: '',
+              newPassword: '',}));
+              this.router.navigate(['/login']);
+            },
+            error:()=>{
+              this.toastrService.success('Error Changing Password.');
+          }
         }),
       );
     }

@@ -14,6 +14,7 @@ export const routes: Routes = [
 
   //////////////////////////////////////////
   // *for authentication
+
   {
     path: '',
     component: AuthLayoutComponent,
@@ -101,12 +102,12 @@ export const routes: Routes = [
         title: 'Booking History',
       },
       {
-        path: 'receptionist',
+        path: 'confirmingPayments',
         loadComponent: () =>
-          import('./features/receptionist/receptionist.component').then(
-            (c) => c.ReceptionistComponent,
+          import('./features/receptionist/confirmingPayments.component').then(
+            (c) => c.confirmingPayments,
           ),
-        title: 'Receptionist',
+        title: 'Confirming payments',
       },
       {
         path: 'RequestAndSr',
@@ -152,7 +153,6 @@ export const routes: Routes = [
     path: '',
     component: GeneralLayoutComponent,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent, title: 'Home Page | الصفحة الرئيسية' },
       { path: 'booking', component: BookingPageComponent, title: 'New Booking' },
       { path: 'review', component: ReviewComponent, title: 'Previous Reviews' },
@@ -179,6 +179,7 @@ export const routes: Routes = [
       },
       {
         path: 'loggedout',
+        canActivate: [],
         loadComponent: () =>
           import('./features/logout-message/logout-message.component').then(
             (c) => c.LogoutMessageComponent,

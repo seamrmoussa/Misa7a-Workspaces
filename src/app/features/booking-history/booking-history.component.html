@@ -1,7 +1,78 @@
 <div class="min-h-screen bg-mainBg p-4 md:p-6 lg:p-8 font-sans space-y-4 smooth-appear">
-  <div class="mb-4">
-    <p class="text-fontGray1 font-semibold text-xl">Review All Your Reservations</p>
+  <div class="mb-4 flex items-center justify-center md:justify-between flex-wrap md:flex-nowrap">
+    <p class="text-mainColorDark font-bold text-2xl mb-2 md:mb-0">Review All Your Reservations</p>
+    <div
+      class="text-fontGray1 font-semibold text-xl flex items-center justify-between flex-wrap md:flex-nowrap gap-5"
+    >
+      <button
+        class="w-full md:w-auto block text-center cursor-pointer font-semibold rounded-lg text-sm px-6 py-3 transition-all duration-300 shadow-md bg-mainColorLight hover:bg-mainColorDark hover:text-white text-white/80"
+      >
+        Get By Id
+      </button>
+      <div class="w-full flex-1">
+        <input
+          type="number"
+          id="userId"
+          class="w-full md:w-auto bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block px-3 py-2.5 shadow-xs placeholder:text-body"
+          placeholder="Enter Booking Id"
+          required
+        />
+      </div>
+    </div>
   </div>
+
+  @if (bookingHistory().length > 0) {
+    <div class="flex items-center justify-center">
+      <ul class="flex -space-x-px text-sm">
+        <li>
+          <button
+            (click)="prevPage()"
+            [disabled]="currentPage() === 0"
+            class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+          >
+            Previous
+          </button>
+        </li>
+        @for (pageNumber of pagesArray(); track $index) {
+          <li>
+            @if (pageNumber === '...') {
+              <span
+                class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+              >
+                ...
+              </span>
+            } @else {
+              <button
+                (click)="goToPage($any(pageNumber))"
+                [disabled]="currentPage() === $any(pageNumber)"
+                class="cursor-pointer disabled:cursor-not-allowed flex items-center justify-center box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+                [class]="{
+                  'text-mainColorLight': currentPage() === $any(pageNumber),
+                  'bg-neutral-tertiary-medium': currentPage() === $any(pageNumber),
+
+                  'text-body': currentPage() !== $any(pageNumber),
+                  'bg-neutral-secondary-medium': currentPage() !== $any(pageNumber),
+                  'hover:text-heading': currentPage() !== $any(pageNumber),
+                  'hover:bg-neutral-tertiary-medium': currentPage() !== $any(pageNumber),
+                }"
+              >
+                {{ $any(pageNumber) + 1 }}
+              </button>
+            }
+          </li>
+        }
+        <li>
+          <button
+            (click)="nextPage()"
+            [disabled]="currentPage() === totalPage() - 1 || totalPage() === 0"
+            class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-e-base text-sm px-3 h-10 focus:outline-none"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </div>
+  }
 
   @for (book of bookingHistory(); track book.id) {
     <div class="space-y-6 smooth-appear">
@@ -10,22 +81,9 @@
       >
         <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-mainColorDark"></div>
 
-        <div class="p-4 md:w-56 shrink-0">
-          <img
-            src="/img/Logo-Misa7a-icon.png"
-            alt="Sanctuary Image"
-            class="w-full h-40 md:h-full object-cover rounded-lg shadow-sm"
-          />
-        </div>
-
         <div class="flex-1 p-4 md:p-6 grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
           <div class="col-span-3 sm:col-span-2 xl:col-span-1 space-y-1 order-1">
             <div class="flex flex-col gap-3">
-              <div>
-                <p class="text-fontGray1 font-bold text-xl">
-                  ID: <span class="text-mainColorLight">{{ book.id }}</span>
-                </p>
-              </div>
               <div>
                 <p class="text-fontGray1 font-bold">Reference ID</p>
                 <p class="text-mainColorLight font-bold text-sm">{{ book.bookingRef }}</p>
@@ -71,8 +129,8 @@
                   class="flex items-center gap-2 text-[12px]"
                   [class]="{
                     'text-red-500': book.status === 'PENDING',
-                    'text-green-500': book.status === 'COMPLETE',
-                    'text-yellow-700': book.status === 'CANCELED',
+                    'text-green-500': book.status === 'CONFIRMED',
+                    'text-yellow-700': book.status === 'CANCELLED',
                   }"
                 >
                   {{ book.status }}
@@ -83,14 +141,6 @@
                 </span>
               }
             </div>
-
-            <!-- <div class="flex text-secColorDark text-xs gap-1 mt-1">
-              <i class="fa-solid fa-star text-yellow-400"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-            </div> -->
           </div>
 
           <div
@@ -110,6 +160,14 @@
                 class="w-full bg-gray-100 hover:bg-gray-200 text-mainColorDark font-semibold cursor-pointer py-2.5 px-4 rounded-lg transition-colors text-sm"
               >
                 Rate this room
+              </button>
+            }
+            @if (book.status === 'PENDING' && book.endDatetime >= currentDateTime) {
+              <button
+                (click)="isModalConfirmPaymentVisible(book.id)"
+                class="w-full bg-gray-100 hover:bg-gray-200 text-mainColorDark font-semibold cursor-pointer py-2.5 px-4 rounded-lg transition-colors text-sm"
+              >
+                Confirm Payment
               </button>
             }
           </div>
@@ -172,7 +230,7 @@
           <button
             (click)="nextPage()"
             [disabled]="currentPage() === totalPage() - 1 || totalPage() === 0"
-            class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+            class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-e-base text-sm px-3 h-10 focus:outline-none"
           >
             Next
           </button>
@@ -471,6 +529,241 @@
 
             <button
               (click)="closeRatedModal()"
+              type="button"
+              class="cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showConfirmPaymentModal()) {
+  <div
+    class="smooth-appear overflow-y-auto overflow-x-hidden fixed z-50 flex justify-center items-center w-full inset-0 h-full max-h-full bg-black/50"
+  >
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Submit a Review</h3>
+          <button
+            (click)="closeConfirmPaymentModal()"
+            type="button"
+            class="cursor-pointer text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-x"></i>
+          </button>
+        </div>
+
+        <form [formGroup]="formConfirmPayment" (ngSubmit)="onSubmitConfirmPayment()">
+          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+            <div class="col-span-1 sm:col-span-2">
+              <label for="depositMethod" class="block mb-2.5 text-sm font-medium text-heading"
+                >Deposit Method</label
+              >
+              <select
+                required
+                id="depositMethod"
+                formControlName="depositMethod"
+                class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight shadow-xs placeholder:text-body"
+              >
+                <option selected disabled hidden>Select Method ......</option>
+                <option value="VODAFONE_CASH">Wallet</option>
+                <option value="INSTAPAY">InstaPay</option>
+              </select>
+              @if (
+                formConfirmPayment.get('depositMethod')?.invalid &&
+                formConfirmPayment.get('depositMethod')?.touched
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  @if (formConfirmPayment.get('depositMethod')?.hasError('required')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Please select a payment method.</span>
+                    </p>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <label for="paidToNumber" class="block mb-2.5 text-sm font-medium text-heading"
+                >Paid To Number</label
+              >
+              <input
+                required
+                type="text"
+                id="paidToNumber"
+                formControlName="paidToNumber"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="e.g., Great workspace, very quiet!"
+              />
+              @if (
+                formConfirmPayment.get('paidToNumber')?.invalid &&
+                formConfirmPayment.get('paidToNumber')?.touched
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  @if (formConfirmPayment.get('paidToNumber')?.hasError('required')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Please select the number to which the transfer will be made.</span>
+                    </p>
+                  }
+                  @if (formConfirmPayment.get('paidToNumber')?.hasError('pattern')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span
+                        >Invalid format. Must start with (010, 011, 012, or 015) and be 11
+                        digits.</span
+                      >
+                    </p>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <label for="senderNumber" class="block mb-2.5 text-sm font-medium text-heading"
+                >Sender Number
+              </label>
+              <input
+                required
+                type="text"
+                id="senderNumber"
+                formControlName="senderNumber"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="e.g., Great workspace, very quiet!"
+              />
+              @if (
+                formConfirmPayment.get('senderNumber')?.invalid &&
+                formConfirmPayment.get('senderNumber')?.touched
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  @if (formConfirmPayment.get('senderNumber')?.hasError('required')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Please select the number from which the transfer is being made.</span>
+                    </p>
+                  }
+                  @if (formConfirmPayment.get('senderNumber')?.hasError('pattern')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span
+                        >Invalid format. Must start with (010, 011, 012, or 015) and be 11
+                        digits.</span
+                      >
+                    </p>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <label for="referenceCode" class="block mb-2.5 text-sm font-medium text-heading"
+                >Reference Code</label
+              >
+              <input
+                required
+                type="text"
+                id="referenceCode"
+                formControlName="referenceCode"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="e.g., Great workspace, very quiet!"
+              />
+              @if (
+                formConfirmPayment.get('referenceCode')?.invalid &&
+                formConfirmPayment.get('referenceCode')?.touched
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  @if (formConfirmPayment.get('referenceCode')?.hasError('required')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Please write the reference number.</span>
+                    </p>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <label for="amount" class="block mb-2.5 text-sm font-medium text-heading"
+                >Amount</label
+              >
+              <input
+                required
+                type="number"
+                id="amount"
+                formControlName="amount"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="e.g., Great workspace, very quiet!"
+              />
+              @if (
+                formConfirmPayment.get('amount')?.invalid &&
+                formConfirmPayment.get('amount')?.touched
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  @if (formConfirmPayment.get('amount')?.hasError('required')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Please enter the transferred amount.</span>
+                    </p>
+                  }
+                  @if (formConfirmPayment.get('amount')?.hasError('pattern')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Only numbers are allowed.</span>
+                    </p>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2">
+              <label
+                for="screenshot"
+                class="flex flex-col items-center justify-center w-full h-64 bg-neutral-secondary-medium border border-dashed border-default-strong rounded-base cursor-pointer hover:bg-neutral-tertiary-medium"
+              >
+                <div class="flex flex-col items-center justify-center text-body pt-5 pb-6">
+                  @if (selectedFileName()) {
+                    <span class="text-2xl text-mainColorDark py-2.5">{{ selectedFileName() }}</span>
+                  } @else {
+                    <span class="text-2xl text-mainColorDark py-2.5"
+                      >Upload the payment receipt.</span
+                    >
+                  }
+
+                  <i class="fa-solid fa-cloud-arrow-up text-3xl"></i>
+                  <p class="mb-2 text-sm font-semibold">Click to upload</p>
+                  <p class="text-xs">SVG, PNG, JPG or GIF</p>
+                </div>
+                <input
+                  id="screenshot"
+                  (change)="ConfirmPayment($event)"
+                  type="file"
+                  class="hidden"
+                  accept="image/*"
+                />
+              </label>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+            <button
+              [disabled]="formConfirmPayment.invalid"
+              type="submit"
+              class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-mainColorLight inline-flex items-center gap-1 text-white bg-mainColorLight hover:bg-mainColorDark box-border border border-transparent focus:ring-4 focus:ring-mainColorLight-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              <i class="fa-solid fa-sack-dollar text-xl"></i>
+              Confirm
+            </button>
+
+            <button
+              (click)="closeConfirmPaymentModal()"
               type="button"
               class="cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
             >

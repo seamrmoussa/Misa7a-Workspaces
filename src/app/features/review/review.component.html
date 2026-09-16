@@ -68,6 +68,59 @@
       </div>
     </div>
 
+    @if (allReviewData().length > 0) {
+      <div class="flex items-center justify-center py-4">
+        <ul class="flex -space-x-px text-sm">
+          <li>
+            <button
+              (click)="prevPage()"
+              [disabled]="currentPage() === 0"
+              class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+            >
+              Previous
+            </button>
+          </li>
+          @for (pageNumber of pagesArray(); track $index) {
+            <li>
+              @if (pageNumber === '...') {
+                <span
+                  class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+                >
+                  ...
+                </span>
+              } @else {
+                <button
+                  (click)="goToPage($any(pageNumber))"
+                  [disabled]="currentPage() === $any(pageNumber)"
+                  class="cursor-pointer disabled:cursor-not-allowed flex items-center justify-center box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+                  [class]="{
+                    'text-mainColorLight': currentPage() === $any(pageNumber),
+                    'bg-neutral-tertiary-medium': currentPage() === $any(pageNumber),
+
+                    'text-body': currentPage() !== $any(pageNumber),
+                    'bg-neutral-secondary-medium': currentPage() !== $any(pageNumber),
+                    'hover:text-heading': currentPage() !== $any(pageNumber),
+                    'hover:bg-neutral-tertiary-medium': currentPage() !== $any(pageNumber),
+                  }"
+                >
+                  {{ $any(pageNumber) + 1 }}
+                </button>
+              }
+            </li>
+          }
+          <li>
+            <button
+              (click)="nextPage()"
+              [disabled]="currentPage() === totalPage() - 1 || totalPage() === 0"
+              class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-e-base text-sm px-3 h-10 focus:outline-none"
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </div>
+    }
+
     <div class="flex flex-col gap-6 w-full p-4 md:p-6 bg-mainBg min-h-screen">
       @for (eval of allReviewData(); track eval.id) {
         <div
@@ -165,6 +218,58 @@
       }
     </div>
   </div>
+  @if (allReviewData().length > 0) {
+    <div class="flex items-center justify-center">
+      <ul class="flex -space-x-px text-sm">
+        <li>
+          <button
+            (click)="prevPage()"
+            [disabled]="currentPage() === 0"
+            class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-s-base text-sm px-3 h-10 focus:outline-none"
+          >
+            Previous
+          </button>
+        </li>
+        @for (pageNumber of pagesArray(); track $index) {
+          <li>
+            @if (pageNumber === '...') {
+              <span
+                class="flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+              >
+                ...
+              </span>
+            } @else {
+              <button
+                (click)="goToPage($any(pageNumber))"
+                [disabled]="currentPage() === $any(pageNumber)"
+                class="cursor-pointer disabled:cursor-not-allowed flex items-center justify-center box-border border border-default-medium font-medium text-sm w-10 h-10 focus:outline-none"
+                [class]="{
+                  'text-mainColorLight': currentPage() === $any(pageNumber),
+                  'bg-neutral-tertiary-medium': currentPage() === $any(pageNumber),
+
+                  'text-body': currentPage() !== $any(pageNumber),
+                  'bg-neutral-secondary-medium': currentPage() !== $any(pageNumber),
+                  'hover:text-heading': currentPage() !== $any(pageNumber),
+                  'hover:bg-neutral-tertiary-medium': currentPage() !== $any(pageNumber),
+                }"
+              >
+                {{ $any(pageNumber) + 1 }}
+              </button>
+            }
+          </li>
+        }
+        <li>
+          <button
+            (click)="nextPage()"
+            [disabled]="currentPage() === totalPage() - 1 || totalPage() === 0"
+            class="flex items-center justify-center cursor-pointer disabled:cursor-not-allowed text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium disabled:hover:bg-neutral-secondary-medium hover:text-heading disabled:hover:text-body disabled:opacity-50 font-medium rounded-e-base text-sm px-3 h-10 focus:outline-none"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </div>
+  }
 </div>
 
 @if (isModalAdminReplayVisible()) {

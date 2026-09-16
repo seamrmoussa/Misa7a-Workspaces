@@ -137,7 +137,7 @@
                     <span>Icon Name is required.</span>
                   </p>
                 }
-                @if (spaceTypeForm.get('iconName')?.hasError('min')) {
+                @if (spaceTypeForm.get('iconName')?.hasError('minlength')) {
                   <p class="flex items-start gap-2">
                     <i class="fa-solid fa-right-long p-0.5"></i>
                     <span>Icon Name must be at least 5 characters.</span>

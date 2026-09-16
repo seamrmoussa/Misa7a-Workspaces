@@ -3,7 +3,6 @@ import {
   computed,
   effect,
   inject,
-  input,
   model,
   OnInit,
   PLATFORM_ID,

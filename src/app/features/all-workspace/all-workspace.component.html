@@ -1,35 +1,4 @@
 @if (workspaces().length > 0) {
-  <div class="max-w-[95%] mx-auto mt-6 bg-white border border-gray-100 rounded-xl shadow-sm mb-5">
-    <div class="flex flex-row flex-wrap justify-between p-6 border-t border-gray-100">
-      <button
-        (click)="getSelectWorkspace(workSpaceSelection.value)"
-        class="text-white bg-mainColorLight hover:bg-mainColorDark focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition-colors disabled:opacity-50 cursor-pointer"
-      >
-        Get Select Workspace
-      </button>
-      <div class="flex flex-row flex-wrap gap-3 items-center">
-        @if (oneWorkspaces().length > 0) {
-          <button
-            (click)="resetAllWorkspaceView()"
-            class="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition-colors disabled:opacity-50 cursor-pointer"
-          >
-            Reset Filter
-          </button>
-        }
-        <select
-          #workSpaceSelection
-          id="workSpaceSelection"
-          class="px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
-        >
-          <option selected disabled hidden value="">Select Workspace</option>
-          @for (item of workspaces(); track item.id) {
-            <option [value]="item.id">{{ item.id }} - {{ item.workspaceName }}</option>
-          }
-        </select>
-      </div>
-    </div>
-  </div>
-
   <div class="max-w-[95%] mx-auto mt-6 bg-white border border-gray-100 rounded-xl shadow-sm">
     <button
       (click)="toggleCollapseDelete()"
@@ -198,7 +167,7 @@
                 {{ workspace.typeName }}
               </span>
 
-              @if (workspace.isAvailable === 1) {
+              @if (workspace.isAvailable.toString() === 'Y') {
                 <span
                   class="px-2.5 py-1 bg-greenBgBadge text-greenTextBadge text-2xs font-medium rounded-full flex items-center gap-1.5 border border-greenTextBadge/20"
                 >

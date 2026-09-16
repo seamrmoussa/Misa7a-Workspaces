@@ -165,6 +165,7 @@ export class SpaceTypeComponent implements OnInit {
   getAllSpaceType() {
     this.callAdminDataService.getAllTypeSpace().subscribe({
       next: (res) => {
+        console.log(res);
         this.totalSpacesType.set(res.data);
         this.allSpacesType.set([...this.totalSpacesType()]);
       },

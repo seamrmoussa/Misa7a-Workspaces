@@ -44,7 +44,8 @@ export class RegistrationComponent {
     if (this.registrationForm.valid) {
       this.registerSubscription.set(
         this.authService.signUp(this.registrationForm.value).subscribe({
-          next: (res) => {
+          next: () => {
+            this.registrationForm.reset();
             this.toastrService.success('Your account has been successfully created');
             this.router.navigate(['/login']);
           },

@@ -37,6 +37,8 @@ export class ReviewComponent implements OnInit {
     averageRating: 0.0,
   });
   allReviewData = signal<ReviewRes[]>([]);
+  totalPage = signal<number>(0);
+  currentPage = signal<number>(0);
   isModalAdminReplayVisible = signal<boolean>(false);
   ratingCounts = signal<RatedCountsRes[]>([]);
 
@@ -57,6 +59,66 @@ export class ReviewComponent implements OnInit {
     }
   }
 
+  pagesArray = computed(() => {
+    const total = this.totalPage();
+    const current = this.currentPage();
+    const delta = 3;
+
+    if (total <= 11) {
+      return Array.from({ length: total }, (_, i) => i);
+    }
+
+    const pages: (number | string)[] = [];
+
+    pages.push(0);
+
+    let start = Math.max(1, current - delta);
+    let end = Math.min(total - 2, current + delta);
+
+    if (current <= 4) {
+      end = 7;
+    }
+    if (current >= total - 5) {
+      start = total - 8;
+    }
+
+    if (start > 1) {
+      pages.push('...');
+    }
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (end < total - 2) {
+      pages.push('...');
+    }
+
+    pages.push(total - 1);
+
+    return pages;
+  });
+
+  prevPage() {
+    if (this.currentPage() > 0) {
+      this.currentPage.update((p) => p - 1);
+      this.showAllReview();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage() < this.totalPage() - 1) {
+      this.currentPage.update((p) => p + 1);
+      this.showAllReview();
+    }
+  }
+
+  goToPage(pageNumber: number) {
+    if (this.currentPage() !== pageNumber) {
+      this.currentPage.set(pageNumber);
+      this.showAllReview();
+    }
+  }
+
   showSummaryReview() {
     this.ratedService.getAvgReview().subscribe({
       next: (res) => {
@@ -66,8 +128,10 @@ export class ReviewComponent implements OnInit {
   }
 
   showAllReview() {
-    this.ratedService.getAllReview().subscribe({
+    this.ratedService.getAllReview(this.currentPage()).subscribe({
       next: (res) => {
+        this.totalPage.set(res.data.totalPages);
+        this.currentPage.set(res.data.number);
         this.allReviewData.set(res.data.content);
       },
     });

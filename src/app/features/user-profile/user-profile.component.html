@@ -114,7 +114,7 @@
         </div>
       </div>
 
-      <div class="mt-auto pt-4 border-t border-gray-100">
+      <div class="flex justify-between mt-auto pt-4 border-t border-gray-100">
         <button
           (click)="showModalToEditProfileData()"
           type="button"
@@ -145,113 +145,343 @@
             <span class="sr-only">Close modal</span>
           </button>
         </div>
-        <form action="#">
-          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
-            <div class="col-span-2 sm:col-span-1">
-              <label for="price" class="block mb-2.5 text-sm font-medium text-heading">Price</label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                placeholder="$2999"
-                required=""
-              />
+
+        <form [formGroup]="updateUserData" (ngSubmit)="completeUpdateUserData()">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-3">
+            <div>
+              <div class="">
+                <label
+                  for="firstName"
+                  class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+                  >First Name</label
+                >
+                <div class="relative">
+                  <input
+                    [class]="{
+                      'border-green-500': updateUserData.get('firstName')?.valid,
+                      'border-red-500':
+                        updateUserData.get('firstName')?.invalid &&
+                        updateUserData.get('firstName')?.touched,
+                    }"
+                    formControlName="firstName"
+                    type="text"
+                    id="firstName"
+                    class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+                    placeholder="Enter first name"
+                    required
+                  />
+                </div>
+              </div>
+
+              @if (
+                updateUserData.get('firstName')?.invalid && updateUserData.get('firstName')?.touched
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  @if (updateUserData.get('firstName')?.hasError('required')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>First name is required.</span>
+                    </p>
+                  } @else if (updateUserData.get('firstName')?.hasError('minlength')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>First name must be at least 3 characters.</span>
+                    </p>
+                  }
+                </div>
+              }
             </div>
-            <div class="col-span-2 sm:col-span-1">
-              <label for="price" class="block mb-2.5 text-sm font-medium text-heading">Price</label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                placeholder="$2999"
-                required=""
-              />
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-              <label for="price" class="block mb-2.5 text-sm font-medium text-heading">Price</label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                placeholder="$2999"
-                required=""
-              />
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-              <label for="price" class="block mb-2.5 text-sm font-medium text-heading">Price</label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                placeholder="$2999"
-                required=""
-              />
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-              <label for="price" class="block mb-2.5 text-sm font-medium text-heading">Price</label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                placeholder="$2999"
-                required=""
-              />
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-              <label for="price" class="block mb-2.5 text-sm font-medium text-heading">Price</label>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                placeholder="$2999"
-                required=""
-              />
-            </div>
-            <div class="col-span-2">
-              <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Name</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                placeholder="Type product name"
-                required=""
-              />
-            </div>
-            <div class="col-span-2">
-              <label for="name" class="block mb-2.5 text-sm font-medium text-heading">Name</label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                placeholder="Type product name"
-                required=""
-              />
+
+            <div>
+              <div class="">
+                <label
+                  for="lastName"
+                  class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+                  >Last Name</label
+                >
+                <div class="relative">
+                  <input
+                    #rePass
+                    [class]="{
+                      'border-green-500': updateUserData.get('lastName')?.valid,
+                      'border-red-500':
+                        updateUserData.get('lastName')?.invalid &&
+                        updateUserData.get('lastName')?.touched,
+                    }"
+                    formControlName="lastName"
+                    type="text"
+                    id="lastName"
+                    class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+                    placeholder="Enter last name"
+                    required
+                  />
+                </div>
+              </div>
+
+              @if (
+                updateUserData.get('lastName')?.invalid && updateUserData.get('lastName')?.touched
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  @if (updateUserData.get('lastName')?.hasError('required')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Last name is required.</span>
+                    </p>
+                  } @else if (updateUserData.get('lastName')?.hasError('minlength')) {
+                    <p class="flex items-start gap-2">
+                      <i class="fa-solid fa-right-long p-0.5"></i>
+                      <span>Last name must be at least 3 characters.</span>
+                    </p>
+                  }
+                </div>
+              }
             </div>
           </div>
-          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
-            <button
-              type="submit"
-              class="inline-flex gap-2 items-center text-white bg-mainColorLight hover:bg-mainColorDark transition-all duration-300 cursor-pointer box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+
+          <div class="mb-3">
+            <label
+              for="username"
+              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+              >User Name</label
             >
-              <i class="fa-regular fa-pen-to-square"></i>
-              Done
-            </button>
-            <button
-              (click)="closeModalToEditProfileData()"
-              type="button"
-              class="text-body bg-neutral-secondary-medium cursor-pointer box-border border border-default-medium hover:bg-neutral-tertiary-medium transition-all duration-300 hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
-            >
-              Cancel
-            </button>
+            <input
+              [class]="{
+                'border-green-500': updateUserData.get('username')?.valid,
+                'border-red-500':
+                  updateUserData.get('username')?.invalid &&
+                  updateUserData.get('username')?.touched,
+              }"
+              formControlName="username"
+              type="text"
+              id="username"
+              class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+              placeholder="Enter User name"
+              required
+            />
           </div>
+
+          @if (updateUserData.get('username')?.invalid && updateUserData.get('username')?.touched) {
+            <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+              @if (updateUserData.get('username')?.hasError('required')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>User name is required.</span>
+                </p>
+              } @else if (updateUserData.get('username')?.hasError('minlength')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>User name must be at least 3 characters.</span>
+                </p>
+              }
+            </div>
+          }
+
+          <div class="mb-3">
+            <label
+              for="jobTitle"
+              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+              >Job Title</label
+            >
+            <input
+              [class]="{
+                'border-green-500': updateUserData.get('jobTitle')?.valid,
+                'border-red-500':
+                  updateUserData.get('jobTitle')?.invalid &&
+                  updateUserData.get('jobTitle')?.touched,
+              }"
+              formControlName="jobTitle"
+              type="text"
+              id="jobTitle"
+              class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+              placeholder="Enter your Job Title"
+              required
+            />
+          </div>
+
+          @if (updateUserData.get('jobTitle')?.invalid && updateUserData.get('jobTitle')?.touched) {
+            <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+              @if (updateUserData.get('jobTitle')?.hasError('required')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Job Title is required.</span>
+                </p>
+              } @else if (updateUserData.get('jobTitle')?.hasError('minlength')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Job Title must be at least 3 characters.</span>
+                </p>
+              }
+            </div>
+          }
+
+          <div class="mb-3">
+            <label
+              for="companyName"
+              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+              >Company Name</label
+            >
+            <input
+              [class]="{
+                'border-green-500': updateUserData.get('companyName')?.valid,
+                'border-red-500':
+                  updateUserData.get('companyName')?.invalid &&
+                  updateUserData.get('companyName')?.touched,
+              }"
+              formControlName="companyName"
+              type="text"
+              id="companyName"
+              class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+              placeholder="Enter your Company name"
+              required
+            />
+          </div>
+
+          @if (
+            updateUserData.get('companyName')?.invalid && updateUserData.get('companyName')?.touched
+          ) {
+            <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+              @if (updateUserData.get('companyName')?.hasError('required')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Company name is required.</span>
+                </p>
+              } @else if (updateUserData.get('companyName')?.hasError('minlength')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Company Name must be at least 3 characters.</span>
+                </p>
+              }
+            </div>
+          }
+
+          <div class="mb-3">
+            <label
+              for="email"
+              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+              >Email Address</label
+            >
+            <input
+              [class]="{
+                'border-green-500': updateUserData.get('email')?.valid,
+                'border-red-500':
+                  updateUserData.get('email')?.invalid && updateUserData.get('email')?.touched,
+              }"
+              formControlName="email"
+              type="email"
+              id="email"
+              class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+              placeholder="name@misa7a.com"
+              required
+            />
+          </div>
+
+          @if (updateUserData.get('email')?.invalid && updateUserData.get('email')?.touched) {
+            <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+              @if (updateUserData.get('email')?.hasError('required')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Email is required.</span>
+                </p>
+              } @else if (updateUserData.get('email')?.hasError('email')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Please enter a valid email address.</span>
+                </p>
+              }
+            </div>
+          }
+
+          <div class="mb-3">
+            <label
+              for="phone"
+              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+              >Phone Number</label
+            >
+            <input
+              [class]="{
+                'border-green-500': updateUserData.get('phone')?.valid,
+                'border-red-500':
+                  updateUserData.get('phone')?.invalid && updateUserData.get('phone')?.touched,
+              }"
+              formControlName="phone"
+              type="tel"
+              id="phone"
+              class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+              placeholder="01000000000"
+              required
+            />
+          </div>
+
+          @if (updateUserData.get('phone')?.invalid && updateUserData.get('phone')?.touched) {
+            <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+              @if (updateUserData.get('phone')?.hasError('required')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Phone number is required.</span>
+                </p>
+              } @else if (updateUserData.get('phone')?.hasError('pattern')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span
+                    >Invalid format. Must start with (010, 011, 012, or 015) and be 11 digits.</span
+                  >
+                </p>
+              }
+            </div>
+          }
+
+          <div class="mb-7">
+            <label
+              for="password"
+              class="block mb-1 text-2xs font-bold text-linksColor1 capitalize tracking-wider"
+              >New password</label
+            >
+            <div class="relative">
+              <input
+                #pass
+                [class]="{
+                  'border-green-500': updateUserData.get('password')?.valid,
+                  'border-red-500':
+                    updateUserData.get('password')?.invalid &&
+                    updateUserData.get('password')?.touched,
+                }"
+                formControlName="password"
+                type="password"
+                id="password"
+                class="placeholder:text-2xs bg-white border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-mainColorLight focus:border-mainColorLight block w-full p-2 shadow-sm"
+                placeholder="Enter your New password"
+                required
+              />
+              <i
+                (click)="showPassword(pass)"
+                [class]="pass.type === 'password' ? 'fa-eye-slash' : 'fa-eye'"
+                class="fa-solid absolute text-fontGray2 text-xs right-2 top-1/2 -translate-y-1/2 cursor-pointer"
+              ></i>
+            </div>
+          </div>
+
+          @if (updateUserData.get('password')?.invalid && updateUserData.get('password')?.touched) {
+            <div class="flex flex-col gap-1 text-2xs mb-3 text-red-500 -mt-2">
+              @if (updateUserData.get('password')?.hasError('required')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Password is required.</span>
+                </p>
+              } @else if (updateUserData.get('password')?.hasError('pattern')) {
+                <p class="flex items-start gap-2">
+                  <i class="fa-solid fa-right-long p-0.5"></i>
+                  <span>Must be 5-14 characters.</span>
+                </p>
+              }
+            </div>
+          }
+
+          <button
+            type="submit"
+            class="w-full text-white bg-mainColorLight hover:bg-mainColorDark focus:ring-2 focus:outline-none focus:ring-mainExtraLight font-medium rounded-lg text-sm px-5 py-2 text-center transition-colors cursor-pointer"
+          >
+            Create Account
+          </button>
         </form>
       </div>
     </div>

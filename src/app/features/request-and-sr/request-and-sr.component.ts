@@ -100,6 +100,13 @@ export class RequestAndSrComponent implements OnInit {
     }
   }
 
+  goToPage(pageNumber: number) {
+    if (this.currentPage() !== pageNumber) {
+      this.currentPage.set(pageNumber);
+      this.checkFilterMode();
+    }
+  }
+
   getAllRequests(isPagination: boolean = false) {
     this.resetAllData('All');
     this.FormUserId.reset();

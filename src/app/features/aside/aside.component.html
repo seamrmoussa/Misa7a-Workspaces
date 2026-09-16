@@ -1,5 +1,5 @@
 <aside
-  class="min-h-screen fixed z-10 inset-y-30 inset-x-0 block w-14 transition-[width] duration-500 lg:flex flex-col lg:w-64 bg-mainBg py-8 lg:px-2 shrink-0 border-e border-gray-200"
+  class="fixed z-10 top-20 bottom-0 inset-0 w-14 lg:w-64 transition-[width] duration-300 flex flex-col bg-mainBg py-4 lg:px-2 shrink-0 border-e border-gray-200"
 >
   <nav class="flex flex-col justify-start gap-2 flex-1 px-1">
     @if (roleType() === 'ADMIN') {
@@ -49,15 +49,15 @@
         <span class="hidden lg:block">Manage Role</span>
       </a>
     }
-    @if (roleType() === 'ADMIN' || roleType() === 'RECEPTIONIST') {
+    @if (roleType() === 'ADMIN' || roleType() === 'STAFF') {
       <a
-        title="Staff Portal"
-        routerLink="/admin/receptionist"
+        title="Confirming payments"
+        routerLink="/admin/confirmingPayments"
         [routerLinkActive]="classesAsideActiveLinks"
         class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
       >
-        <i class="fa-solid fa-user-pen w-5 text-center text-lg"></i>
-        <span class="hidden lg:block">Staff Portal</span>
+        <i class="fa-solid fa-dollar-sign w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">Confirming payments</span>
       </a>
       <a
         title="Request And Sr"
@@ -72,7 +72,7 @@
     <a
       title="My Bookings"
       [routerLink]="
-        roleType() === 'ADMIN' || roleType() === 'RECEPTIONIST'
+        roleType() === 'ADMIN' || roleType() === 'STAFF'
           ? '/admin/booking-history'
           : '/user/booking-history'
       "
@@ -82,5 +82,34 @@
       <i class="fa-regular fa-calendar-check w-5 text-center text-lg"></i>
       <span class="hidden lg:block">My Bookings</span>
     </a>
+    @if (roleType() !== 'ADMIN') {
+      <a
+        title="New Booking"
+        routerLink="'/booking'"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-regular fa-calendar-check w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">Booking</span>
+      </a>
+      <a
+        title="Gallery"
+        routerLink="'/gallery'"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-regular fa-calendar-check w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">Gallery</span>
+      </a>
+      <a
+        title="Review"
+        routerLink="'/review'"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-regular fa-calendar-check w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">Review</span>
+      </a>
+    }
   </nav>
 </aside>

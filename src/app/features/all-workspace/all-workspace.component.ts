@@ -16,7 +16,6 @@ export class AllWorkspaceComponent implements OnInit {
 
   workspaces = signal<WorkspaceData[]>([]);
   totalWorkspaces = signal<WorkspaceData[]>([]);
-  oneWorkspaces = signal<WorkspaceData[]>([]);
   workspaceIdToDelete = signal<string>('');
   deleteIsOpen = signal(false);
   isModalOpen = signal(false);
@@ -28,22 +27,9 @@ export class AllWorkspaceComponent implements OnInit {
   getWorkspaces() {
     this.callAdminDataService.getAllWorkspace().subscribe({
       next: (res) => {
+        console.log(res);
         this.totalWorkspaces.set(res.data);
         this.workspaces.set(this.totalWorkspaces());
-      },
-    });
-  }
-
-  getSelectWorkspace(workspaceId: string) {
-    if (!workspaceId) {
-      this.toastrService.warning('Please select a workspace first');
-      return;
-    }
-    this.callAdminDataService.getOneWorkspace(workspaceId).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.oneWorkspaces.set([res.data]);
-        this.workspaces.set(this.oneWorkspaces());
       },
     });
   }
@@ -80,10 +66,5 @@ export class AllWorkspaceComponent implements OnInit {
         this.getWorkspaces();
       },
     });
-  }
-
-  resetAllWorkspaceView() {
-    this.workspaces.set(this.totalWorkspaces());
-    this.oneWorkspaces.set([]);
   }
 }
