@@ -41,7 +41,6 @@
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
-            "prerender": false,
             "security": {
               "allowedHosts": []
             },
