@@ -154,7 +154,14 @@ export const routes: Routes = [
     component: GeneralLayoutComponent,
     children: [
       { path: 'home', component: HomeComponent, title: 'Home Page | الصفحة الرئيسية' },
-      { path: 'booking', component: BookingPageComponent, title: 'New Booking' },
+      {
+        path: 'booking',
+        loadComponent: () =>
+          import('./features/booking-page/booking-page.component').then(
+            (c) => c.BookingPageComponent,
+          ),
+        title: 'New Booking',
+      },
       { path: 'review', component: ReviewComponent, title: 'Previous Reviews' },
 
       {
