@@ -9,8 +9,6 @@ export const guestGuard: CanActivateFn = (route, state) => {
   if (isPlatformBrowser(platformId)) {
     if (localStorage.getItem('misa7aUserToken')) {
       return router.parseUrl('/user');
-    } else {
-      return true;
     }
   }
   return true;

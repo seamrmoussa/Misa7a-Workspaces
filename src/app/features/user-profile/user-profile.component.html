@@ -13,10 +13,10 @@
           <div class="flex flex-row flex-wrap items-center justify-center gap-2">
             <p class="text-fontGray1 font-bold">
               {{ userProfileData()?.fullName }}"<span class="text-green-600 capitalize">
-                @if (roleType()) {
-                  {{ roleType() }}
+                @if (roleNow()) {
+                  {{ roleNow() }}
                 } @else {
-                  {{ 'Standard User' }}
+                  {{ 'MEMBER' }}
                 }</span
               >"
             </p>

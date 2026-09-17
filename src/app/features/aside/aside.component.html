@@ -2,7 +2,7 @@
   class="fixed z-10 top-20 bottom-0 inset-0 w-14 lg:w-64 transition-[width] duration-300 flex flex-col bg-mainBg py-4 lg:px-2 shrink-0 border-e border-gray-200"
 >
   <nav class="flex flex-col justify-start gap-2 flex-1 px-1">
-    @if (roleType() === 'ADMIN') {
+    @if (roleType().includes('ADMIN')) {
       <a
         title="Dashboard"
         routerLink="/admin/dashboard"
@@ -49,7 +49,7 @@
         <span class="hidden lg:block">Manage Role</span>
       </a>
     }
-    @if (roleType() === 'ADMIN' || roleType() === 'STAFF') {
+    @if (roleType().includes('ADMIN') || roleType().includes('STAFF')) {
       <a
         title="Confirming payments"
         routerLink="/admin/confirmingPayments"
@@ -68,21 +68,26 @@
         <i class="fa-solid fa-code-pull-request w-5 text-center text-lg"></i>
         <span class="hidden lg:block">Request And Sr</span>
       </a>
+      <a
+        title="My Bookings"
+        routerLink="'/user/booking-history'"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-solid fa-clock-rotate-left w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">My Bookings</span>
+      </a>
     }
-    <a
-      title="My Bookings"
-      [routerLink]="
-        roleType() === 'ADMIN' || roleType() === 'STAFF'
-          ? '/admin/booking-history'
-          : '/user/booking-history'
-      "
-      [routerLinkActive]="classesAsideActiveLinks"
-      class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
-    >
-      <i class="fa-regular fa-calendar-check w-5 text-center text-lg"></i>
-      <span class="hidden lg:block">My Bookings</span>
-    </a>
-    @if (roleType() !== 'ADMIN') {
+    @if (!roleType().includes('ADMIN') && !roleType().includes('STAFF')) {
+      <a
+        title="My Bookings"
+        routerLink="'/user/booking-history'"
+        [routerLinkActive]="classesAsideActiveLinks"
+        class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
+      >
+        <i class="fa-solid fa-clock-rotate-left w-5 text-center text-lg"></i>
+        <span class="hidden lg:block">My Bookings</span>
+      </a>
       <a
         title="New Booking"
         routerLink="'/booking'"
@@ -98,7 +103,7 @@
         [routerLinkActive]="classesAsideActiveLinks"
         class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
       >
-        <i class="fa-regular fa-calendar-check w-5 text-center text-lg"></i>
+        <i class="fa-solid fa-images w-5 text-center text-lg"></i>
         <span class="hidden lg:block">Gallery</span>
       </a>
       <a
@@ -107,7 +112,7 @@
         [routerLinkActive]="classesAsideActiveLinks"
         class="flex items-center justify-center lg:justify-start gap-4 p-3 text-sm font-semibold text-linksColor1 hover:text-mainColorDark transition-colors"
       >
-        <i class="fa-regular fa-calendar-check w-5 text-center text-lg"></i>
+        <i class="fa-solid fa-star-half-stroke w-5 text-center text-lg"></i>
         <span class="hidden lg:block">Review</span>
       </a>
     }

@@ -1,13 +1,4 @@
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  model,
-  OnInit,
-  PLATFORM_ID,
-  signal,
-} from '@angular/core';
+import { Component, effect, inject, model, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { FlowbiteService } from '../../core/service/flowbite.service';
 import { initFlowbite } from 'flowbite';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -30,7 +21,6 @@ export class NavbarComponent implements OnInit {
   paths = signal<string[]>(['home', 'booking', 'gallery', 'review', 'contact-us', 'Location']);
   isUserLoggedIn = model<boolean>(false);
   userProfileData = signal<UserProfile | null>(null);
-  readonly roleType = computed<string>(() => this.authService.tokenData()?.roles[0]);
 
   classesProfile: string[] = [
     'bg-white',

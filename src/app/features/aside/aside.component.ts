@@ -11,7 +11,7 @@ import { AuthService } from '../../core/auth/services/auth.service';
 export class AsideComponent {
   private readonly authService = inject(AuthService);
 
-  readonly roleType = computed<string>(() => this.authService.tokenData()?.roles[0]);
+  readonly roleType = computed<string>(() => this.authService.tokenData()?.roles);
 
   constructor() {
     this.authService.decodeUserToken();

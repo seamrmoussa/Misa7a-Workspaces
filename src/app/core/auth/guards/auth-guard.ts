@@ -7,12 +7,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const platformId = inject(PLATFORM_ID);
 
   if (isPlatformBrowser(platformId)) {
-    if (localStorage.getItem('misa7aUserToken')) {
-      return true;
-    } else {
-      return router.parseUrl('/login');
-    }
+    return localStorage.getItem('misa7aUserToken') ? true : router.parseUrl('/login');
   }
-
-  return true;
+  return router.parseUrl('/login');
 };

@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
-import { BookingPageComponent } from './features/booking-page/booking-page.component';
 import { ReviewComponent } from './features/review/review.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
@@ -8,6 +7,8 @@ import { GeneralLayoutComponent } from './layout/general-layout/general-layout.c
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { guestGuard } from './core/auth/guards/guest-guard';
 import { authGuard } from './core/auth/guards/auth-guard';
+import { adminGuard } from './core/auth/guards/admin-guard';
+import { staffGuard } from './core/auth/guards/staff-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -54,9 +55,10 @@ export const routes: Routes = [
     component: AdminLayoutComponent,
     canActivate: [authGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'user-profile', pathMatch: 'full' },
       {
         path: 'dashboard',
+        canActivate: [adminGuard],
         loadComponent: () =>
           import('./features/admin-control-panel/admin-control-panel.component').then(
             (c) => c.AdminControlPanelComponent,
@@ -65,6 +67,7 @@ export const routes: Routes = [
       },
       {
         path: 'add-workspace',
+        canActivate: [adminGuard],
         loadComponent: () =>
           import('./features/add-workspaces/add-workspaces.component').then(
             (c) => c.AddWorkspaceComponent,
@@ -73,6 +76,7 @@ export const routes: Routes = [
       },
       {
         path: 'all-workspace',
+        canActivate: [adminGuard],
         loadComponent: () =>
           import('./features/all-workspace/all-workspace.component').then(
             (c) => c.AllWorkspaceComponent,
@@ -81,12 +85,14 @@ export const routes: Routes = [
       },
       {
         path: 'space-type',
+        canActivate: [adminGuard],
         loadComponent: () =>
           import('./features/space-type/./space-type.component').then((c) => c.SpaceTypeComponent),
         title: 'Create Space Type',
       },
       {
         path: 'manage-role',
+        canActivate: [adminGuard],
         loadComponent: () =>
           import('./features/manage-role/./manage-role.component').then(
             (c) => c.ManageRoleComponent,
@@ -94,15 +100,8 @@ export const routes: Routes = [
         title: 'Manage Role',
       },
       {
-        path: 'booking-history',
-        loadComponent: () =>
-          import('./features/booking-history/booking-history.component').then(
-            (c) => c.BookingHistoryComponent,
-          ),
-        title: 'Booking History',
-      },
-      {
         path: 'confirmingPayments',
+        canActivate: [staffGuard],
         loadComponent: () =>
           import('./features/receptionist/confirmingPayments.component').then(
             (c) => c.confirmingPayments,
@@ -111,6 +110,7 @@ export const routes: Routes = [
       },
       {
         path: 'RequestAndSr',
+        canActivate: [staffGuard],
         loadComponent: () =>
           import('./features/request-and-sr/request-and-sr.component').then(
             (c) => c.RequestAndSrComponent,

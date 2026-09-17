@@ -4,15 +4,7 @@ import { UpdateUserDataService } from '../../core/service/update-user-data.servi
 import { ToastrService } from 'ngx-toastr';
 import { UserProfile } from '../../user-profile.interface';
 import { AuthService } from '../../core/auth/services/auth.service';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { ForgotPassService } from '../../core/auth/services/forgot-pass.service';
-import { ResetPassword } from '../../reset-password.interface';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
@@ -26,7 +18,6 @@ export class UserProfileComponent implements OnInit {
   private readonly updateUserDataService = inject(UpdateUserDataService);
   private readonly toastrService = inject(ToastrService);
   private readonly authService = inject(AuthService);
-  private readonly forgotPassService = inject(ForgotPassService);
 
   saveImg!: File;
   imgUrl = signal<string | ArrayBuffer | null | undefined>(null);
@@ -34,11 +25,20 @@ export class UserProfileComponent implements OnInit {
   userProfileData = signal<UserProfile | null>(null);
   showModalEditProfileData = signal<boolean>(false);
   private token = signal<string | null>(null);
-  private initialRestPassData = signal<ResetPassword>({
-    token: '',
-    newPassword: '',
+
+  private readonly roleType = computed<string[]>(() => this.authService.tokenData()?.roles ?? []);
+
+  readonly roleNow = computed<string>(() => {
+    const rolesList = this.roleType();
+
+    if (rolesList.some((role: string) => role.toLowerCase().includes('admin'))) {
+      return 'ADMIN';
+    }
+    if (rolesList.some((role: string) => role.toLowerCase().includes('staff'))) {
+      return 'STAFF';
+    }
+    return 'MEMBER';
   });
-  readonly roleType = computed<string>(() => this.authService.tokenData()?.roles[0]);
 
   updateUserData: FormGroup = this.fb.group({
     firstName: ['', [Validators.required, Validators.minLength(3)]],
@@ -94,7 +94,7 @@ export class UserProfileComponent implements OnInit {
   uploadImg(): void {
     if (this.userId() !== 0 && this.saveImg) {
       this.updateUserDataService.upDateAvatar(this.userId(), this.saveImg).subscribe({
-        next: (res) => {
+        next: () => {
           this.toastrService.success('Image uploaded successfully');
           this.imgUrl.set(null);
           this.showImg(this.userId());
