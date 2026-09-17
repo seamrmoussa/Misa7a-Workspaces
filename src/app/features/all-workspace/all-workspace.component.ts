@@ -3,10 +3,11 @@ import { ToastrService } from 'ngx-toastr';
 import { CallAdminDataService } from '../../core/service/call-admin-data.service';
 import { WorkspaceData } from '../../workspace-data.interface';
 import { isPlatformBrowser } from '@angular/common';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-all-workspace',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './all-workspace.component.html',
   styleUrl: './all-workspace.component.css',
 })
@@ -20,6 +21,9 @@ export class AllWorkspaceComponent implements OnInit {
   workspaceIdToDelete = signal<string>('');
   deleteIsOpen = signal(false);
   isModalOpen = signal(false);
+  roomFilterById = signal<boolean>(false);
+
+  roomById: FormControl = new FormControl('', Validators.required);
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.pLATFORM_ID)) {
@@ -35,6 +39,17 @@ export class AllWorkspaceComponent implements OnInit {
         this.workspaces.set(this.totalWorkspaces());
       },
     });
+  }
+
+  getRoomById() {
+    if (this.roomById.valid) {
+      this.callAdminDataService.getOneWorkspace(this.roomById.value).subscribe({
+        next: (res) => {
+          this.workspaces.set([res.data]);
+          this.roomFilterById.set(true);
+        },
+      });
+    }
   }
 
   toggleCollapseDelete() {
@@ -69,5 +84,11 @@ export class AllWorkspaceComponent implements OnInit {
         this.getWorkspaces();
       },
     });
+  }
+
+  restFindBookById() {
+    this.roomFilterById.set(false);
+    this.roomById.reset();
+    this.getWorkspaces();
   }
 }

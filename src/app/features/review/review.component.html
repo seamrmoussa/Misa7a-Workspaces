@@ -60,6 +60,12 @@
                   <span class="text-sm font-medium text-fontGray1 text-right shrink-0">{{
                     rateCount.totalReviews
                   }}</span>
+                  <button
+                    (click)="getReviewByRate(rateCount.rating)"
+                    class="bg-beigePointBadge p-1 rounded-2xl text-xs cursor-pointer"
+                  >
+                    Get All {{ rateCount.rating }}
+                  </button>
                 </div>
               </div>
             }
@@ -119,6 +125,15 @@
           </li>
         </ul>
       </div>
+    }
+
+    @if (reviewFilterByRate()) {
+      <button
+        (click)="restFindReviewByRate()"
+        class="w-full md:w-auto m-auto block text-center cursor-pointer font-semibold rounded-lg text-sm px-6 mt-3 py-3 transition-all duration-300 shadow-md bg-orange-700 hover:bg-orange-800 hover:text-white text-white/80"
+      >
+        <i class="fa-solid fa-arrows-rotate"></i> Reset
+      </button>
     }
 
     <div class="flex flex-col gap-6 w-full p-4 md:p-6 bg-mainBg min-h-screen">

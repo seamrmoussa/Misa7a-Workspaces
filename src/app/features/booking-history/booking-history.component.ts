@@ -2,9 +2,14 @@ import { Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angul
 import { BookRoomService } from '../../core/service/book-room.service';
 import { CurrencyPipe, DatePipe, isPlatformBrowser } from '@angular/common';
 import { ResBookData } from '../../res-book-data.interface';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { RatedService } from '../../core/service/rated.service';
 
 @Component({
   selector: 'app-booking-history',
@@ -13,43 +18,39 @@ import { RatedService } from '../../core/service/rated.service';
   styleUrl: './booking-history.component.css',
 })
 export class BookingHistoryComponent implements OnInit {
+  // All inject service
+
   private readonly bookRoomService = inject(BookRoomService);
-  private readonly ratedService = inject(RatedService);
   private readonly pLATFORM_ID = inject(PLATFORM_ID);
   private readonly toastrService = inject(ToastrService);
   private readonly fb = inject(FormBuilder);
 
-  private readonly userId = signal<string>('');
+  // All property
 
+  private readonly userId = signal<string>('');
   currentDateTime: String = new Date().toISOString();
   intervalId: any;
-
   bookingHistory = signal<ResBookData[]>([]);
   totalPage = signal<number>(0);
   currentPage = signal<number>(0);
   showCancelModal = signal<boolean>(false);
-  showRatedModal = signal<boolean>(false);
   showConfirmPaymentModal = signal<boolean>(false);
   imgConfirmPayment!: File;
   selectedFileName = signal<string>('');
   confirmBookId = signal<number>(0);
   cancelBookingPartTime = signal<boolean>(false);
   cancelBookingId = signal<number>(0);
+  bookFilterById = signal<boolean>(false);
+
+  // All Form Controls
+
+  bookById: FormControl = new FormControl('', Validators.required);
 
   formCancellation = this.fb.group({
     cancelledByUserId: [Number(this.userId())],
     reason: ['This timing is not needed at the moment.', Validators.required],
     cancelStartDatetime: ['', Validators.required],
     cancelEndDatetime: ['', Validators.required],
-  });
-
-  formRatedBooking: FormGroup = this.fb.group({
-    userId: [0, [Validators.required]],
-    workspaceId: [0, [Validators.required]],
-    bookingId: [0, [Validators.required]],
-    rating: [5, [Validators.required]],
-    title: ['Great workspace', [Validators.required]],
-    body: ['', [Validators.required]],
   });
 
   formConfirmPayment: FormGroup = this.fb.group({
@@ -134,6 +135,17 @@ export class BookingHistoryComponent implements OnInit {
     }
   }
 
+  getBookById() {
+    if (this.bookById.valid) {
+      this.bookRoomService.getBookingById(this.bookById.value).subscribe({
+        next: (res) => {
+          this.bookingHistory.set([res.data]);
+          this.bookFilterById.set(true);
+        },
+      });
+    }
+  }
+
   getAllMyPrevReservations() {
     this.bookRoomService.getAllMyPrevBookings(this.userId(), this.currentPage()).subscribe({
       next: (res) => {
@@ -194,35 +206,6 @@ export class BookingHistoryComponent implements OnInit {
     this.cancelBookingPartTime.update((v) => !v);
   }
 
-  isModalRatedVisible(bookingData: ResBookData) {
-    this.formRatedBooking.patchValue({
-      userId: Number(this.userId()),
-      workspaceId: bookingData.workspaceId,
-      bookingId: bookingData.id,
-    });
-
-    this.showRatedModal.set(true);
-  }
-
-  submitRated() {
-    if (this.formRatedBooking.valid) {
-      this.ratedService
-        .sendRated({
-          ...this.formRatedBooking.value,
-          rating: Number(this.formRatedBooking.value.rating),
-        })
-        .subscribe({
-          next: () => {
-            this.toastrService.success('Booking rating recorded');
-            this.closeRatedModal();
-            this.formRatedBooking.reset();
-          },
-        });
-    } else {
-      this.formRatedBooking.markAllAsTouched();
-    }
-  }
-
   ConfirmPayment(event: Event): void {
     const inputImg = event.target as HTMLInputElement;
     if (inputImg.files && inputImg.files.length > 0) {
@@ -260,10 +243,6 @@ export class BookingHistoryComponent implements OnInit {
       });
   }
 
-  closeRatedModal() {
-    this.showRatedModal.set(false);
-  }
-
   isModalConfirmPaymentVisible(bookingId: number) {
     this.confirmBookId.set(bookingId);
     this.showConfirmPaymentModal.set(true);
@@ -274,5 +253,11 @@ export class BookingHistoryComponent implements OnInit {
     this.showConfirmPaymentModal.set(false);
     this.formConfirmPayment.reset();
     this.selectedFileName.set('');
+  }
+
+  restFindBookById() {
+    this.bookFilterById.set(false);
+    this.bookById.reset();
+    this.getAllMyPrevReservations();
   }
 }

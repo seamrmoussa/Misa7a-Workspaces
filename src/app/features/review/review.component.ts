@@ -41,6 +41,7 @@ export class ReviewComponent implements OnInit {
   currentPage = signal<number>(0);
   isModalAdminReplayVisible = signal<boolean>(false);
   ratingCounts = signal<RatedCountsRes[]>([]);
+  reviewFilterByRate = signal<boolean>(false);
 
   FormRateAdmin: FormGroup = this.fb.group({
     responderId: [this.userId(), Validators.required],
@@ -137,6 +138,17 @@ export class ReviewComponent implements OnInit {
     });
   }
 
+  getReviewByRate(ratingNumber: number) {
+    this.ratedService.getReviewByRating(ratingNumber, this.currentPage()).subscribe({
+      next: (res) => {
+        this.totalPage.set(res.data.totalPages);
+        this.currentPage.set(res.data.number);
+        this.allReviewData.set(res.data.content);
+        this.reviewFilterByRate.set(true);
+      },
+    });
+  }
+
   showModalAdminReply(rateId: number) {
     this.nowReteId.set(rateId);
     this.isModalAdminReplayVisible.set(true);
@@ -176,5 +188,10 @@ export class ReviewComponent implements OnInit {
   }
   getStarsArray(rating: number): any[] {
     return new Array(rating);
+  }
+
+  restFindReviewByRate() {
+    this.reviewFilterByRate.set(false);
+    this.showAllReview();
   }
 }

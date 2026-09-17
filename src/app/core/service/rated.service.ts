@@ -39,6 +39,7 @@ export class RatedService {
   }
 
   getReviewByRating(
+    rate: number,
     page: number = 0,
     size: number = 10,
     sorts: string = 'createdOn,desc',
@@ -47,7 +48,7 @@ export class RatedService {
       'ngrok-skip-browser-warning': '69420',
     });
     const params = new HttpParams().set('page', page).set('size', size).set('sorts', sorts);
-    return this.http.get(`/api/v1/reviews/rating/{rating}`, { params, headers });
+    return this.http.get(`/api/v1/reviews/rating/${rate}`, { params, headers });
   }
 
   getRatedCounts(): Observable<any> {

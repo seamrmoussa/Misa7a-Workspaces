@@ -94,18 +94,6 @@ export class AddWorkspaceComponent {
     }
   }
 
-  getSelectWorkspace(workspaceId: string) {
-    if (!workspaceId) {
-      this.toastrService.warning('Please select a workspace first');
-      return;
-    }
-    this.callAdminDataService.getOneWorkspace(workspaceId).subscribe({
-      next: (res) => {
-        this.workspacesDataUpdate.set(res.data);
-      },
-    });
-  }
-
   getWorkspaces() {
     this.callAdminDataService.getAllWorkspace().subscribe({
       next: (res) => {

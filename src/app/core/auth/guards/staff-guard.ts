@@ -23,5 +23,5 @@ export const staffGuard: CanActivateFn = (route, state) => {
     }
   }
 
-  return router.parseUrl('/user-profile');
+  return true;
 };

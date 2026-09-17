@@ -22,5 +22,5 @@ export const adminGuard: CanActivateFn = (route, state) => {
     }
   }
 
-  return router.parseUrl('/user-profile');
+  return true;
 };

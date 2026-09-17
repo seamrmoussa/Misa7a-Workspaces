@@ -33,4 +33,11 @@ export class UpdateUserDataService {
       headers,
     });
   }
+
+  confirmDeleteUserAccount(userId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'ngrok-skip-browser-warning': '69420',
+    });
+    return this.http.delete(`/api/v1/users/delete/${userId}`, { headers });
+  }
 }

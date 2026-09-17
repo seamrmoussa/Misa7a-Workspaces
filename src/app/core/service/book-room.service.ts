@@ -49,7 +49,7 @@ export class BookRoomService {
     const headers = new HttpHeaders({
       'ngrok-skip-browser-warning': '69420',
     });
-    return this.http.get(`${environment.baseUrl}/api/v1/bookings/${bookingId}/cancel`, { headers });
+    return this.http.get(`/api/v1/bookings/${bookingId}`, { headers });
   }
 
   confirmBooking(data: object): Observable<any> {

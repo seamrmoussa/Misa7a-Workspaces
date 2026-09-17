@@ -4,6 +4,14 @@
     <p class="text-fontGray2 text-sm">Welcome back to your architectural sanctuary.</p>
   </div>
 
+  @if (roleNow() === 'MEMBER') {
+    <button
+      (click)="openRatedModal()"
+      class="w-full bg-green-500 hover:bg-green-700 text-white font-semibold cursor-pointer my-3 py-2.5 px-4 rounded-lg transition-colors text-md"
+    >
+      Rate Us
+    </button>
+  }
   <div class="grid grid-cols-1 gap-6">
     <div
       class="lg:col-span-1 bg-white rounded-2xl p-6 shadow-sm flex flex-col h-full border border-gray-100"
@@ -120,7 +128,14 @@
           type="button"
           class="text-mainColorDark font-bold text-sm hover:text-mainColorLight transition-colors flex items-center gap-2 cursor-pointer"
         >
-          Edit Profile Details <i class="fa-solid fa-pen text-xs"></i>
+          Edit Profile Details <i class="fa-solid fa-pen text-xl"></i>
+        </button>
+        <button
+          (click)="openModalToDeleteUser()"
+          type="button"
+          class="text-red-500 font-bold text-sm hover:text-red-700 transition-colors flex items-center gap-2 cursor-pointer"
+        >
+          Delete My User <i class="fa-solid fa-user-xmark text-xl"></i>
         </button>
       </div>
     </div>
@@ -142,7 +157,6 @@
             class="text-body bg-transparent hover:bg-neutral-tertiary transition-all duration-300 hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center cursor-pointer"
           >
             <i class="fa-solid fa-x"></i>
-            <span class="sr-only">Close modal</span>
           </button>
         </div>
 
@@ -482,6 +496,192 @@
           >
             Create Account
           </button>
+        </form>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showModalDeleteUser()) {
+  <div
+    class="smooth-appear overflow-y-auto bg-black/50 overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center w-full md:inset-0 h-full max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <button
+          (click)="closeModalToDeleteUser()"
+          type="button"
+          class="absolute top-3 cursor-pointer inset-e-2.5 text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+        >
+          <i class="fa-solid fa-x"></i>
+        </button>
+        <div class="p-4 md:p-5 text-center">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <h3 class="mb-6 text-body">Are you sure you want to delete your user?</h3>
+          <div class="flex items-center space-x-4 justify-center">
+            <button
+              (click)="deleteUserAccount()"
+              type="button"
+              class="text-white bg-danger cursor-pointer box-border border border-transparent hover:bg-danger-strong focus:ring-4 focus:ring-danger-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              Yes, I'm sure
+            </button>
+            <button
+              (click)="closeModalToDeleteUser()"
+              type="button"
+              class="text-body bg-neutral-secondary-medium cursor-pointer box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              No, cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showRateModal()) {
+  <div
+    class="smooth-appear overflow-y-auto overflow-x-hidden fixed z-50 flex justify-center items-center w-full inset-0 h-full max-h-full bg-black/50"
+  >
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <div
+        class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6"
+      >
+        <div class="flex items-center justify-between border-b border-default pb-4 md:pb-5">
+          <h3 class="text-lg font-medium text-heading">Submit a Review</h3>
+          <button
+            (click)="closeRatedModal()"
+            type="button"
+            class="cursor-pointer text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+          >
+            <i class="fa-solid fa-x"></i>
+          </button>
+        </div>
+
+        <form [formGroup]="formRatedBooking">
+          <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+            <div class="col-span-2 sm:col-span-1">
+              <label for="title" class="block mb-2.5 text-sm font-medium text-heading"
+                >Review Title</label
+              >
+              <input
+                [class]="{
+                  'border-green-500': formRatedBooking.get('title')?.valid,
+                  'border-red-500':
+                    formRatedBooking.get('title')?.invalid &&
+                    formRatedBooking.get('title')?.touched,
+                }"
+                required
+                type="text"
+                id="title"
+                formControlName="title"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                placeholder="e.g., Great workspace, very quiet!"
+              />
+              @if (
+                formRatedBooking.get('title')?.invalid &&
+                formRatedBooking.get('title')?.touched &&
+                formRatedBooking.get('title')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Review Title is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2 sm:col-span-1">
+              <label for="rating" class="block mb-2.5 text-sm font-medium text-heading"
+                >Rating (1 - 5)</label
+              >
+              <select
+                [class]="{
+                  'border-green-500': formRatedBooking.get('rating')?.valid,
+                  'border-red-500':
+                    formRatedBooking.get('rating')?.invalid &&
+                    formRatedBooking.get('rating')?.touched,
+                }"
+                required
+                id="rating"
+                formControlName="rating"
+                class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight shadow-xs placeholder:text-body"
+              >
+                <option value="5">5 - Excellent</option>
+                <option value="4">4 - Very Good</option>
+                <option value="3">3 - Good</option>
+                <option value="2">2 - Fair</option>
+                <option value="1">1 - Poor</option>
+              </select>
+              @if (
+                formRatedBooking.get('rating')?.invalid &&
+                formRatedBooking.get('rating')?.touched &&
+                formRatedBooking.get('rating')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Rating is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+
+            <div class="col-span-2">
+              <label for="body" class="block mb-2.5 text-sm font-medium text-heading"
+                >Comment</label
+              >
+              <textarea
+                [class]="{
+                  'border-green-500': formRatedBooking.get('body')?.valid,
+                  'border-red-500':
+                    formRatedBooking.get('body')?.invalid && formRatedBooking.get('body')?.touched,
+                }"
+                required
+                id="body"
+                formControlName="body"
+                rows="4"
+                class="block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-mainColorLight focus:border-mainColorLight w-full p-3.5 shadow-xs placeholder:text-body"
+                placeholder="Share your experience about this workspace..."
+              ></textarea>
+              @if (
+                formRatedBooking.get('body')?.invalid &&
+                formRatedBooking.get('body')?.touched &&
+                formRatedBooking.get('body')?.hasError('required')
+              ) {
+                <div class="flex flex-col gap-1 text-2xs text-red-500 mt-1">
+                  <p class="flex items-start gap-2">
+                    <i class="fa-solid fa-right-long p-0.5"></i>
+                    <span>Comment is required.</span>
+                  </p>
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 border-t border-default pt-4 md:pt-6">
+            <button
+              (click)="createReview()"
+              [disabled]="formRatedBooking.invalid"
+              type="submit"
+              class="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-mainColorLight inline-flex items-center gap-1 text-white bg-mainColorLight hover:bg-mainColorDark box-border border border-transparent focus:ring-4 focus:ring-mainColorLight-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              <i class="fa-solid fa-star"></i>
+              Submit Review
+            </button>
+
+            <button
+              (click)="closeRatedModal()"
+              type="button"
+              class="cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </div>
     </div>
