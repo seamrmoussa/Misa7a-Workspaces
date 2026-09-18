@@ -39,11 +39,11 @@ export class AuthService {
   }
 
   signUp(data: object): Observable<any> {
-    return this.http.post(environment.baseUrl + '/api/v1/users/register', data, {});
+    return this.http.post(`${environment.baseUrl}/api/v1/users/register`, data);
   }
 
   signIn(data: object): Observable<any> {
-    return this.http.post(environment.baseUrl + '/api/v1/auth/login', data, {});
+    return this.http.post(`${environment.baseUrl}/api/v1/auth/login`, data);
   }
 
   logoutUser(): void {

@@ -18,9 +18,7 @@ export class ForgotPassService {
     );
   }
 
- restPass(data: object): Observable<any> {
-    return this.http.post(environment.baseUrl + '/api/v1/auth/reset-password', data);
+  restPass(data: object): Observable<any> {
+    return this.http.post(`${environment.baseUrl}/api/v1/auth/reset-password`, data);
   }
-
-
 }

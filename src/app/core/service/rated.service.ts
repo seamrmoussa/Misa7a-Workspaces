@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -14,13 +14,9 @@ export class RatedService {
     size: number = 10,
     sorts: string = 'createdOn,desc',
   ): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-
     const params = new HttpParams().set('page', page).set('size', size).set('sorts', sorts);
 
-    return this.http.get(`/api/v1/reviews`, { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/reviews`, { params });
   }
 
   sendRated(data: object): Observable<any> {
@@ -32,10 +28,7 @@ export class RatedService {
   }
 
   getAvgReview(): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.get(`/api/v1/reviews/summary`, { headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/reviews/summary`);
   }
 
   getReviewByRating(
@@ -44,17 +37,11 @@ export class RatedService {
     size: number = 10,
     sorts: string = 'createdOn,desc',
   ): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
     const params = new HttpParams().set('page', page).set('size', size).set('sorts', sorts);
-    return this.http.get(`/api/v1/reviews/rating/${rate}`, { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/reviews/rating/${rate}`, { params });
   }
 
   getRatedCounts(): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.get(`/api/v1/reviews/rating-counts`, { headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/reviews/rating-counts`);
   }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -10,26 +10,18 @@ export class BookRoomService {
   private readonly http = inject(HttpClient);
 
   checkAvailabilityRoomId(dataToCheck: any, roomId: number): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-
     const params = new HttpParams()
       .set('workspaceId', roomId)
       .set('startDatetime', new Date(dataToCheck.startTimeSelected).toISOString())
       .set('endDatetime', new Date(dataToCheck.endTimeSelected).toISOString());
-    return this.http.get('/api/v1/bookings/availability', { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/bookings/availability`, { params });
   }
 
   checkAvailabilityRoomByDate(dataToCheck: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-
     const params = new HttpParams()
       .set('startDatetime', new Date(dataToCheck.startTimeSelected).toISOString())
       .set('endDatetime', new Date(dataToCheck.endTimeSelected).toISOString());
-    return this.http.get('/api/v1/workspaces/available', { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/workspaces/available`, { params });
   }
 
   getAllMyPrevBookings(
@@ -38,18 +30,12 @@ export class BookRoomService {
     size: string = '10',
     sort: string = 'id,desc',
   ): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
     const params = new HttpParams().set('page', page).set('size', size).set('sort', sort);
-    return this.http.get(`/api/v1/bookings/users/${userId}`, { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/bookings/users/${userId}`, { params });
   }
 
   getBookingById(bookingId: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.get(`/api/v1/bookings/${bookingId}`, { headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/bookings/${bookingId}`);
   }
 
   confirmBooking(data: object): Observable<any> {
@@ -69,11 +55,8 @@ export class BookRoomService {
   }
 
   getPaymentConfirmationRequest(page: number = 0, size: number = 10): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
     const params = new HttpParams().set('page', page).set('size', size);
-    return this.http.get(`/api/v1/payments`, { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/payments`, { params });
   }
 
   getPaymentConfirmationRequestByStatus(
@@ -81,11 +64,8 @@ export class BookRoomService {
     page: number = 0,
     size: number = 10,
   ): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
     const params = new HttpParams().set('page', page).set('size', size);
-    return this.http.get(`/api/v1/payments/status/${status}`, { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/payments/status/${status}`, { params });
   }
 
   getPaymentConfirmationRequestByTransactionType(
@@ -93,13 +73,12 @@ export class BookRoomService {
     page: number = 0,
     size: number = 10,
   ): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
     const params = new HttpParams().set('page', page).set('size', size);
-    return this.http.get(`/api/v1/payments/transaction-type/${transactionType}`, {
-      params,
-      headers,
-    });
+    return this.http.get(
+      `${environment.baseUrl}/api/v1/payments/transaction-type/${transactionType}`,
+      {
+        params,
+      },
+    );
   }
 }

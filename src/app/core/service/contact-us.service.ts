@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -14,16 +14,13 @@ export class ContactUsService {
   }
 
   getAllRequestForAdmin(page: number, size: number = 20, sorts: string[] = []): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
     let params = new HttpParams().set('page', page).set('size', size);
 
     sorts.forEach((sortItems) => {
       params = params.append('sort', sortItems);
     });
 
-    return this.http.get('/api/v1/contact-us', { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/contact-us`, { params });
   }
 
   getRequestForOneUser(
@@ -32,16 +29,13 @@ export class ContactUsService {
     sorts: string[] = [],
     size: number = 10,
   ): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
     let params = new HttpParams().set('page', page).set('size', size);
 
     sorts.forEach((sortItems) => {
       params = params.append('sort', sortItems);
     });
 
-    return this.http.get(`/api/v1/contact-us/users/${userId}`, { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/contact-us/users/${userId}`, { params });
   }
 
   getReqAsPerStatus(
@@ -50,23 +44,16 @@ export class ContactUsService {
     size: number = 10,
     sort: string = 'createdOn,desc',
   ): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
     const params = new HttpParams()
       .set('status', status)
       .set('page', page)
       .set('size', size)
       .set('sort', sort);
 
-    return this.http.get('/api/v1/contact-us/status', { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/contact-us/status`, { params });
   }
 
   closeRequest(requestId: number): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-
-    return this.http.patch(`/api/v1/contact-us/${requestId}/close`, {}, { headers });
+    return this.http.patch(`${environment.baseUrl}/api/v1/contact-us/${requestId}/close`, {});
   }
 }

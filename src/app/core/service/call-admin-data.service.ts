@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -16,31 +16,19 @@ export class CallAdminDataService {
   }
 
   getAllWorkspace(): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.get(`/api/v1/workspaces`, { headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/workspaces`);
   }
 
   getOneWorkspace(workspaceId: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.get(`/api/v1/workspaces/${workspaceId}`, { headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/workspaces/${workspaceId}`);
   }
 
   updateOneWorkspace(workspaceId: string, data: object): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.put(`/api/v1/workspaces/${workspaceId}`, data, { headers });
+    return this.http.put(`${environment.baseUrl}/api/v1/workspaces/${workspaceId}`, data);
   }
 
   deleteOneWorkspace(workspaceId: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.delete(`/api/v1/workspaces/${workspaceId}`, { headers });
+    return this.http.delete(`${environment.baseUrl}/api/v1/workspaces/${workspaceId}`);
   }
 
   // ! For new space Type
@@ -50,39 +38,24 @@ export class CallAdminDataService {
   }
 
   getAllTypeSpace(): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.get(`/api/v1/workspace-types`, { headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/workspace-types`);
   }
 
   getOneTypeSpace(workspaceId: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.get(`/api/v1/workspace-types/${workspaceId}`, { headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/workspace-types/${workspaceId}`);
   }
 
   updateOneTypeSpace(workspaceId: string, data: object): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.put(`/api/v1/workspace-types/${workspaceId}`, data, { headers });
+    return this.http.put(`${environment.baseUrl}/api/v1/workspace-types/${workspaceId}`, data);
   }
 
   deleteOneTypeSpace(workspaceId: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
-    return this.http.delete(`/api/v1/workspace-types/${workspaceId}`, { headers });
+    return this.http.delete(`${environment.baseUrl}/api/v1/workspace-types/${workspaceId}`);
   }
 
   getRoleForUser(role: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'ngrok-skip-browser-warning': '69420',
-    });
     const params = new HttpParams().set('role', role);
-    return this.http.get(`/api/v1/admin/roles/users`, { params, headers });
+    return this.http.get(`${environment.baseUrl}/api/v1/admin/roles/users`, { params });
   }
 
   updateRoleForUser(userId: string, newRole: string): Observable<any> {
